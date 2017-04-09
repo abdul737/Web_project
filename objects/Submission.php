@@ -1,5 +1,5 @@
 <?php
-class Submitsion extends Homework
+class Submission extends Homework
 {
   //private fields
   private $submitFile;
