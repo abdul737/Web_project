@@ -27,23 +27,23 @@ class Homework
   }
 
   //public setter and getter methods
-  public function getHwId() { return $hwId; }
+  public function getHwId() { return $this->hwId; }
   public function setHwId($value) { $this->hwId = $value; }
-  public function getInstructorId() { return $instructorId; }
+  public function getInstructorId() { return $this->instructorId; }
   public function setInstructorId($value) { $this->instructorId = $value; }
-  public function getKidId() { return $kidId; }
+  public function getKidId() { return $this->kidId; }
   public function setKidId($value) { $this->kidId = $value; }
-  public function getTitle() { return $title; }
+  public function getTitle() { return $this->title; }
   public function setTitle($value) { $this->title = $value; }
-  public function getContent() { return $content; }
+  public function getContent() { return $this-> content; }
   public function setContent($value) { $this->content = $value; }
-  public function getAttachment() { return $attachment; }
+  public function getAttachment() { return $this->attachment; }
   public function setAttachment($value) { $this->attachent = $value; }
-  public function getStartTime() { return $startTime; }
+  public function getStartTime() { return $this-> startTime; }
   public function setStartTime($value) { $this->startTime = $value; }
-  public function getEndTime() { return $endTime; }
+  public function getEndTime() { return $this-> endTime; }
   public function setEndTime($value) { $this->endTime = $value; }
-  public function getCourseId() { return $courseId; }
+  public function getCourseId() { return $this-> courseId; }
   public function setCourseId($value) { $this->courseId = $value; }
 }
  ?>
