@@ -8,22 +8,18 @@ class Course
   private $title;
   private $length;
   private $ageLimit;
-  private $group;
   private $courseId;
-  private $instructor;
+  private $assignments = array();
 
-  public function _construct($title, $length, $ageLimit,$courseId ,Instructor $instructor = null, Group $group = null)
+  public function _construct($title, $length, $ageLimit,$courseId, $assignments = null)
   {
      $this->setAgeLimit($ageLimit);
      $this->setCourseId($courseId);
      $this->setLength($length);
      $this->setTitle($title);
 
-     if ($group != null)
-      $this->setGroup($group);
-
-     if ($instructor != null)
-      $this->setInstructor($instructor);
+     if ($assignments != null)
+         $this->setAssignments($assignments);
 
   }
 
@@ -77,22 +73,6 @@ class Course
     }
 
     /**
-     * @return mixed
-     */
-    public function getGroup()
-    {
-        return $this->group;
-    }
-
-    /**
-     * @param mixed $group
-     */
-    public function setGroup(Group $group)
-    {
-        $this->group = $group;
-    }
-
-    /**
      * @param mixed $courseId
      */
     public function setCourseId($courseId)
@@ -109,26 +89,20 @@ class Course
     }
 
     /**
-     * @param mixed $instructor
+     * @param array $assignments
      */
-    public function setInstructor(Instructor $instructor)
+    public function setAssignments($assignments)
     {
-        $this->instructor = $instructor;
+        $this->assignments = $assignments;
     }
 
     /**
-     * @return mixed
+     * @return array
      */
-    public function getInstructor()
+    public function getAssignments()
     {
-        return $this->instructor;
+        return $this->assignments;
     }
-    //End of Setters and Getters
-
-
-
-
-
 
 }
  ?>

@@ -9,12 +9,22 @@
 class Kid extends User
 {
   //private fields
-  private  $points;
+  private $points;
+  private $groups = array();
+  private $parent;
+  private $submittedAssignments = array();
 
-  public function _construct($userId, $name, $email, $phoneNumber, $password, $birthdate, $createDate, $lastLogin, $points = 0)
+  public function _construct($userId, $name, $email, $phoneNumber, $password, $birthdate,
+                             $createDate, $lastLogin,_Parent $parent, $groups = null ,$points = 0)
   {
     parent::_construct($userId, $name, $email, $phoneNumber, $password, $birthdate, $createDate, $lastLogin);
+
     $this->points = $points;
+    $this->parent = $parent;
+
+    if ($groups != null)
+        $this->setGroups($groups);
+
   }
 
   //public setter and getter methods
@@ -26,5 +36,55 @@ class Kid extends User
   {
     $this->points += $value;
   }
+
+    /**
+     * @return array
+     */
+    public function getGroups()
+    {
+        return $this->groups;
+    }
+
+    /**
+     * @param array $groups
+     */
+    public function setGroups($groups)
+    {
+        $this->groups = $groups;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * @param mixed $parent
+     */
+    public function setParent(_Parent $parent)
+    {
+        $this->parent = $parent;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSubmittedAssignments()
+    {
+        return $this->submittedAssignments;
+    }
+
+    /**
+     * @param array $submittedAssignments
+     */
+    public function setSubmittedAssignments($submittedAssignments)
+    {
+        $this->submittedAssignments = $submittedAssignments;
+    }
+
+
 }
 ?>
