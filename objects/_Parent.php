@@ -13,10 +13,10 @@ class _Parent extends User
 
   //constructors
 
-  public function _construct($userId, $name, $email, $phoneNumber, $password, $birthdate, $createDate, $lastLogin,
-                             $passportNumber = "AAXXXXXXX", $passportDueDate = "20XX.XX.XX", $passportGetInfo = "")
+  public function _construct($userId, $name, $email, $phoneNumber,  $birthdate, $password,
+                             $passportNumber = "AAXXXXXXX", $passportDueDate = "20XX.XX.XX", $passportGetInfo = "",  $lastLogin = null, $photo = null)
   {
-    parent::_construct($userId, $name, $email, $phoneNumber, $password, $birthdate, $createDate, $lastLogin);
+    parent::_construct($userId, $name, $email, $phoneNumber,  $birthdate, $password, $lastLogin, $photo);
     $this->passportNumber = $passportNumber;
     $this->passportDueDate = $passportDueDate;
     $this->passportGetInfo = $passportGetInfo;

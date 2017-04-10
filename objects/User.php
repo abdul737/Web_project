@@ -1,50 +1,36 @@
 <?php
-/**
- *YOU DON'T GIVE ACCESS MODIFIERS TO CLASSES IN PHP
- *YOU DON'T PROVIDE DATA TYPE FOR VARIABLES IN PHP
- * GETTERS MUST RETURN $this-><class field>
 
- */
 abstract class User {
   //private fields (not any is constant yet)
-  private $userId;      //not sure about type
-  private $name;        //quite sure about type
-  private $email;       //quite sure about type
-  private $phoneNumber; //quite sure about type
-  private $password;    //quite sure about type
-  private $birthdate;   //possibly type will be changed
-  private $createDate;  //possibly type will be changed
-  private $lastLogin;   //possibly type will be changed
+
+  private $password;
+  private $birthdate;
+  private $createDate;
+  private $lastLogin;
+  private $contactDetails;
 
   //constructor
-  public function _construct($userId, $name, $email, $phoneNumber, $password, $birthdate, $createDate, $lastLogin)
+  public function _construct($userId, $name, $email, $phoneNumber, $birthdate, $password, $lastLogin, $photo)
   {
-    $this->userId = $userId;
-    $this->name = $name;
-    $this->email = $email;
-    $this->phoneNumber = $phoneNumber;
+
+    if ($password == null)
+      $this->password = $birthdate;
+
     $this->password = $password;
     $this->birthdate = $birthdate;
-    $this->createDate = $createDate;
     $this->lastLogin = $lastLogin;
+
+    $this->contactDetails = new ContactDetail($userId, $name, $phoneNumber, $email, $photo);
+
+    /**
+     * We need some algorithm to capture create date of the account...
+     * Following method is not good
+     */
+    $this->createDate = date("Y.m.d");
+
   }
 
     //public setter and getter methods
-    /**
-     * @return mixed
-     */
-    public function getUserId()
-    {
-        return $this->userId;
-    }
-
-    /**
-     * @param mixed $userId
-     */
-    public function setUserId($userId)
-    {
-        $this->userId = $userId;
-    }
 
     /**
      * @return mixed

@@ -12,7 +12,8 @@ class Group
     private $startTime;
     private $kids = array();            //Array of kids
     private $id;
-
+    private $instructor = array();
+    private $assignment = array();
 
     public function _construct($id , $venue, $startTime, $kids = null)
     {
@@ -95,6 +96,38 @@ class Group
     public function addKid(Kid $kid)
     {
         array_push($this->kids,$kid);
+    }
+
+    /**
+     * @param array $instructor
+     */
+    public function setInstructor($instructor)
+    {
+        $this->instructor = $instructor;
+    }
+
+    /**
+     * @param array $assignment
+     */
+    public function setAssignment($assignment)
+    {
+        $this->assignment = $assignment;
+    }
+
+    /**
+     * @return array
+     */
+    public function getInstructor()
+    {
+        return $this->instructor;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAssignment()
+    {
+        return $this->assignment;
     }
 
     /**
