@@ -1,44 +1,124 @@
 <?php
-public abstract class User {
-  //private fields (not any is constant yet)
-  private int $userId;//not sure about type
-  private string $name;//quite sure about type
-  private string $email;//quite sure about type
-  private string $phoneNumber; //quite sure about type
-  private string $password;//quite sure about type
-  private string $birthdate; //possibly type will be changed
-  private string $createDate; //possibly type will be changed
-  private string $lastLogin; //possibly type will be changed
-
-  //constructor
-  public function _construct($userId, $name, $email, $phoneNumber, $password, $birthdate, $createDate, $lastLogin)
-  {
-    $this->userId = $userId;
-    $this->name = $name;
-    $this->email = $email;
-    $this->phoneNumber = $phoneNumber;
-    $this->password = $password;
-    $this->birthdate = $birthdate;
-    $this->createDate = $createDate;
-    $this->lastLogin = $lastLogin;
-  }
-
-  //public setter and getter methods
-  public function getUserId() {return $userId;}
-  public function setUserId($value) { $this->userId=$value; }
-  public function getName() {return $name;}
-  public function setName($value) { $this->name=$value; }
-  public function getEmail() {return $email;}
-  public function setEmail($value) { $this->email=$value; }
-  public function getPhoneNumber() {return $phoneNumber;}
-  public function setPhoneNumber($value) { $this->phoneNumber=$value; }
-  public function getCheckPassword($value) {return $password == $value;}
-  public function setPassword($value) { $this->password=$value; }
-  public function getBirthdate() {return $birthdate;}
-  public function setBirthdate($value) { $this->userId=$value; }
-  public function getCreateDate() {return $createDate;}
-  public function getLastLogin() {return $lastLogin;}
-  public function setLastLogin($value) { $this->lastLogin=$value; }
-
+abstract class User {
+    //private fields (not any is constant yet)
+    private $password;
+    private $birthdate;
+    private $createDate;
+    private $lastLogin;
+    private $contactDetails;
+    //constructor
+    public function _construct($userId, $name, $email, $phoneNumber, $birthdate, $password, $lastLogin, $photo)
+    {
+        if ($password == null)
+            $this->password = $birthdate;
+        $this->password = $password;
+        $this->birthdate = $birthdate;
+        $this->lastLogin = $lastLogin;
+        $this->contactDetails = new ContactDetail($userId, $name, $phoneNumber, $email, $photo);
+        /**
+         * We need some algorithm to capture create date of the account...
+         * Following method is not good
+         */
+        $this->createDate = date("Y.m.d");
+    }
+    //public setter and getter methods
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->contactDetails->name;
+    }
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->contactDetails->name;
+    }
+    /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->contactDetails->email;
+    }
+    /**
+     * @param mixed $email
+     */
+    public function setEmail($email)
+    {
+        $this->contactDetails->email = $email;
+    }
+    /**
+     * @return mixed
+     */
+    public function getPhoneNumber()
+    {
+        return $this->contactDetails->phoneNumber;
+    }
+    /**
+     * @param mixed $phoneNumber
+     */
+    public function setPhoneNumber($phoneNumber)
+    {
+        $this->contactDetails->phoneNumber = $phoneNumber;
+    }
+    /**
+     * @return mixed
+     */
+    public function getPassword()
+    {
+        return $this->contactDetails->password;
+    }
+    /**
+     * @param mixed $password
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+    /**
+     * @return mixed
+     */
+    public function getBirthdate()
+    {
+        return $this->birthdate;
+    }
+    /**
+     * @param mixed $birthdate
+     */
+    public function setBirthdate($birthdate)
+    {
+        $this->birthdate = $birthdate;
+    }
+    /**
+     * @return mixed
+     */
+    public function getCreateDate()
+    {
+        return $this->createDate;
+    }
+    /**
+     * @param mixed $createDate
+     */
+    public function setCreateDate($createDate)
+    {
+        $this->createDate = $createDate;
+    }
+    /**
+     * @return mixed
+     */
+    public function getLastLogin()
+    {
+        return $this->lastLogin;
+    }
+    /**
+     * @param mixed $lastLogin
+     */
+    public function setLastLogin($lastLogin)
+    {
+        $this->lastLogin = $lastLogin;
+    }
 }
 ?>
