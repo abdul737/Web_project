@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Created by PhpStorm.
  * User: hamlet
@@ -13,20 +12,14 @@ class ContactDetail
     private $photo;
     private $phoneNumber;
     private $email;
-
-
     public function _construct($id, $name, $phoneNumber, $email , $photo = null)
     {
         $this->setId($id);
         $this->setEmail($email);
         $this->setName($name);
         $this->setPhoneNumber($phoneNumber);
-
         $this->setPhoto($photo);
-
     }
-
-
     /**
      * @return mixed
      */
@@ -34,7 +27,6 @@ class ContactDetail
     {
         return $this->id;
     }
-
     /**
      * @param mixed $id
      */
@@ -42,7 +34,6 @@ class ContactDetail
     {
         $this->id = $id;
     }
-
     /**
      * @return mixed
      */
@@ -50,7 +41,6 @@ class ContactDetail
     {
         return $this->name;
     }
-
     /**
      * @param mixed $name
      */
@@ -58,7 +48,6 @@ class ContactDetail
     {
         $this->name = $name;
     }
-
     /**
      * @return mixed
      */
@@ -66,7 +55,6 @@ class ContactDetail
     {
         return $this->photo;
     }
-
     /**
      * @param mixed $photo
      */
@@ -74,7 +62,6 @@ class ContactDetail
     {
         $this->photo = $photo;
     }
-
     /**
      * @return mixed
      */
@@ -82,7 +69,6 @@ class ContactDetail
     {
         return $this->phoneNumber;
     }
-
     /**
      * @param mixed $phoneNumber
      */
@@ -90,7 +76,6 @@ class ContactDetail
     {
         $this->phoneNumber = $phoneNumber;
     }
-
     /**
      * @param mixed $email
      */
@@ -98,7 +83,6 @@ class ContactDetail
     {
         $this->email = $email;
     }
-
     /**
      * @return mixed
      */
@@ -106,7 +90,4 @@ class ContactDetail
     {
         return $this->email;
     }
-
-
-
 }

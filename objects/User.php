@@ -1,93 +1,76 @@
 <?php
-
 abstract class User {
-  //private fields (not any is constant yet)
-
-  private $password;
-  private $birthdate;
-  private $createDate;
-  private $lastLogin;
-  private $contactDetails;
-
-  //constructor
-  public function _construct($userId, $name, $email, $phoneNumber, $birthdate, $password, $lastLogin, $photo)
-  {
-
-    if ($password == null)
-      $this->password = $birthdate;
-
-    $this->password = $password;
-    $this->birthdate = $birthdate;
-    $this->lastLogin = $lastLogin;
-
-    $this->contactDetails = new ContactDetail($userId, $name, $phoneNumber, $email, $photo);
-
-    /**
-     * We need some algorithm to capture create date of the account...
-     * Following method is not good
-     */
-    $this->createDate = date("Y.m.d");
-
-  }
-
+    //private fields (not any is constant yet)
+    private $password;
+    private $birthdate;
+    private $createDate;
+    private $lastLogin;
+    private $contactDetails;
+    //constructor
+    public function _construct($userId, $name, $email, $phoneNumber, $birthdate, $password, $lastLogin, $photo)
+    {
+        if ($password == null)
+            $this->password = $birthdate;
+        $this->password = $password;
+        $this->birthdate = $birthdate;
+        $this->lastLogin = $lastLogin;
+        $this->contactDetails = new ContactDetail($userId, $name, $phoneNumber, $email, $photo);
+        /**
+         * We need some algorithm to capture create date of the account...
+         * Following method is not good
+         */
+        $this->createDate = date("Y.m.d");
+    }
     //public setter and getter methods
-
     /**
      * @return mixed
      */
     public function getName()
     {
-        return $this->name;
+        return $this->contactDetails->name;
     }
-
     /**
      * @param mixed $name
      */
     public function setName($name)
     {
-        $this->name = $name;
+        $this->contactDetails->name;
     }
-
     /**
      * @return mixed
      */
     public function getEmail()
     {
-        return $this->email;
+        return $this->contactDetails->email;
     }
-
     /**
      * @param mixed $email
      */
     public function setEmail($email)
     {
-        $this->email = $email;
+        $this->contactDetails->email = $email;
     }
-
     /**
      * @return mixed
      */
     public function getPhoneNumber()
     {
-        return $this->phoneNumber;
+        return $this->contactDetails->phoneNumber;
     }
-
     /**
      * @param mixed $phoneNumber
      */
     public function setPhoneNumber($phoneNumber)
     {
-        $this->phoneNumber = $phoneNumber;
+        $this->contactDetails->phoneNumber = $phoneNumber;
     }
-
     /**
      * @return mixed
      */
     public function getPassword()
     {
-        return $this->password;
+        return $this->contactDetails->password;
     }
-
     /**
      * @param mixed $password
      */
@@ -95,7 +78,6 @@ abstract class User {
     {
         $this->password = $password;
     }
-
     /**
      * @return mixed
      */
@@ -103,7 +85,6 @@ abstract class User {
     {
         return $this->birthdate;
     }
-
     /**
      * @param mixed $birthdate
      */
@@ -111,7 +92,6 @@ abstract class User {
     {
         $this->birthdate = $birthdate;
     }
-
     /**
      * @return mixed
      */
@@ -119,7 +99,6 @@ abstract class User {
     {
         return $this->createDate;
     }
-
     /**
      * @param mixed $createDate
      */
@@ -127,7 +106,6 @@ abstract class User {
     {
         $this->createDate = $createDate;
     }
-
     /**
      * @return mixed
      */
@@ -135,7 +113,6 @@ abstract class User {
     {
         return $this->lastLogin;
     }
-
     /**
      * @param mixed $lastLogin
      */
@@ -143,9 +120,5 @@ abstract class User {
     {
         $this->lastLogin = $lastLogin;
     }
-
-
-
-
 }
 ?>
