@@ -7,59 +7,20 @@
  * just after installation.
  */
 
+namespace DatabaseManager;
+
 class DBManager
 {
-
-
-    private static $serverName;
-    private  static $userName;
-    private static  $password;
-    private static  $connection;
-
-
     /**
      * Establishing connection with DatabaseManager server
      */
-    public static function setConnection()
-    {
-        self::$connection = new mysqli(self::$serverName, self::$userName, self::$password);
-
-        if (self::$connection->connect_error)
-            die("Connection failed: " .self::$connection->connect_error);
-        else
-            echo "Connected successfully";
-
-    }
-
-
-    /**
-     * Setters and Getters.
-     * Due to security reasons, there are no get userName
-     * and get password methods
-     */
-    /**
-     * @return mixed
-     */
     public static function getConnection()
     {
-        return self::$connection;
+        DBConnect::checkConnection();
+        return DBConnect::$connection;
     }
 
-    /**
-     * @return mixed
-     */
-    public static function getServerName()
-    {
-        return self::$serverName;
-    }
 
-    //End of Setters and Getters
-
-
-    public static function closeConnection()
-    {
-        mysqli_close(self::$connection);
-    }
 
     /**
      * @param $name
@@ -101,7 +62,7 @@ class DBManager
     public static function readContactDetails($name)
     {
         $sql = "SELECT * FROM ContactDetails WHERE name = '$name' ORDER BY ID DESC";
-        $result = self::$connection->query($sql);
+        $result = self::getConnection()->query($sql);
 
         $contactDetails = array();
 
