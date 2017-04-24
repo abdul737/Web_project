@@ -1,5 +1,5 @@
 <?php
-    require_once "../DatabaseManager.php"
+    require_once "../DatabaseManager.php";
 ?>
 
 <!doctype html>
