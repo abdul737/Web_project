@@ -9,7 +9,7 @@
 ////GET is used because phpstorm has issue with POST
 
 require_once("../DatabaseManager/DBManager.php");
-require_once ("register.html");
+require_once("register.htm");
 $name =
 $email =
 $surname =
