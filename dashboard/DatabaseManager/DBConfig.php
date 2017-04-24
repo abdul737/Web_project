@@ -11,8 +11,74 @@ namespace DatabaseManager;
 
 class DBConfig
 {
-    public static $DB_USERNAME = "abdulbosid";
-    public static $DB_PASSWORD = "abdul618";
-    public static $DB_NAME = "lcm";
-    public static $DB_HOST = "192.168.9.2";
+    private static $DB_USERNAME = "abdulbosid";
+    private static $DB_PASSWORD = "abdul618";
+    private static $DB_NAME = "lcm";
+    private static $DB_HOST = "192.168.9.2";
+
+
+    /**
+     * @param string $DB_HOST
+     */
+    public static function setDBHOST($DB_HOST)
+    {
+        self::$DB_HOST = $DB_HOST;
+    }
+
+    /**
+     * @param string $DB_NAME
+     */
+    public static function setDBNAME($DB_NAME)
+    {
+        self::$DB_NAME = $DB_NAME;
+    }
+
+    /**
+     * @param string $DB_PASSWORD
+     */
+    public static function setDBPASSWORD($DB_PASSWORD)
+    {
+        self::$DB_PASSWORD = $DB_PASSWORD;
+    }
+
+    /**
+     * @param string $DB_USERNAME
+     */
+    public static function setDBUSERNAME($DB_USERNAME)
+    {
+        self::$DB_USERNAME = $DB_USERNAME;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getDBHOST()
+    {
+        return self::$DB_HOST;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getDBNAME()
+    {
+        return self::$DB_NAME;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getDBPASSWORD()
+    {
+        return self::$DB_PASSWORD;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getDBUSERNAME()
+    {
+        return self::$DB_USERNAME;
+    }
+
 }

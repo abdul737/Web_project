@@ -9,6 +9,8 @@
 
 namespace DatabaseManager;
 
+use MongoDB\Driver\Exception\ConnectionException;
+
 class DBManager
 {
     /**
@@ -16,11 +18,18 @@ class DBManager
      */
     public static function getConnection()
     {
-        if(DBConnect::$connection == null)
+        try{
+            if(DBConnect::$connection == null)
+            {
+                DBConnect::connect();
+            }
+            return DBConnect::$connection;
+
+        } catch (ConnectionException $err)
         {
-            DBConnect::connect();
+            echo $err->getMessage();
+            echo $err->getTrace();
         }
-        return DBConnect::$connection;
     }
 
     /**
