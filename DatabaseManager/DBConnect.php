@@ -24,13 +24,7 @@ class DBConnect
             throw new \ErrorException("Connection to MySQL error: ".mysqli_connect_error());
         }
     }
-    public static function checkConnection()
-    {
-        if(DBConnect::$connection == null)
-        {
-            self::connect();
-        }
-    }
+
     public static function closeConnection()
     {
         mysqli_close(self::$connection);

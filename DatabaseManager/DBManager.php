@@ -16,11 +16,12 @@ class DBManager
      */
     public static function getConnection()
     {
-        DBConnect::checkConnection();
+        if(DBConnect::$connection == null)
+        {
+            DBConnect::connect();
+        }
         return DBConnect::$connection;
     }
-
-
 
     /**
      * @param $name
@@ -35,8 +36,6 @@ class DBManager
         $passportNumber =  $passportDueDate = $passportGetInfo = $lastLogin = $photo = "";
 
         $sql = "QUERY MUST BE HERE WHICH ON ";
-
-
 
         foreach ($contactDetails as $contactDetail)
         {
