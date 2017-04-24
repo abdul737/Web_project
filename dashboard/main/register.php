@@ -15,7 +15,6 @@ $email =
 $surname =
 $password =
 $phoneNumber = null;
-
 $error = null;
 
 function test_input($data) {
