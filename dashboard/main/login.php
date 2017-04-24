@@ -1,3 +1,7 @@
+<?php
+    require_once "../DatabaseManager.php"
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -7,7 +11,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="http://demos.creative-tim.com/material-dashboard-pro/assets/img/apple-icon.png" />
     <link rel="icon" type="image/png" href="http://demos.creative-tim.com/material-dashboard-pro/assets/img/favicon.png" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Edu Management System</title>
+    <title>Material Dashboard PRO by Creative Tim | Premium Bootstrap Admin Template</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
     <!-- Bootstrap core CSS     -->
@@ -29,7 +33,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href=" #pablo ">Edu Management System</a>
+                <a class="navbar-brand" href="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">Edu Management System</a>
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
@@ -38,12 +42,12 @@
                             <i class="material-icons">person_add</i> Register
                         </a>
                     </li>
-                    <li class="">
-                        <a href="login.html">
+                    <li class=" active ">
+                        <a href="login.php">
                             <i class="material-icons">fingerprint</i> Login
                         </a>
                     </li>
-                    <li class=" active ">
+                    <li class="">
                         <a href="lock.html">
                             <i class="material-icons">lock_open</i> Lock
                         </a>
@@ -53,31 +57,57 @@
         </div>
     </nav>
     <div class="wrapper wrapper-full-page">
-        <div class="full-page lock-page" filter-color="black" data-image="../../assets/img/login.jpg">
-            <!--   you can change the color of the filter page using: data-color="blue | green | orange | red | purple" -->
+        <div class="full-page login-page" filter-color="black" data-image="../../assets/img/login.jpg">
+            <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
             <div class="content">
-                <form method="#" action="#">
-                    <div class="card card-profile card-hidden">
-                        <div class="card-avatar">
-                            <a href="#pablo">
-                                <img class="avatar" src="http://demos.creative-tim.com/material-dashboard-pro/assets/img/faces/avatar.jpg" alt="...">
-                            </a>
-                        </div>
-                        <div class="card-content">
-                            <h4 class="card-title">Tania Andrew</h4>
-                            <div class="form-group label-floating">
-                                <label class="control-label">Enter Password</label>
-                                <input type="password" class="form-control">
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <button type="button" class="btn btn-info    btn-round">Unlock</button>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
+                            <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                                <div class="card card-login card-hidden">
+                                    <div class="card-header text-center" data-background-color="blue">
+                                        <h4 class="card-title">Login</h4>
+                                    </div>
+                                    <div class="card-content">
+                                        <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="material-icons">perm_identity</i>
+                                </span>
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">ID Number</label>
+                                                <input type="text" class="form-control" name="id">
+                                            </div>
+                                        </div>
+                                        <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="material-icons">lock_outline</i>
+                                </span>
+                                            <div class="form-group label-floating">
+                                                <label class="control-label">Password</label>
+                                                <input type="password" class="form-control" name="password">
+                                            </div>
+                                        </div>
+                                        <div class="checkbox">
+                                            <div class="form-group">
+                                                <label>
+                                                    <input type="checkbox" name="remember" checked>
+                                                    <span class="checkbox-material"><span class="check">
+                                                    </span></span> Remember
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="footer text-center">
+                                        <button type="submit" class="btn btn-info btn-simple btn-wd btn-lg">Let's go</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
             <footer class="footer">
-                <div class="container-fluid">
+                <div class="container">
                     <p class="copyright pull-right">
                         &copy;
                         <script>
@@ -89,6 +119,7 @@
             </footer>
         </div>
     </div>
+</body>
 </body>
 <!--   Core JS Files   -->
 <script src="../../assets/js/jquery-3.1.1.min.js" type="text/javascript"></script>
