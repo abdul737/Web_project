@@ -14,7 +14,7 @@ use MongoDB\Driver\Exception\ConnectionException;
 class DBManager
 {
     /**
-     * Establishing connection with DatabaseManager server
+     * Establishing connection with databaseManager server
      */
     public static function getConnection()
     {
