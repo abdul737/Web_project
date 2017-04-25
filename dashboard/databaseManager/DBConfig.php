@@ -11,10 +11,10 @@ namespace DatabaseManager;
 
 class DBConfig
 {
-    private static $DB_USERNAME = "abdulbosid";
-    private static $DB_PASSWORD = "abdul618";
-    private static $DB_NAME = "lcm";
-    private static $DB_HOST = "192.168.9.2";
+    private static $DB_USERNAME = "m_codecraft";
+    private static $DB_PASSWORD = "c0decr@ft";
+    private static $DB_NAME = "codecraft_moodle";
+    private static $DB_HOST = "127.0.0.1";
 
 
     /**
