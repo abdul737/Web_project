@@ -1,5 +1,5 @@
 <?php
-include "Kid.php";
+include "Student.php";
 /**
  * Created by PhpStorm.
  * User: hamlet

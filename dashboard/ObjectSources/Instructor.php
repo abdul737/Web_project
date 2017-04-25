@@ -6,11 +6,9 @@ class Instructor extends User
 
 
   //constructors
-  public function _construct($userId, $name, $email, $phoneNumber, $password, $birthdate, $lastLogin  = null, $photo = null)
+  public function _construct($userId, $name, $password, $birthdate, $lastLogin  = null, $photo = null, $email = null, $phoneNumber = null)
   {
     parent::_construct($userId, $name, $email, $phoneNumber , $password , $birthdate, $lastLogin , $photo);
-
-
 
   }
 

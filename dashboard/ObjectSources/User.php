@@ -3,20 +3,23 @@ abstract class User {
     //private fields (not any is constant yet)
     private $password;
     private $birthdate;
+    private $createDate;
+    private $lastLogin;
     private $contactDetails;
     //constructor
-    public function _construct($userId, $name, $email, $phoneNumber, $birthdate, $password, $photo)
+    public function _construct($userId, $name, $email, $phoneNumber, $birthdate, $password, $lastLogin, $photo)
     {
         if ($password == null)
             $this->password = $birthdate;
-        else
-            $this->password = $password;
+        $this->password = $password;
         $this->birthdate = $birthdate;
+        $this->lastLogin = $lastLogin;
         $this->contactDetails = new ContactDetail($userId, $name, $phoneNumber, $email, $photo);
         /**
          * We need some algorithm to capture create date of the account...
          * Following method is not good
          */
+        $this->createDate = date("Y.m.d");
     }
     //public setter and getter methods
     /**

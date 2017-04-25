@@ -8,8 +8,8 @@
 
 ////GET is used because phpstorm has issue with POST
 
-require_once("../DatabaseManager/DBManager.php");
-require_once ("register.html");
+require_once("../databaseManager/DBManager.php");
+require_once ("register.htm");
 $name =
 $email =
 $surname =
@@ -22,7 +22,6 @@ function test_input($data) {
     $data = trim($data);
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
-    $data = mysqli_real_escape_string($data);
     return $data;
 }
 
