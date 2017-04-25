@@ -402,7 +402,7 @@
   }
 
   var stopEventPropagation = function (e) {
-    // In particular, make sure the space bar doesn't scroll the main window.
+    // In particular, make sure the space bar doesn't scroll the FrontendHTML&PHPs window.
     if (typeof e.stopPropagation === 'function') {
       e.stopPropagation()
       e.preventDefault()
@@ -662,7 +662,7 @@
       $cancelBtn.style.backgroundColor = params.cancelButtonColor
     }
 
-    // Add buttons custom classes
+    // Add buttons custom ObjectSources
     $confirmBtn.className = swalClasses.confirm
     addClass($confirmBtn, params.confirmButtonClass)
     $cancelBtn.className = swalClasses.cancel

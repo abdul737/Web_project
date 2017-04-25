@@ -7,7 +7,8 @@
  * just after installation.
  */
 
-namespace DatabaseManager;
+namespace databaseManager;
+//include "../ObjectSources/_Parent.php";
 
 use MongoDB\Driver\Exception\ConnectionException;
 
@@ -67,12 +68,12 @@ class DBManager
      * @return array of ContactDetails.
      * P.S. Better search algorithm must be implemented.
      */
-    public static function readContactDetails($name)
+    public static function readUser($name)
     {
         $sql = "SELECT * FROM ContactDetails WHERE name = '$name' ORDER BY ID DESC";
         $result = self::getConnection()->query($sql);
 
-        $contactDetails = array();
+        $users = array();
 
         if ($result->num_rows > 0) {
             //Push all contact details to array
@@ -83,8 +84,8 @@ class DBManager
                 $phoneNumber = $row["phoneNumber"];
                 $email = $row["email"];
 
-                $contactDetail = new _Parent($id, $name, $phoneNumber, $email, $photo);
-                array_push($contactDetails, $contactDetail);
+                $user = new \_Parent($id, $name,  $photo,$email = null,$phoneNumber = null);
+                array_push($users, $user);
 
             }
         }

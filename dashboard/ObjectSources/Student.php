@@ -6,36 +6,37 @@
  * 2) get functions must return $this-><property of the class>
  */
 
-class Kid extends User
+class Student extends User
 {
-  //private fields
-  private $points;
-  private $groups = array();
-  private $parent;
-  private $submittedAssignments = array();
+    //private fields
+    private $totalPoints;
+    private $groups = array();
+    private $parent;
+    private $submittedAssignments = array();
 
-  public function _construct($userId, $name, $email, $phoneNumber, $password, $birthdate,
-                             $createDate, $lastLogin,_Parent $parent, $groups = null ,$points = 0)
-  {
-    parent::_construct($userId, $name, $email, $phoneNumber, $password, $birthdate, $createDate, $lastLogin);
+    public function _construct($userId, $name, $birthdate,$password, $parent, $groups = null ,$points = 0,
+                               $lastLogin = null, $photo = null, $email = null, $phoneNumber = null)
+    {
+        parent::_construct($userId, $name, $email, $phoneNumber,  $birthdate, $password,  $lastLogin , $photo);
 
-    $this->points = $points;
-    $this->parent = $parent;
 
-    if ($groups != null)
-        $this->setGroups($groups);
+        $this->totalPoints = $points;
+        $this->parent = $parent;
 
-  }
+        if ($groups != null)
+            $this->setGroups($groups);
 
-  //public setter and getter methods
-  public function getPoints()
-  {
-    return $this->points;
-  }
-  public function addToPoints($value=0)
-  {
-    $this->points += $value;
-  }
+    }
+
+    //public setter and getter methods
+    public function getTotalPoints()
+    {
+        return $this->totalPoints;
+    }
+    public function addToPoints($value=0)
+    {
+        $this->totalPoints += $value;
+    }
 
     /**
      * @return array

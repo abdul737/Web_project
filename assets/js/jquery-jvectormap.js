@@ -163,11 +163,11 @@
         // No change actually happened, no reason to go any further
         if ( deltaY === 0 && deltaX === 0 ) { return; }
 
-        // Need to convert lines and main to pixels if we aren't already in pixels
+        // Need to convert lines and FrontendHTML&PHPs to pixels if we aren't already in pixels
         // There are three delta modes:
         //   * deltaMode 0 is by pixels, nothing to do
         //   * deltaMode 1 is by lines
-        //   * deltaMode 2 is by main
+        //   * deltaMode 2 is by FrontendHTML&PHPs
         if ( orgEvent.deltaMode === 1 ) {
             var lineHeight = $.data(this, 'mousewheel-line-height');
             delta  *= lineHeight;
@@ -243,7 +243,7 @@
     }
 
 }));/**
- * @namespace jvm Holds core methods and classes used by jVectorMap.
+ * @namespace jvm Holds core methods and ObjectSources used by jVectorMap.
  */
 var jvm = {
 
@@ -3239,7 +3239,7 @@ jvm.Map.apiEvents = {
  * @constructor
  * @param {Object} params Parameters to initialize map with.
  * @param {Number} params.maxLevel Maximum number of levels user can go through
- * @param {Object} params.main Config of the main map. See <a href="./jvm-map/">jvm.Map</a> for more information.
+ * @param {Object} params.FrontendHTML&PHPs Config of the FrontendHTML&PHPs map. See <a href="./jvm-map/">jvm.Map</a> for more information.
  * @param {Function} params.mapNameByCode Function go generate map name by region code. Default value is:
 <pre>
 function(code, multiMap) {
