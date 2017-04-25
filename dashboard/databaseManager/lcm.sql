@@ -247,7 +247,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `fullName` varchar(255) NOT NULL,
   `phoneNumber` varchar(255) NOT NULL,
   `position` varchar(1) NOT NULL,
-  PRIMARY KEY (`position`, `id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
