@@ -37,7 +37,7 @@ abstract class User {
      */
     public function setName($name)
     {
-        $this->contactDetails->name;
+        $this->contactDetails->name = $name;
     }
     /**
      * @return mixed
