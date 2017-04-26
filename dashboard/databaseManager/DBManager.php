@@ -90,7 +90,7 @@ class DBManager
             }
         }
 
-        return $contactDetails;
+        return $users;
     }
 
 

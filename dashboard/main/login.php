@@ -209,7 +209,6 @@ $id = (int)substr($login, 1);
 $userType = $login[0];
 
 $connection = \DatabaseManager\DBManager::getConnection();
-
 $statement = connection::prepare("SELECT * FROM user WHERE id=? AND password=?");
 $statement->bind_params("is", $id, $pwd);
 $statement->execute();
@@ -221,7 +220,10 @@ $result = $statement->get_result();
 
 if ($userType == "i") {
     //for instructor
-    //$curUser = new Instructor();
+
+
+    //$curUser = new Instructor('i');
+
 
 
 
