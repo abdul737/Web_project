@@ -9,7 +9,8 @@
 ////GET is used because phpstorm has issue with POST
 
 require_once(__DIR__."/../databaseManager/DBManager.php");
-require_once ("./register.htm");
+require_once(__DIR__."/../databaseManager/DBConnect.php");
+require_once ("register.htm");
 $name =
 $email =
 $surname =
@@ -17,6 +18,7 @@ $password =
 $phoneNumber = null;
 
 $error = null;
+
 
 function test_input($data) {
     $data = trim($data);
@@ -38,9 +40,11 @@ if (!preg_match("/^[a-zA-Z ]*$/",$name)) {
 
 if(isset($_POST['password'])){
     if($_POST['password'] == $_POST['confirmPassword']){
-            $connection = DatabaseManager\DBConnect::connect();
-            $statement = $connection->prepare("INSERT INTO user (name, surname, password, email, phoneNumber) VALUE (?, ?, ?, ?)");
-            $statement->bind_params("ssss", $name, $surname, $password, $email, $phoneNumber);
+            echo "Good password";
+            $connection = \databaseManager\DBManager::getConnection();
+            echo "Connected";
+            $statement = $connection->prepare("INSERT INTO user (name, surname, password, email, phoneNumber, position) VALUE (?, ?, ?, ?, ?)");
+            $statement->bind_params("ssss", $name, $surname, $password, $email, $phoneNumber, 'p');
 
             $result = mysqli_query($connection, $query);
             if($result){
@@ -62,6 +66,6 @@ if(isset($_POST['password'])){
     }else{
         $error = "Null Password!";
     }
-    throw new ErrorException($error);
+    echo "<h1>$error</h1>";
 
 ?>
