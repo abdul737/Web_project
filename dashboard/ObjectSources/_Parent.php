@@ -14,7 +14,7 @@ class _Parent extends User
   public function _construct($userId, $name,  $birthdate, $password,
                              $lastLogin = null, $photo = null,$email = null, $phoneNumber = null)
   {
-      parent::_construct($userId, $name, $email, $phoneNumber,  $birthdate, $password, $lastLogin, $photo);
+      parent::_construct('p', $userId, $name, $email, $phoneNumber,  $birthdate, $password, $lastLogin, $photo);
       $this->passport = $password;
   }
 }

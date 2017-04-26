@@ -17,7 +17,7 @@ class Student extends User
     public function _construct($userId, $name, $birthdate,$password, $parent, $groups = null ,$points = 0,
                                $lastLogin = null, $photo = null, $email = null, $phoneNumber = null)
     {
-        parent::_construct($userId, $name, $email, $phoneNumber,  $birthdate, $password,  $lastLogin , $photo);
+        parent::_construct('s', $userId, $name, $email, $phoneNumber,  $birthdate, $password,  $lastLogin , $photo);
 
 
         $this->totalPoints = $points;

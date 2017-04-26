@@ -221,6 +221,12 @@ $result = $statement->get_result();
 
 if ($userType == "i") {
     //for instructor
+    //$curUser = new Instructor();
+
+
+
+
+
 } else if ($userType == "s") {
     //for student
 } else if ($userType == "p") {

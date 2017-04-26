@@ -6,11 +6,13 @@ abstract class User {
     private $createDate;
     private $lastLogin;
     private $contactDetails;
+    private $position;
     //constructor
-    public function _construct($userId, $name, $email, $phoneNumber, $birthdate, $password, $lastLogin, $photo)
+    public function _construct($position, $userId, $name, $email, $phoneNumber, $birthdate, $password, $lastLogin, $photo)
     {
         if ($password == null)
             $this->password = $birthdate;
+        $this->position = $position;
         $this->password = $password;
         $this->birthdate = $birthdate;
         $this->lastLogin = $lastLogin;
@@ -21,6 +23,7 @@ abstract class User {
          */
         $this->createDate = date("Y.m.d");
     }
+
     //public setter and getter methods
     /**
      * @return mixed
@@ -35,6 +38,20 @@ abstract class User {
     public function setName($name)
     {
         $this->contactDetails->name;
+    }
+    /**
+     * @return mixed
+     */
+    public function getPosition()
+    {
+        return $this->position;
+    }
+    /**
+     * @param mixed $name
+     */
+    public function setPosition($pos)
+    {
+        $this->position = $pos;
     }
     /**
      * @return mixed
