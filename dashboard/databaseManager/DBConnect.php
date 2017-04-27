@@ -1,15 +1,16 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Abdulbosid
- * Date: 14.04.2017
- * Time: 15:46
+ * User: dfdf
+ * Date: 28.04.2017
+ * Time: 2:38
  */
 
-namespace DatabaseManager;
+namespace databaseManager;
 
 
-use MongoDB\Driver\Exception\ConnectionException;
+namespace MZ\MailChimpBundle\Services;
+use Exception;
 
 class DBConnect
 {
@@ -24,7 +25,7 @@ class DBConnect
             DBConfig::getDBPASSWORD(), DBConfig::getDBNAME());
         if(mysqli_connect_errno())
         {
-            throw new ConnectionException("Connection to MySQL error: ".mysqli_connect_error());
+            throw new \Exception("Connection to MySQL error: ".mysqli_connect_error());
         }
     }
 

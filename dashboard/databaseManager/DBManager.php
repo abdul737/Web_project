@@ -1,16 +1,15 @@
 <?php
-
 /**
- * There must be some mechanism to create a
- * database during installation of the app.
- * All the tables must be there in the database
- * just after installation.
+ * Created by PhpStorm.
+ * User: dfdf
+ * Date: 28.04.2017
+ * Time: 2:37
  */
 
 namespace databaseManager;
-//include "../ObjectSources/_Parent.php";
 
-use MongoDB\Driver\Exception\ConnectionException;
+namespace MZ\MailChimpBundle\Services;
+use Exception;
 
 class DBManager
 {
@@ -20,13 +19,13 @@ class DBManager
     public static function getConnection()
     {
         try{
-            if(DBConnect::$connection == null)
+            if(DBDBConnect::$connection == null)
             {
                 DBConnect::connect();
             }
             return DBConnect::$connection;
 
-        } catch (ConnectionException $err)
+        } catch (Exception $err)
         {
             echo $err->getMessage();
             echo $err->getTrace();

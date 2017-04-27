@@ -8,9 +8,6 @@
 
 ////GET is used because phpstorm has issue with POST
 
-require_once(__DIR__."/../databaseManager/DBManager.php");
-require_once(__DIR__."/../databaseManager/DBConnect.php");
-require_once ("register.htm");
 $name =
 $email =
 $surname =
@@ -18,7 +15,6 @@ $password =
 $phoneNumber = null;
 
 $error = null;
-
 
 function test_input($data) {
     $data = trim($data);
@@ -41,19 +37,20 @@ if (!preg_match("/^[a-zA-Z ]*$/",$name)) {
 if(isset($_POST['password'])){
     if($_POST['password'] == $_POST['confirmPassword']){
             echo "Good password";
-            $connection = \databaseManager\DBManager::getConnection();
+            $connection = \databaseManager\DBManager::getDBHOST();
             echo "Connected";
             $statement = $connection->prepare("INSERT INTO user (name, surname, password, email, phoneNumber, position) VALUE (?, ?, ?, ?, ?)");
             $statement->bind_params("ssss", $name, $surname, $password, $email, $phoneNumber, 'p');
 
-            $result = mysqli_query($connection, $query);
+            $result = mysqli_query($connection, $statement);
             if($result){
                 $parent_id = mysqli_insert_id($connection);
                 $query = sprintf("INSERT INTO parent (id) VALUE (%d)",
                     mysqli_real_escape_decimal($parent_id));
                 $result = mysqli_query($connection, $query);
                 if($result){
-                    echo '<meta http-equiv="refresh" content="0; URL=login.html" />';
+                    header("login.php");
+                    exit;
                 }else{
                     $error = "result Problem";
                 }
@@ -68,4 +65,7 @@ if(isset($_POST['password'])){
     }
     echo "<h1>$error</h1>";
 
+    require_once ("register.htm");
 ?>
+
+

@@ -6,13 +6,13 @@
  * Time: 15:46
  */
 
-namespace DatabaseManager;
+namespace databaseManager;
 
 
 class DBConfig
 {
-    private static $DB_USERNAME = "m_codecraft";
-    private static $DB_PASSWORD = "c0decr@ft";
+    private static $DB_USERNAME = "admin";
+    private static $DB_PASSWORD = "admin";
     private static $DB_NAME = "codecraft_moodle";
     private static $DB_HOST = "127.0.0.1";
 
