@@ -10,6 +10,7 @@ namespace databaseManager;
 
 
 namespace MZ\MailChimpBundle\Services;
+use databaseManager\DBConfig;
 use Exception;
 
 class DBConnect
@@ -21,7 +22,7 @@ class DBConnect
      */
     public static function connect()
     {
-        $connection = mysqli_connect(DBConfig::getDBHOST(), DBConfig::getDBUSERNAME(),
+        $connection = new mysqli(DBConfig::getDBHOST(), DBConfig::getDBUSERNAME(),
             DBConfig::getDBPASSWORD(), DBConfig::getDBNAME());
         if(mysqli_connect_errno())
         {

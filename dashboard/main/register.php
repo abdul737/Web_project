@@ -7,7 +7,7 @@
  */
 
 include "functions.php";
-
+require_once "../databaseManager/DBManager.php";
 
 $name =
 $email =
