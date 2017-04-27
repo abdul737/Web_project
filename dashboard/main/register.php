@@ -6,7 +6,8 @@
  * Time: 9:46 AM
  */
 
-////GET is used because phpstorm has issue with POST
+include "functions.php";
+
 
 $name =
 $email =
@@ -15,20 +16,15 @@ $password =
 $phoneNumber = null;
 
 $error = null;
+$position = "p";
 
-function test_input($data) {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = test_input($_POST["name"]);
-    $email = test_input($_POST["email"]);
-    $surname = test_input($_POST["surname"]);
-    $password = test_input($_POST["password"]);
-    $phoneNumber = test_input($_POST["phoneNumber"]);
+    $name = (string)test_input($_POST["name"]);
+    $email = (string)test_input($_POST["email"]);
+    $surname = (string)test_input($_POST["surname"]);
+    $password = (string)test_input($_POST["password"]);
+    $phoneNumber = (string)test_input($_POST["phoneNumber"]);
 }
 if (!preg_match("/^[a-zA-Z ]*$/",$name)) {
     $nameErr = "Only letters and white space allowed";
@@ -36,20 +32,26 @@ if (!preg_match("/^[a-zA-Z ]*$/",$name)) {
 
 if(isset($_POST['password'])){
     if($_POST['password'] == $_POST['confirmPassword']){
-            echo "Good password";
-            $connection = \databaseManager\DBManager::getConnection();
+            $connection = connect();
             echo "Connected";
-            $statement = $connection->prepare("INSERT INTO user (name, surname, password, email, phoneNumber, position) VALUE (?, ?, ?, ?, ?)");
-            $statement->bind_params("ssss", $name, $surname, $password, $email, $phoneNumber, 'p');
 
-            $result = mysqli_query($connection, $statement);
+            $statement = $connection->prepare('INSERT INTO user (name, surname, password, email, phoneNumber, position) VALUES (?, ?, ?, ?, ?, ?)');
+            if(!$statement){
+                echo "Statement is false";
+            }
+
+            $statement->bind_param("ssssss", $name, $surname, $password, $email, $phoneNumber, $position);
+
+            $result = $statement->execute();
             if($result){
-                $parent_id = mysqli_insert_id($connection);
-                $query = sprintf("INSERT INTO parent (id) VALUE (%d)",
-                    mysqli_real_escape_decimal($parent_id));
-                $result = mysqli_query($connection, $query);
+                echo "Inserted into USER table";
+                $parent_id = $statement->insert_id;
+                $stmt = $connection->prepare('INSERT INTO parent (id) VALUE (?)');
+                $stmt->bind_param("i", $parent_id);
+                $result = $stmt->execute();
                 if($result){
-                    header("login.php");
+                    echo "Inserted into PARENT table";
+                    require_once ("login.php");
                     exit;
                 }else{
                     $error = "result Problem";
@@ -66,6 +68,23 @@ if(isset($_POST['password'])){
     echo "<h1>$error</h1>";
 
     require_once ("register.htm");
+
+
+    function connect(){
+        $DB_USERNAME = "admin";
+        $DB_PASSWORD = "admin";
+        $DB_NAME = "codecraft_moodle";
+        $DB_HOST = "localhost";
+
+        $connection = new mysqli($DB_HOST, $DB_USERNAME,
+            $DB_PASSWORD, $DB_NAME);
+        if(mysqli_connect_errno())
+        {
+            throw new \Exception("Connection to MySQL error: ".mysqli_connect_error());
+        }
+
+        return $connection;
+    }
 ?>
 
 

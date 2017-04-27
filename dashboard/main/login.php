@@ -178,6 +178,8 @@
 
 <?php
 
+include "functions.php";
+
 /**
  * Created by PhpStorm.
  * User: Darkhonbek
@@ -246,13 +248,5 @@ if ($userType == "i") {
 
 $statement->close();
 $connection->mysqli_close();
-
-function test_input($data)
-{
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
-}
 
 ?>
