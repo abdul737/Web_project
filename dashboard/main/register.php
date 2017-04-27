@@ -37,7 +37,7 @@ if (!preg_match("/^[a-zA-Z ]*$/",$name)) {
 if(isset($_POST['password'])){
     if($_POST['password'] == $_POST['confirmPassword']){
             echo "Good password";
-            $connection = \databaseManager\DBManager::getDBHOST();
+            $connection = \databaseManager\DBManager::getConnection();
             echo "Connected";
             $statement = $connection->prepare("INSERT INTO user (name, surname, password, email, phoneNumber, position) VALUE (?, ?, ?, ?, ?)");
             $statement->bind_params("ssss", $name, $surname, $password, $email, $phoneNumber, 'p');
