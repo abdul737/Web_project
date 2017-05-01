@@ -7,7 +7,7 @@
  */
 
 include "functions.php";
-require_once "../databaseManager/DBManager.php";
+require_once "./databaseManager/DBManager.php";
 
 $name =
 $email =
@@ -71,9 +71,9 @@ if(isset($_POST['password'])){
 
 
     function connect(){
-        $DB_USERNAME = "admin";
-        $DB_PASSWORD = "admin";
-        $DB_NAME = "codecraft_moodle";
+        $DB_USERNAME = "root";
+        $DB_PASSWORD = "toor";
+        $DB_NAME = "lcm";
         $DB_HOST = "localhost";
 
         $connection = new mysqli($DB_HOST, $DB_USERNAME,
