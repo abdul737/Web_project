@@ -7,11 +7,9 @@
  */
 
 namespace databaseManager;
-
-
-namespace MZ\MailChimpBundle\Services;
-use databaseManager\DBConfig;
-use Exception;
+require_once "DBConfig.php";
+use \mysqli;
+use \Exception;
 
 class DBConnect
 {
@@ -24,9 +22,8 @@ class DBConnect
     {
         $connection = new mysqli(DBConfig::getDBHOST(), DBConfig::getDBUSERNAME(),
             DBConfig::getDBPASSWORD(), DBConfig::getDBNAME());
-        if(mysqli_connect_errno())
-        {
-            throw new \Exception("Connection to MySQL error: ".mysqli_connect_error());
+        if (mysqli_connect_errno()) {
+            throw new Exception("Connection to MySQL error: " . mysqli_connect_error());
         }
     }
 

@@ -7,90 +7,88 @@
  */
 
 namespace databaseManager;
+require_once "DBConnect.php";
 
-namespace MZ\MailChimpBundle\Services;
-use Exception;
+use \Exception;
 
 class DBManager
 {
-    /**
-     * Establishing connection with databaseManager server
-     */
-    public static function getConnection()
-    {
-        try{
-            if(DBDBConnect::$connection == null)
-            {
-                DBConnect::connect();
-            }
-            return DBConnect::$connection;
-
-        } catch (Exception $err)
+/**
+ * Establishing connection with databaseManager server
+ */
+public static function getConnection()
+{
+    try{
+        if(DBConnect::$connection == null)
         {
-            echo $err->getMessage();
-            echo $err->getTrace();
+            DBConnect::connect();
         }
-    }
+        return DBConnect::$connection;
 
-    /**
-     * @param $name
-     * Search for parent by name
-     */
-    public static function readParents($_name)
+    } catch (Exception $err)
     {
-        $contactDetails = self::readContactDetails($_name);
+        echo $err->getMessage();
+        echo $err->getTrace();
+    }
+}
 
-        //Variables to instantiate a parent
-        $userId = $name = $email = $phoneNumber =  $birthdate = $password =
-        $passportNumber =  $passportDueDate = $passportGetInfo = $lastLogin = $photo = "";
+/**
+ * @param $name
+ * Search for parent by name
+ */
+public static function readParents($_name)
+{
+    $contactDetails = self::readContactDetails($_name);
 
-        $sql = "QUERY MUST BE HERE WHICH ON ";
+    //Variables to instantiate a parent
+    $userId = $name = $email = $phoneNumber =  $birthdate = $password =
+    $passportNumber =  $passportDueDate = $passportGetInfo = $lastLogin = $photo = "";
 
-        foreach ($contactDetails as $contactDetail)
+    $sql = "QUERY MUST BE HERE WHICH ON ";
+
+    foreach ($contactDetails as $contactDetail)
+    {
+        if ($contactDetail->getName() == $_name)
         {
-            if ($contactDetail->getName() == $_name)
-            {
-                $name = $_name;
-                $userId = $contactDetail->getId();
-                $email = $contactDetail->getEmail();
-                $phoneNumber = $contactDetail->getPhoneNumber();
-                $photo = $contactDetail->getPhoto();
-            }
+            $name = $_name;
+            $userId = $contactDetail->getId();
+            $email = $contactDetail->getEmail();
+            $phoneNumber = $contactDetail->getPhoneNumber();
+            $photo = $contactDetail->getPhoto();
         }
-        return;
+    }
+    return;
+}
+
+/**
+ * @param $name
+ * Search for contact details with name $name.
+ * Returns an array of ContactDetails ordered by ID in ascending order.
+ * @return array of ContactDetails.
+ * P.S. Better search algorithm must be implemented.
+ */
+public static function readUser($name)
+{
+    $sql = "SELECT * FROM ContactDetails WHERE name = '$name' ORDER BY ID DESC";
+    $result = self::getConnection()->query($sql);
+
+    $users = array();
+
+    if ($result->num_rows > 0) {
+        //Push all contact details to array
+        while ($row = $result->fetch_assoc()) {
+            $id = $row["id"];
+            $name = $row["name"];
+            $photo = $row["photo"];
+            $phoneNumber = $row["phoneNumber"];
+            $email = $row["email"];
+
+            $user = new \_Parent($id, $name,  $photo,$email = null,$phoneNumber = null);
+            array_push($users, $user);
+
+        }
     }
 
-    /**
-     * @param $name
-     * Search for contact details with name $name.
-     * Returns an array of ContactDetails ordered by ID in ascending order.
-     * @return array of ContactDetails.
-     * P.S. Better search algorithm must be implemented.
-     */
-    public static function readUser($name)
-    {
-        $sql = "SELECT * FROM ContactDetails WHERE name = '$name' ORDER BY ID DESC";
-        $result = self::getConnection()->query($sql);
-
-        $users = array();
-
-        if ($result->num_rows > 0) {
-            //Push all contact details to array
-            while ($row = $result->fetch_assoc()) {
-                $id = $row["id"];
-                $name = $row["name"];
-                $photo = $row["photo"];
-                $phoneNumber = $row["phoneNumber"];
-                $email = $row["email"];
-
-                $user = new \_Parent($id, $name,  $photo,$email = null,$phoneNumber = null);
-                array_push($users, $user);
-
-            }
-        }
-
-        return $users;
-    }
-
-
+    return $users;
+}
 }

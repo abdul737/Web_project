@@ -6,8 +6,7 @@
  * Time: 9:46 AM
  */
 
-include "functions.php";
-require_once "../databaseManager/DBManager.php";
+require_once ("functions.php");
 
 $name =
 $email =
@@ -32,59 +31,44 @@ if (!preg_match("/^[a-zA-Z ]*$/",$name)) {
 
 if(isset($_POST['password'])){
     if($_POST['password'] == $_POST['confirmPassword']){
-            $connection = connect();
-            echo "Connected";
+        $connection = connect();
+        echo "Connected";
 
-            $statement = $connection->prepare('INSERT INTO user (name, surname, password, email, phoneNumber, position) VALUES (?, ?, ?, ?, ?, ?)');
-            if(!$statement){
-                echo "Statement is false";
-            }
-
-            $statement->bind_param("ssssss", $name, $surname, $password, $email, $phoneNumber, $position);
-
-            $result = $statement->execute();
-            if($result){
-                echo "Inserted into USER table";
-                $parent_id = $statement->insert_id;
-                $stmt = $connection->prepare('INSERT INTO parent (id) VALUE (?)');
-                $stmt->bind_param("i", $parent_id);
-                $result = $stmt->execute();
-                if($result){
-                    echo "Inserted into PARENT table";
-                    require_once ("login.php");
-                    exit;
-                }else{
-                    $error = "result Problem";
-                }
-
-            }else {
-                $error = "Error in Insertion";
-            }
-            $statement->close();
+        $statement = $connection->prepare('INSERT INTO user (name, surname, password, email, phoneNumber, position)
+            VALUES (?, ?, ?, ?, ?, ?)');
+        if(!$statement){
+            echo "Statement is false";
         }
-    }else{
-        $error = "Null Password!";
+
+        $statement->bind_param("ssssss", $name, $surname, $password, $email, $phoneNumber, $position);
+
+        $result = $statement->execute();
+        if($result){
+            echo "Inserted into USER table";
+            $parent_id = $statement->insert_id;
+            $stmt = $connection->prepare('INSERT INTO parent (id) VALUE (?)');
+            $stmt->bind_param("i", $parent_id);
+            $result = $stmt->execute();
+            if($result){
+                echo "Inserted into PARENT table";
+                require_once("login.html");
+                exit;
+            }else{
+                echo "result Problem";
+            }
+
+        }else {
+            echo "Error in Insertion";
+        }
+        if($connection != null){
+            $statement->close();
+            $connection->close();
+        }
     }
-    echo "<h1>$error</h1>";
+}
 
     require_once ("register.htm");
 
-
-    function connect(){
-        $DB_USERNAME = "admin";
-        $DB_PASSWORD = "admin";
-        $DB_NAME = "codecraft_moodle";
-        $DB_HOST = "localhost";
-
-        $connection = new mysqli($DB_HOST, $DB_USERNAME,
-            $DB_PASSWORD, $DB_NAME);
-        if(mysqli_connect_errno())
-        {
-            throw new \Exception("Connection to MySQL error: ".mysqli_connect_error());
-        }
-
-        return $connection;
-    }
 ?>
 
 

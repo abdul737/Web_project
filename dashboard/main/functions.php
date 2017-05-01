@@ -13,4 +13,19 @@ function test_input($data) {
     return $data;
 }
 
+function connect(){
+    $DB_USERNAME = "admin";
+    $DB_PASSWORD = "admin";
+    $DB_NAME = "codecraft_moodle";
+    $DB_HOST = "localhost";
+
+    $connection = new mysqli($DB_HOST, $DB_USERNAME,
+        $DB_PASSWORD, $DB_NAME);
+    if(mysqli_connect_errno())
+    {
+        throw new Exception("Connection to MySQL error: ".mysqli_connect_error());
+    }
+
+    return $connection;
+}
 ?>
