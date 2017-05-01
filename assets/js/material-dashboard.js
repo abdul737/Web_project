@@ -37,7 +37,7 @@
 
      if (isWindows && !$('body').hasClass('sidebar-mini')){
         // if we are on windows OS we activate the perfectScrollbar function
-        $('.sidebar .sidebar-wrapper, .FrontendHTML&PHPs-panel').perfectScrollbar();
+        $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
 
         $('html').addClass('perfect-scrollbar-on');
     } else {
@@ -221,7 +221,7 @@ md = {
                 md.misc.sidebar_mini_active = false;
 
                 if(isWindows){
-                    $('.sidebar .sidebar-wrapper, .FrontendHTML&PHPs-panel').perfectScrollbar();
+                    $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar();
                 }
 
             }else{
@@ -231,7 +231,7 @@ md = {
                 });
 
                 if(isWindows){
-                    $('.sidebar .sidebar-wrapper, .FrontendHTML&PHPs-panel').perfectScrollbar('destroy');
+                    $('.sidebar .sidebar-wrapper, .main-panel').perfectScrollbar('destroy');
                 }
 
                 setTimeout(function(){
@@ -334,10 +334,10 @@ md = {
                     }, 430);
 
 
-                    main_panel_height = $('.FrontendHTML&PHPs-panel')[0].scrollHeight;
+                    main_panel_height = $('.main-panel')[0].scrollHeight;
                     $layer = $('<div class="close-layer"></div>');
                     $layer.css('height',main_panel_height + 'px');
-                    $layer.appendTo(".FrontendHTML&PHPs-panel");
+                    $layer.appendTo(".main-panel");
 
                     setTimeout(function(){
                         $layer.addClass('visible');

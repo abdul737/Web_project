@@ -675,7 +675,7 @@
 		/**
 		 * Change the pagination - provides the internal logic for pagination in a simple API
 		 * function. With this function you can have a DataTables table go to the next,
-		 * previous, first or last FrontendHTML&PHPs.
+		 * previous, first or last pages.
 		 *  @param {string|int} mAction Paging action to take: "first", "previous", "next" or "last"
 		 *    or page number to jump to (integer), note that page 0 is the first page.
 		 *  @param {bool} [bRedraw=true] Redraw the table or not
@@ -1061,8 +1061,8 @@
 			// @todo Remove in 1.11
 			if ( oInit.bJQueryUI )
 			{
-				/* Use the JUI ObjectSources object for display. You could clone the oStdClasses object if
-				 * you want to have multiple tables with multiple independent ObjectSources
+				/* Use the JUI classes object for display. You could clone the oStdClasses object if
+				 * you want to have multiple tables with multiple independent classes
 				 */
 				$.extend( oClasses, DataTable.ext.oJUIClasses, oInit.oClasses );
 
@@ -1139,7 +1139,7 @@
 				];
 			}
 
-			/* Remove row stripe ObjectSources if they are already on the table row */
+			/* Remove row stripe classes if they are already on the table row */
 			var stripeClasses = oSettings.asStripeClasses;
 			var rowOne = $this.children('tbody').find('tr').eq(0);
 			if ( $.inArray( true, $.map( stripeClasses, function(el, i) {
@@ -1243,8 +1243,8 @@
 				}
 			}
 
-			/* Do a first pass on the sorting ObjectSources (allows any size changes to be taken into
-			 * account, and also will apply sorting disabled ObjectSources if disabled
+			/* Do a first pass on the sorting classes (allows any size changes to be taken into
+			 * account, and also will apply sorting disabled classes if disabled
 			 */
 			_fnSortingClasses( oSettings );
 
@@ -1775,7 +1775,7 @@
 
 
 	/**
-	 * Provide backwards compatibility for the FrontendHTML&PHPs DT options. Note that the new
+	 * Provide backwards compatibility for the main DT options. Note that the new
 	 * options are mapped onto the old parameters, so this is an external interface
 	 * change only.
 	 *  @param {object} init Object to map
@@ -1975,7 +1975,7 @@
 		var searchCols = oSettings.aoPreSearchCols;
 		searchCols[ iCol ] = $.extend( {}, DataTable.models.oSearch, searchCols[ iCol ] );
 
-		// Use the default column options function to initialise ObjectSources etc
+		// Use the default column options function to initialise classes etc
 		_fnColumnOptions( oSettings, iCol, $(nTh).data() );
 	}
 
@@ -3154,7 +3154,7 @@
 			}
 
 			if ( data.DT_RowClass ) {
-				// Remove any ObjectSources added by DT_RowClass before
+				// Remove any classes added by DT_RowClass before
 				var a = data.DT_RowClass.split(' ');
 				row.__rowc = row.__rowc ?
 					_unique( row.__rowc.concat( a ) ) :
@@ -3231,7 +3231,7 @@
 		/* ARIA role for the rows */
 	 	$(thead).find('>tr').attr('role', 'row');
 
-		/* Deal with the footer - add ObjectSources if required */
+		/* Deal with the footer - add classes if required */
 		$(thead).find('>tr>th, >tr>td').addClass( classes.sHeaderTH );
 		$(tfoot).find('>tr>th, >tr>td').addClass( classes.sFooterTH );
 
@@ -3435,7 +3435,7 @@
 
 				var nRow = aoData.nTr;
 
-				/* Remove the old striping ObjectSources and then add the new one */
+				/* Remove the old striping classes and then add the new one */
 				if ( iStripes !== 0 )
 				{
 					var sStripe = asStripeClasses[ iRowCount % iStripes ];
@@ -5544,7 +5544,7 @@
 			// node in the data, assign any user defined widths, then insert it into
 			// the DOM and allow the browser to do all the hard work of calculating
 			// table widths
-			var tmpTable = $(table).clone() // don't use cloneNode - IE8 will remove events on the FrontendHTML&PHPs table
+			var tmpTable = $(table).clone() // don't use cloneNode - IE8 will remove events on the main table
 				.css( 'visibility', 'hidden' )
 				.removeAttr( 'id' );
 
@@ -6184,7 +6184,7 @@
 
 
 	/**
-	 * Set the sorting ObjectSources on table's body, Note: it is safe to call this function
+	 * Set the sorting classes on table's body, Note: it is safe to call this function
 	 * when bSort and bSortClasses are false
 	 *  @param {object} oSettings dataTables settings object
 	 *  @memberof DataTable#oApi
@@ -6198,7 +6198,7 @@
 		var i, ien, colIdx;
 
 		if ( features.bSort && features.bSortClasses ) {
-			// Remove old sorting ObjectSources
+			// Remove old sorting classes
 			for ( i=0, ien=oldSort.length ; i<ien ; i++ ) {
 				colIdx = oldSort[i].src;
 
@@ -7440,7 +7440,7 @@
 	 *
 	 * @return {object} Object with the following properties set:
 	 *  * `page` - Current page index (zero based - i.e. the first page is `0`)
-	 *  * `FrontendHTML&PHPs` - Total number of FrontendHTML&PHPs
+	 *  * `pages` - Total number of pages
 	 *  * `start` - Display index for the first record shown on the current page
 	 *  * `end` - Display index for the last record shown on the current page
 	 *  * `length` - Display length (number of records). Note that generally `start
@@ -9278,7 +9278,7 @@
 			jqTbody.children().detach();
 			jqTbody.append( rows );
 
-			// Remove the DataTables generated nodes, events and ObjectSources
+			// Remove the DataTables generated nodes, events and classes
 			var removedMethod = remove ? 'remove' : 'detach';
 			jqTable[ removedMethod ]();
 			jqWrapper[ removedMethod ]();
@@ -9294,9 +9294,9 @@
 					.css( 'width', settings.sDestroyWidth )
 					.removeClass( classes.sTable );
 
-				// If the were originally stripe ObjectSources - then we add them back here.
+				// If the were originally stripe classes - then we add them back here.
 				// Note this is not fool proof (for example if not all rows had stripe
-				// ObjectSources - but it's a good effort without getting carried away
+				// classes - but it's a good effort without getting carried away
 				ien = settings.asDestroyStripes.length;
 
 				if ( ien ) {
@@ -10166,7 +10166,7 @@
 
 
 		/**
-		 * An array of CSS ObjectSources that should be applied to displayed rows. This
+		 * An array of CSS classes that should be applied to displayed rows. This
 		 * array may be of any length, and DataTables will apply each class
 		 * sequentially, looping when required.
 		 *  @type array
@@ -10523,10 +10523,10 @@
 
 
 		/**
-		 * Enable or disable the addition of the ObjectSources `sorting\_1`, `sorting\_2` and
+		 * Enable or disable the addition of the classes `sorting\_1`, `sorting\_2` and
 		 * `sorting\_3` to the columns which are currently being sorted on. This is
 		 * presented as a feature switch as it can increase processing time (while
-		 * ObjectSources are removed and added) so for large data sets you might want to
+		 * classes are removed and added) so for large data sets you might want to
 		 * turn this off.
 		 *  @type boolean
 		 *  @default true
@@ -10572,7 +10572,7 @@
 		/**
 		 * This function is called when a TR element is created (and all TD child
 		 * elements have been inserted), or registered if using a DOM source, allowing
-		 * manipulation of the TR element (adding ObjectSources etc).
+		 * manipulation of the TR element (adding classes etc).
 		 *  @type function
 		 *  @param {node} row "TR" element for the current row
 		 *  @param {array} data Raw data array for this row
@@ -11177,7 +11177,7 @@
 
 		/**
 		 * Classes that DataTables assigns to the various components and features
-		 * that it adds to the HTML table. This allows ObjectSources to be configured
+		 * that it adds to the HTML table. This allows classes to be configured
 		 * during initialisation in addition to through the static
 		 * {@link DataTable.ext.oStdClasses} object).
 		 *  @namespace
@@ -11383,7 +11383,7 @@
 			 * * `\_TOTAL\_` - Number of records in the table after filtering
 			 * * `\_MAX\_` - Number of records in the table without filtering
 			 * * `\_PAGE\_` - Current page number
-			 * * `\_PAGES\_` - Total number of FrontendHTML&PHPs of data in the table
+			 * * `\_PAGES\_` - Total number of pages of data in the table
 			 *
 			 *  @type string
 			 *  @default Showing _START_ to _END_ of _TOTAL_ entries
@@ -11786,8 +11786,8 @@
 		 *     </li>
 		 *     <li>The following constants are allowed:
 		 *       <ul>
-		 *         <li>'H' - jQueryUI theme "header" ObjectSources ('fg-toolbar ui-widget-header ui-corner-tl ui-corner-tr ui-helper-clearfix')</li>
-		 *         <li>'F' - jQueryUI theme "footer" ObjectSources ('fg-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix')</li>
+		 *         <li>'H' - jQueryUI theme "header" classes ('fg-toolbar ui-widget-header ui-corner-tl ui-corner-tr ui-helper-clearfix')</li>
+		 *         <li>'F' - jQueryUI theme "footer" classes ('fg-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix')</li>
 		 *       </ul>
 		 *     </li>
 		 *     <li>The following syntax is expected:
@@ -13224,7 +13224,7 @@
 		"asStripeClasses": null,
 
 		/**
-		 * If restoring a table - we should restore its striping ObjectSources as well
+		 * If restoring a table - we should restore its striping classes as well
 		 *  @type array
 		 *  @default []
 		 */
@@ -13320,7 +13320,7 @@
 		"sTableId": "",
 
 		/**
-		 * The TABLE node for the FrontendHTML&PHPs table
+		 * The TABLE node for the main table
 		 *  @type node
 		 *  @default null
 		 */
@@ -13606,7 +13606,7 @@
 		"_iRecordsDisplay": 0,
 
 		/**
-		 * Flag to indicate if jQuery UI marking and ObjectSources should be used.
+		 * Flag to indicate if jQuery UI marking and classes should be used.
 		 * Note that this parameter will be set by the initialisation routine. To
 		 * set a default use {@link DataTable.defaults}.
 		 *  @type boolean
@@ -13614,7 +13614,7 @@
 		"bJUI": null,
 
 		/**
-		 * The ObjectSources to use for the table
+		 * The classes to use for the table
 		 *  @type object
 		 *  @default {}
 		 */
@@ -13906,7 +13906,7 @@
 		 * * {boolean} Include the row in the searched result set (true) or not
 		 *   (false)
 		 *
-		 * Note that as with the FrontendHTML&PHPs search ability in DataTables, technically this
+		 * Note that as with the main search ability in DataTables, technically this
 		 * is "filtering", since it is subtractive. However, for consistency in
 		 * naming we call it searching here.
 		 *
@@ -14021,7 +14021,7 @@
 		 * The functions defined take two parameters:
 		 *
 		 * 1. `{int} page` The current page index
-		 * 2. `{int} FrontendHTML&PHPs` The number of FrontendHTML&PHPs in the table
+		 * 2. `{int} pages` The number of pages in the table
 		 *
 		 * Each function is expected to return an array where each element of the
 		 * array can be one of:
@@ -14045,7 +14045,7 @@
 		 *
 		 *  @example
 		 *    // Show previous, next and current page buttons only
-		 *    $.fn.dataTableExt.oPagination.current = function ( page, FrontendHTML&PHPs ) {
+		 *    $.fn.dataTableExt.oPagination.current = function ( page, pages ) {
 		 *      return [ 'previous', page, 'next' ];
 		 *    };
 		 */
@@ -14335,7 +14335,7 @@
 		"sPageButtonActive": "current",
 		"sPageButtonDisabled": "disabled",
 
-		/* Striping ObjectSources */
+		/* Striping classes */
 		"sStripeOdd": "odd",
 		"sStripeEven": "even",
 

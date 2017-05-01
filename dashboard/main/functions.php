@@ -14,8 +14,8 @@ function test_input($data) {
 }
 
 function connect(){
-    $DB_USERNAME = "admin";
-    $DB_PASSWORD = "admin";
+    $DB_USERNAME = "m_codecraft";
+    $DB_PASSWORD = "c0decr@ft";
     $DB_NAME = "codecraft_moodle";
     $DB_HOST = "localhost";
 
