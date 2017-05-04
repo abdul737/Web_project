@@ -17,35 +17,46 @@ if(isset($_POST)){
     $pwd = test_input($_POST["password"]);
 
     if (!empty($login) && !empty($pwd)) {
+        //gets only the number value of the login (ignores first character)
+        $id = (int)substr($login, 1);
 
-    } else {
-        echo "Login or [password is not written";
-    }
+        //gets the user type (first character)
+        $userType = $login[0];
 
-    //gets only the number value of the login (ignores first character)
-    $id = (int)substr($login, 1);
+        $connection = connect();
+        $statement = connection::prepare("SELECT * FROM user WHERE id=?");
+        $statement->bind_params("i", $id);
+        if($statement->execute()){
+            if($statement->num_rows == 1)
+            {
+                $result = $statement->get_result();
 
-    //gets the user type (first character)
-    $userType = $login[0];
+                if ($userType == "i") {
+                    //for instructor
+                } else if ($userType == "s") {
+                    //for student
+                } else if ($userType == "p") {
+                    //for parent
+                } else if ($userType == "a") {
+                    //for admin
+                } else {
+                    //error
+                }
+            }
+            else if ($statement->num_rows > 1)
+            {
+                throw new ErrorException("Wrong number of results from query");
+            }
+            else
+            {
 
-    $connection = connect();
-    $statement = connection::prepare("SELECT * FROM user WHERE id=?");
-    $statement->bind_params("i", $id);
-    if($statement->execute()){
-        $result = $statement->get_result();
-        
-        if ($userType == "i") {
-            //for instructor
-        } else if ($userType == "s") {
-            //for student
-        } else if ($userType == "p") {
-            //for parent
-        } else if ($userType == "a") {
-            //for admin
-        } else {
-            //error
+            }
         }
+    } else {
+        echo "Login or password is not written";
     }
+
+
 }
 
 require_once ("login.html");
