@@ -9,10 +9,10 @@
 require_once ("functions.php");
 
 $login = $pwd = "";
-$id;
-$userType;
+$id = null;
+$userType = null;
 
-if(isset($_POST)){
+if($_SERVER["REQUEST_METHOD"] == "POST"){
     $login = test_input($_POST["login"]);
     $pwd = test_input($_POST["password"]);
 
@@ -29,7 +29,7 @@ if(isset($_POST)){
     $userType = $login[0];
 
     $connection = connect();
-    $statement = connection::prepare("SELECT * FROM user WHERE id=?");
+    $statement = $connection->prepare("SELECT * FROM user WHERE id=?");
     $statement->bind_params("i", $id);
     if($statement->execute()){
         $result = $statement->get_result();
