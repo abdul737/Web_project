@@ -5,17 +5,18 @@
  *
  */
 
+require_once ("User.php");
+
 class _Parent extends User
 {
   private $passport;
 
   //constructors
 
-  public function _construct($userId, $name,  $birthdate, $password,
-                             $lastLogin = null, $photo = null,$email = null, $phoneNumber = null)
+  public function _construct($userId, $name, $surname, $password, $email, $phoneNumber)
   {
-      parent::_construct('p', $userId, $name, $email, $phoneNumber,  $birthdate, $password, $lastLogin, $photo);
-      $this->passport = $password;
+      parent::_construct('p', $userId, $name, $surname, $email, $phoneNumber, $password);
+      $this->passport = null;
   }
 }
 ?>

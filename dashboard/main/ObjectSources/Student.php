@@ -8,84 +8,81 @@
 
 class Student extends User
 {
-    //private fields
+    private $birthdate;
     private $totalPoints;
     private $groups = array();
     private $parent;
     private $submittedAssignments = array();
 
-    public function _construct($userId, $name, $birthdate,$password, $parent, $groups = null ,$points = 0,
-                               $lastLogin = null, $photo = null, $email = null, $phoneNumber = null)
+    public function _construct($userId, $name, $surname, $birthdate, $password, $parent, $email = null, $phoneNumber = null)
     {
-        parent::_construct('s', $userId, $name, $email, $phoneNumber,  $birthdate, $password,  $lastLogin , $photo);
-
-
-        $this->totalPoints = $points;
+        parent::_construct('s', $userId, $name, $surname, $email, $phoneNumber, $password);
         $this->parent = $parent;
-
-        if ($groups != null)
-            $this->setGroups($groups);
-
+        $this->setGroups(null);
+        $this->setBirthdate($birthdate);
     }
 
-    //public setter and getter methods
     public function getTotalPoints()
     {
         return $this->totalPoints;
     }
-    public function addToPoints($value=0)
+
+    public function addToPoints($value)
     {
-        $this->totalPoints += $value;
+        if($value > 0)
+            $this->totalPoints += $value;
     }
 
-    /**
-     * @return array
-     */
     public function getGroups()
     {
         return $this->groups;
     }
 
-    /**
-     * @param array $groups
-     */
     public function setGroups($groups)
     {
         $this->groups = $groups;
     }
 
-    /**
-     * @return mixed
-     */
+    public function addGroup($group){
+        throw new Exception("not done yet");
+    }
+
+    public function deleteGroup($group){
+        throw new Exception("not done yet");
+    }
+
     public function getParent()
     {
         return $this->parent;
     }
 
-    /**
-     * @param mixed $parent
-     */
     public function setParent(_Parent $parent)
     {
         $this->parent = $parent;
     }
 
-    /**
-     * @return array
-     */
     public function getSubmittedAssignments()
     {
         return $this->submittedAssignments;
     }
 
-    /**
-     * @param array $submittedAssignments
-     */
     public function setSubmittedAssignments($submittedAssignments)
     {
         $this->submittedAssignments = $submittedAssignments;
     }
 
+    public function addSubmittedAssignment($submittedAssignment){
+        throw new Exception("not done yet");
+    }
 
+    public function getBirthdate()
+    {
+        return $this->birthdate;
+    }
+
+    public function setBirthdate($birthdate)
+    {
+        $this->birthdate = $birthdate;
+    }
 }
 ?>

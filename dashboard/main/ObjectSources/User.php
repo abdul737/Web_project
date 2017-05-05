@@ -1,141 +1,74 @@
 <?php
+
 abstract class User {
-    //private fields (not any is constant yet)
     private $password;
-    private $birthdate;
-    private $createDate;
-    private $lastLogin;
-    private $contactDetails;
     private $position;
+    private $contactDetails;
+
     //constructor
-    public function _construct($position, $userId, $name, $email, $phoneNumber, $birthdate, $password, $lastLogin, $photo)
+    public function _construct($position, $userId, $name, $surname, $email, $phoneNumber, $password)
     {
-        if ($password == null)
-            $this->password = $birthdate;
         $this->position = $position;
         $this->password = $password;
-        $this->birthdate = $birthdate;
-        $this->lastLogin = $lastLogin;
-        $this->contactDetails = new ContactDetail($userId, $name, $phoneNumber, $email, $photo);
-        /**
-         * We need some algorithm to capture create date of the account...
-         * Following method is not good
-         */
-        $this->createDate = date("Y.m.d");
+        $this->contactDetails = new ContactDetail($userId, $name, $surname, $phoneNumber, $email, null);
     }
 
-    //public setter and getter methods
-    /**
-     * @return mixed
-     */
+    public function getSurname(){
+        return $this->contactDetails->getSurname();
+    }
+
+    public function setSurname($surname){
+        $this->contactDetails->setSurname($surname);
+    }
+
     public function getName()
     {
         return $this->contactDetails->name;
     }
-    /**
-     * @param mixed $name
-     */
+
     public function setName($name)
     {
         $this->contactDetails->name = $name;
     }
-    /**
-     * @return mixed
-     */
+
     public function getPosition()
     {
         return $this->position;
     }
-    /**
-     * @param mixed $name
-     */
+
     public function setPosition($pos)
     {
         $this->position = $pos;
     }
-    /**
-     * @return mixed
-     */
+
     public function getEmail()
     {
         return $this->contactDetails->email;
     }
-    /**
-     * @param mixed $email
-     */
+
     public function setEmail($email)
     {
         $this->contactDetails->email = $email;
     }
-    /**
-     * @return mixed
-     */
+
     public function getPhoneNumber()
     {
         return $this->contactDetails->phoneNumber;
     }
-    /**
-     * @param mixed $phoneNumber
-     */
+
     public function setPhoneNumber($phoneNumber)
     {
         $this->contactDetails->phoneNumber = $phoneNumber;
     }
-    /**
-     * @return mixed
-     */
+
     public function getPassword()
     {
         return $this->contactDetails->password;
     }
-    /**
-     * @param mixed $password
-     */
+
     public function setPassword($password)
     {
         $this->password = $password;
-    }
-    /**
-     * @return mixed
-     */
-    public function getBirthdate()
-    {
-        return $this->birthdate;
-    }
-    /**
-     * @param mixed $birthdate
-     */
-    public function setBirthdate($birthdate)
-    {
-        $this->birthdate = $birthdate;
-    }
-    /**
-     * @return mixed
-     */
-    public function getCreateDate()
-    {
-        return $this->createDate;
-    }
-    /**
-     * @param mixed $createDate
-     */
-    public function setCreateDate($createDate)
-    {
-        $this->createDate = $createDate;
-    }
-    /**
-     * @return mixed
-     */
-    public function getLastLogin()
-    {
-        return $this->lastLogin;
-    }
-    /**
-     * @param mixed $lastLogin
-     */
-    public function setLastLogin($lastLogin)
-    {
-        $this->lastLogin = $lastLogin;
     }
 }
 ?>
