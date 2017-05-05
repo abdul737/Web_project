@@ -69,7 +69,7 @@ public static function readParents($_name)
  */
 public static function readUser($name)
 {
-    $sql = "SELECT * FROM ContactDetails WHERE name = '$name' ORDER BY ID DESC";
+    $sql = "SELECT * FROM User WHERE name = '$name' ORDER BY ID DESC";
     $result = self::getConnection()->query($sql);
 
     $users = array();
@@ -91,4 +91,69 @@ public static function readUser($name)
 
     return $users;
 }
+
+public static function insertUser(\User $user, $position)
+{
+    $name = $user->getName();
+    $birthdate = $user->getBirthdate();
+    $password = $user->getBirthdate();
+
+    $lastLogin = "";
+    $photo = $user->getPhoto();
+    $email = $user->getEmail();
+    $phoneNumber = $user->getPhoneNumber();
+
+    $connection = connect();
+    echo "Connected";
+
+    $statement = $connection->prepare('INSERT INTO user (name, surname, password, email, phoneNumber, position)
+            VALUES (?, ?, ?, ?, ?, ?)');
+    if(!$statement){
+        echo "Statement is false";
+    }
+
+    $statement->bind_param("ssssss", $name, $surname, $password, $email, $phoneNumber, $position);
+
+    $result = $statement->execute();
+    if($result){
+        echo "Inserted into USER table";
+        $parent_id = $statement->insert_id;
+        $stmt = $connection->prepare('INSERT INTO parent (id) VALUE (?)');
+        $stmt->bind_param("i", $parent_id);
+        $result = $stmt->execute();
+        if($result){
+            echo "Inserted into PARENT table";
+            require_once("login.html");
+            exit;
+        }else{
+            echo "result Problem";
+        }
+
+    }else {
+        echo "Error in Insertion";
+    }
+    if($connection != null){
+        $statement->close();
+        $connection->close();
+    }
+}
+
+public static function insertKid(\Student $kid)
+{
+    $name = $kid->getName();
+    $birthdate = $kid->getBirthdate();
+    $password = $kid->getBirthdate();
+    $groups = $kid->getGroups();
+    $points = $kid->getTotalPoints();
+    $parent = $kid->getParent();
+    $lastLogin = "";
+    $photo = $kid->getPhoto();
+    $email = $kid->getEmail();
+    $phoneNumber = $kid->getPhoneNumber();
+
+
+
+
+}
+
 }

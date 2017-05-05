@@ -4,6 +4,7 @@ abstract class User {
     //private fields (not any is constant yet)
     private $id;
     private $name;
+    private $surname;
     private $photo;
     private $phoneNumber;
     private $email;
@@ -14,13 +15,14 @@ abstract class User {
     private $lastLogin;
     private $position;
     //constructor
-    public function _construct($position, $userId, $name, $email, $phoneNumber, $birthdate, $password, $lastLogin, $photo=null)
+    public function _construct($position, $userId, $name,$surname, $email, $phoneNumber, $birthdate, $password, $lastLogin, $photo=null)
     {
         $this->setId($userId);
         $this->setEmail($email);
         $this->setName($name);
         $this->setPhoneNumber($phoneNumber);
         $this->setPhoto($photo);
+        $this->setSurname($surname);
 
         if ($password == null)
             $this->password = $birthdate;
@@ -172,5 +174,22 @@ abstract class User {
     {
         return $this->email;
     }
+
+    /**
+     * @param mixed $surname
+     */
+    public function setSurname($surname)
+    {
+        $this->surname = $surname;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSurname()
+    {
+        return $this->surname;
+    }
+
 }
 ?>

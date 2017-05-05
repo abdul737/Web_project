@@ -1,3 +1,13 @@
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+     $name = $birthdate = $password =  $groups = "";
+     $points = 0;
+     $parent = null;
+     $lastLogin = $photo = $email = $phoneNumber = null;
+
+}
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -169,7 +179,7 @@
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
                         <div class="card">
-                            <form id="RangeValidation" class="form-horizontal" action="#" method="#">
+                            <form id="RangeValidation" class="form-horizontal" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="get">
                                 <div class="card-header card-header-text" data-background-color="blue">
                                     <i class="material-icons">add</i>
                                 </div>
