@@ -44,6 +44,7 @@ if (isset($parent))
             $courseId = $_POST["selectCourse"];
             $query = "SELECT * FROM group WHERE courseId=?";
             $statement = $connection->prepare($query);
+            $statement->bind_param("i", $_POST["selectCourse"]);
             if ($result = $statement->execute())
             {
                 while($tempObject = $result->fetch_object())//object fetches only id of the student
