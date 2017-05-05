@@ -2,7 +2,13 @@
 
 require_once ("functions.php");
 require_once ("ObjectSources/_Parent.php");
+require_once ("ObjectSources/Student.php");
+require_once ("ObjectSources/Group.php");
+require_once ("ObjectSources/Course.php");
 use \_Parent;
+use \Student;
+use \Group;
+use \Course;
 
 
 if(isset($_POST["login"])){
@@ -63,19 +69,65 @@ function getParent($id, $password){
     }
     $statement->close();
 
-    $children = array();
+    $students = array();
     $statement = $connection->prepare('SELECT studentID FROM customer WHERE parentID = ?');
     $statement->bind_param("i", $id);
     $statement->execute();
-    $child_id = null;
-    $statement->bind_result($child_id);
+    $student_id = null;
+    $statement->bind_result($student_id);
     while($statement->fetch()){
-        echo "<p>$child_id</p>";
-        $child = getParentChild($child_id);
-        array_push($children, $child);
+        echo "<p>$student_id</p>";
+        $student = getParentChild($student_id);
+        array_push($students, $student);
     }
 }
 
-function getParentChild($id){
+function getParentChild($id, $parent){
+    $student = null;
+    $connection = connect();
+    $statement = $connection->prepare('SELECT name, surname FROM user WHERE id = ?');
+    $statement->bind_param("i", $id);
+    $statement->execute();
+    $name = null;
+    $surname = null;
+    $statement->bind_result($name, $surname);
+    if($statement->fetch()){
+        $student = new Student($id, $name, $surname, $parent);
+    }else{
+        error_log("login.php: not found in USER table");
+        return;
+    }
+    $statement->close();
 
+    $statement = $connection->prepare('SELECT groupID FROM attendingStudent WHERE studentID = ?');
+    $statement->bind_param("i", $id);
+    $statement->execute();
+    $groupID = null;
+    $statement->bind_result($groupID);
+    $stmt = $connection->prepare('SELECT courseID FROM group WHERE id = ?');
+    $stmt->bind_param("i", $gID);
+    $st = $connection->prepare('SELECt title FROM course WHERE id = ?');
+    $st->bind_param("i", $cID);
+    while($statement->fetch()){
+        $gID = $groupID;
+        $stmt->execute();
+        $courseID = null;
+        $stmt->bind_result($courseID);
+        if(!$stmt->fetch()){
+            error_log("login.php: error in select from GROUP table");
+            continue;
+        }
+        $cID = $courseID;
+        $st->execute();
+        $courseTitle = null;
+        $st->bind_result($courseTitle);
+        if($st->fetch()){
+            $course = new Course($courseID, $courseTitle, 0);
+            $group = new Group($groupID, $course, null, null);
+            $student->addGroup($group);
+        }
+    }
+    $st->close();
+    $stmt->close();
+    $statement->close();
 }
