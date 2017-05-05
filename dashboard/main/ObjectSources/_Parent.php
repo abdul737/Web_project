@@ -5,6 +5,8 @@
  *
  */
 
+require "User.php";
+
 class _Parent extends User
 {
   private $passport;

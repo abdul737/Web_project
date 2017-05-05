@@ -1,4 +1,5 @@
 <?php
+
 abstract class User {
     //private fields (not any is constant yet)
     private $id;

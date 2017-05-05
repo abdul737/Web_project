@@ -1,5 +1,8 @@
 <?php
 
+include "./ObjectSources/_Parent.php";
+include "functions.php";
+
 $parent = new _Parent();
 
 if (isset($parent))
@@ -8,18 +11,18 @@ if (isset($parent))
     $countStudents = 0;
     $connection = connect();
 
-    $query = "SELECT studentID FROM customer WHERE parentID=?";
-    $query = "SELECT * FROM user WHERE id=?";
-    $statement = $connection->prepare($query);
-    $statement2 = $connection->prepare($query2);
-
-    $statement->bind_param("i", $parent->getId());
-    if ($statement->execute())
+    $query = "SELECT studentID FROM customer WHERE parentID=$parent->getId()";
+    if ($result = $connection->query($query))
     {
-        $result = $statement->get_result();
-        while($id = $result->fetch_field())
+        while($tempStudent = $result->fetch_object())//object fetches only id of the student
         {
-            $statement->bind_param("i", $id);
+            $query2 = "SELECT * FROM user WHERE id=$tempStudent->studentID";
+            if ($result2 = $connection->query($query2))
+            {
+                $tempStudent2 = $result2->fetch_object(); //fetches all attributes of student
+                array_push($students, new Student($tempStudent->studentID, $tempStudent2->fullName, null, null));
+                $countStudents++;
+            }
         }
     }
 
@@ -215,9 +218,9 @@ if (isset($parent))
                                                 <select class="selectpicker" data-style="select-with-transition" title="Single Select" data-size="7">
                                                     <option disabled selected>Choose student</option>
                                                     <?php
-                                                        for($i = 0; $i < $sudents; $i++)
+                                                        for($i = 0; $i < count($students); $i++)
                                                         {
-                                                            echo "<option value='$id'>$name</option>";
+                                                            echo "<option value='$id'>$students[$i]->getName()</option>";
                                                         }
                                                     ?>
                                                 </select>
