@@ -30,6 +30,8 @@ function check($login, $password){
 
     if($userType == 'p')
         getParent($id, $password);
+    else if($userType == 'a')
+        getAdmin($id, )
 }
 
 function getParent($id, $password){
@@ -77,14 +79,13 @@ function getParent($id, $password){
     $statement->bind_result($student_id);
     while($statement->fetch()){
         echo "<p>$student_id</p>";
-        $student = getParentChild($student_id);
+        $student = getParentChild($connection, $student_id, $parent);
         array_push($students, $student);
     }
 }
 
-function getParentChild($id, $parent){
+function getParentChild($connection, $id, $parent){
     $student = null;
-    $connection = connect();
     $statement = $connection->prepare('SELECT name, surname FROM user WHERE id = ?');
     $statement->bind_param("i", $id);
     $statement->execute();
