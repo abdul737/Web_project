@@ -33,7 +33,7 @@ if(isset($_POST)){
     $statement->bind_params("i", $id);
     if($statement->execute()){
         $result = $statement->get_result();
-        
+
         if ($userType == "i") {
             //for instructor
         } else if ($userType == "s") {
