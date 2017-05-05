@@ -4,9 +4,9 @@ class Admin extends User
 
 
     //constructor
-    public function _construct($userId, $name,  $birthdate, $password , $lastLogin = null, $photo = null, $email = null, $phoneNumber = null)
+    public function _construct($userId, $name,$surname,  $birthdate, $password , $lastLogin = null, $photo = null, $email = null, $phoneNumber = null)
     {
-        parent::_construct($userId, $name, $email, $phoneNumber,  $birthdate, $password,  $lastLogin , $photo);
+        parent::_construct($userId, $name,$surname, $email, $phoneNumber,  $birthdate, $password,  $lastLogin , $photo);
     }
 
 

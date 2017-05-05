@@ -12,12 +12,16 @@ class Group
     private $startTime;
     private $kids = array();            //Array of kids
     private $id;
+    private $courseId;
     private $instructor = array();
     private $assignment = array();
+    private $days; //for example Monday/Wednesday/Friday
 
-    public function _construct($id , $venue, $startTime, $kids = null)
+
+    public function _construct($id, $courseId, $venue, $startTime, $kids = null)
     {
         $this->setId($id);
+        $this->setCourseId($courseId);
         $this->setStartTime($startTime);
         $this->setVenue($venue);
 
@@ -142,6 +146,38 @@ class Group
             throw new OutOfBoundsException();
 
         return $this->kids[$index];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDays()
+    {
+        return $this->days;
+    }
+
+    /**
+     * @param mixed $days
+     */
+    public function setDays($days)
+    {
+        $this->days = $days;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCourseId()
+    {
+        return $this->courseId;
+    }
+
+    /**
+     * @param mixed $courseId
+     */
+    public function setCourseId($courseId)
+    {
+        $this->courseId = $courseId;
     }
 
     /**
