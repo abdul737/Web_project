@@ -14,10 +14,10 @@ class Student extends User
     private $parent;
     private $submittedAssignments = array();
 
-    public function _construct($userId, $name, $birthdate,$password, $parent, $groups = null ,$points = 0,
+    public function _construct($userId, $name,$surname, $birthdate,$password, $parent, $groups = null ,$points = 0,
                                $lastLogin = null, $photo = null, $email = null, $phoneNumber = null)
     {
-        parent::_construct('s', $userId, $name, $email, $phoneNumber,  $birthdate, $password,  $lastLogin , $photo);
+        parent::_construct('s', $userId, $name,$surname, $email, $phoneNumber,  $birthdate, $password,  $lastLogin , $photo);
 
 
         $this->totalPoints = $points;
