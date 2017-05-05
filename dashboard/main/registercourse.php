@@ -1,3 +1,37 @@
+<?php
+
+$parent = new _Parent();
+
+if (isset($parent))
+{
+    $students = array();
+    $countStudents = 0;
+    $connection = connect();
+
+    $query = "SELECT studentID FROM customer WHERE parentID=?";
+    $query = "SELECT * FROM user WHERE id=?";
+    $statement = $connection->prepare($query);
+    $statement2 = $connection->prepare($query2);
+
+    $statement->bind_param("i", $parent->getId());
+    if ($statement->execute())
+    {
+        $result = $statement->get_result();
+        while($id = $result->fetch_field())
+        {
+        }
+    }
+
+
+    if($_SERVER["REQUEST_METHOD"] == "POST")
+    {
+
+    }
+}
+
+
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -178,9 +212,13 @@
                                         <label class="col-md-2 label-on-left">Choose your kid</label>
                                             <div class="col-md-9">
                                                 <select class="selectpicker" data-style="select-with-transition" title="Single Select" data-size="7">
-                                                    <option disabled selected>Choose kid</option>
-                                                    <option value="2">Adiba Alimova</option>
-                                                    <option value="3">Sardor Alimov</option>
+                                                    <option disabled selected>Choose student</option>
+                                                    <?php
+                                                        for($i = 0; $i < $sudents; $i++)
+                                                        {
+                                                            echo "<option value='$id'>$name</option>";
+                                                        }
+                                                    ?>
                                                 </select>
                                             </div>
                                     </div>

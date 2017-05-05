@@ -1,6 +1,12 @@
 <?php
 abstract class User {
     //private fields (not any is constant yet)
+    private $id;
+    private $name;
+    private $photo;
+    private $phoneNumber;
+    private $email;
+
     private $password;
     private $birthdate;
     private $createDate;
@@ -8,8 +14,14 @@ abstract class User {
     private $contactDetails;
     private $position;
     //constructor
-    public function _construct($position, $userId, $name, $email, $phoneNumber, $birthdate, $password, $lastLogin, $photo)
+    public function _construct($position, $userId, $name, $email, $phoneNumber, $birthdate, $password, $lastLogin, $photo=null)
     {
+        $this->setId($userId);
+        $this->setEmail($email);
+        $this->setName($name);
+        $this->setPhoneNumber($phoneNumber);
+        $this->setPhoto($photo);
+
         if ($password == null)
             $this->password = $birthdate;
         $this->position = $position;
@@ -25,23 +37,6 @@ abstract class User {
     }
 
     //public setter and getter methods
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
-        return $this->contactDetails->name;
-    }
-    /**
-     * @param mixed $name
-     */
-    public function setName($name)
-    {
-        $this->contactDetails->name = $name;
-    }
-    /**
-     * @return mixed
-     */
     public function getPosition()
     {
         return $this->position;
@@ -53,37 +48,7 @@ abstract class User {
     {
         $this->position = $pos;
     }
-    /**
-     * @return mixed
-     */
-    public function getEmail()
-    {
-        return $this->contactDetails->email;
-    }
-    /**
-     * @param mixed $email
-     */
-    public function setEmail($email)
-    {
-        $this->contactDetails->email = $email;
-    }
-    /**
-     * @return mixed
-     */
-    public function getPhoneNumber()
-    {
-        return $this->contactDetails->phoneNumber;
-    }
-    /**
-     * @param mixed $phoneNumber
-     */
-    public function setPhoneNumber($phoneNumber)
-    {
-        $this->contactDetails->phoneNumber = $phoneNumber;
-    }
-    /**
-     * @return mixed
-     */
+
     public function getPassword()
     {
         return $this->contactDetails->password;
@@ -136,6 +101,77 @@ abstract class User {
     public function setLastLogin($lastLogin)
     {
         $this->lastLogin = $lastLogin;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+    /**
+     * @return mixed
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+    /**
+     * @param mixed $photo
+     */
+    public function setPhoto($photo)
+    {
+        $this->photo = $photo;
+    }
+    /**
+     * @return mixed
+     */
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
+    }
+    /**
+     * @param mixed $phoneNumber
+     */
+    public function setPhoneNumber($phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
+    }
+    /**
+     * @param mixed $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+    /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->email;
     }
 }
 ?>
