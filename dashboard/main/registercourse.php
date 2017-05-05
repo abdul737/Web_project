@@ -8,7 +8,10 @@ $parent = new _Parent();
 if (isset($parent))
 {
     $students = array();
+    $courses = array();
+    $groups = array();
     $countStudents = 0;
+
     $connection = connect();
 
     $query = "SELECT studentID FROM customer WHERE parentID=$parent->getId()";
@@ -25,11 +28,30 @@ if (isset($parent))
             }
         }
     }
-
+    $query = "SELECT * FROM course";
+    if ($result = $connection->query($query))
+    {
+        while($tempObject = $result->fetch_object())//object fetches only id of the student
+        {
+            array_push($courses, new Course($tempObject->id, $tempObject->title, $tempObject->length));
+        }
+    }
 
     if($_SERVER["REQUEST_METHOD"] == "POST")
     {
-
+        if (isset($_POST["selectCourse"]))
+        {
+            $courseId = $_POST["selectCourse"];
+            $query = "SELECT * FROM group WHERE courseId=?";
+            $statement = $connection->prepare($query);
+            if ($result = $statement->execute())
+            {
+                while($tempObject = $result->fetch_object())//object fetches only id of the student
+                {
+                    array_push($groups, new Group($tempObject->id, $tempObject->courseID, $tempObject->venue, $tempObject->startingTime));
+                }
+            }
+        }
     }
 }
 
@@ -207,7 +229,7 @@ if (isset($parent))
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
                         <div class="card">
-                            <form id="RangeValidation" class="form-horizontal" action="#" method="#">
+                            <form id="RangeValidation" class="form-horizontal" action="#" method="post">
                                 <div class="card-header card-header-text" data-background-color="blue">
                                     <i class="material-icons">add</i>
                                 </div>
@@ -215,7 +237,7 @@ if (isset($parent))
                                     <div class="row">
                                         <label class="col-md-2 label-on-left">Choose your kid</label>
                                             <div class="col-md-9">
-                                                <select class="selectpicker" data-style="select-with-transition" title="Single Select" data-size="7">
+                                                <select name="selectStudent" class="selectpicker" data-style="select-with-transition" title="Single Select" data-size="7">
                                                     <option disabled selected>Choose student</option>
                                                     <?php
                                                         for($i = 0; $i < count($students); $i++)
@@ -229,20 +251,28 @@ if (isset($parent))
                                     <div class="row">
                                         <label class="col-md-2 label-on-left">Choose the course</label>
                                         <div class="col-md-9">
-                                            <select class="selectpicker" data-style="select-with-transition" title="Single Select" data-size="7">
+                                            <select name="selectCourse" onchange="change()" class="selectpicker" data-style="select-with-transition" title="Single Select" data-size="7">
                                                 <option disabled selected>Choose course</option>
-                                                <option value="2">Math</option>
-                                                <option value="3">English</option>
+                                                <?php
+                                                for($i = 0; $i < count($courses); $i++)
+                                                {
+                                                    echo "<option value='$id'>$courses[$i]->getTitle()</option>";
+                                                }
+                                                ?>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-md-2 label-on-left">Choose the time</label>
+                                        <label class="col-md-2 label-on-left">Choose the group</label>
                                         <div class="col-md-9">
-                                            <select class="selectpicker" data-style="select-with-transition" title="Single Select" data-size="7">
-                                                <option disabled selected>Choose time</option>
-                                                <option value="2">Monday/Wednesday/Friday</option>
-                                                <option value="3">Tuesday/Thursday/Saturday</option>
+                                            <select name="selectGroup" class="selectpicker" data-style="select-with-transition" title="Single Select" data-size="7">
+                                                <option disabled selected>Choose group</option>
+                                                <?php
+                                                for($i = 0; $i < count($groups); $i++)
+                                                {
+                                                    echo "<option value='$id'>$groups[$i]->getDays()</option>";
+                                                }
+                                                ?>
                                             </select>
                                         </div>
                                     </div>
@@ -310,5 +340,10 @@ if (isset($parent))
 <script src="../../assets/js/material-dashboard.js"></script>
 <script src="../../assets/js/main.js"></script>
 
+<script>
+    function change(){
+        document.getElementById("RangeValidation").submit();
+    }
+</script>
 
 </html>
