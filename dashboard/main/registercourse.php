@@ -19,6 +19,7 @@ if (isset($parent))
         $result = $statement->get_result();
         while($id = $result->fetch_field())
         {
+            $statement->bind_param("i", $id);
         }
     }
 

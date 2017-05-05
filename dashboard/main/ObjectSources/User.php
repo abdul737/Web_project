@@ -11,7 +11,6 @@ abstract class User {
     private $birthdate;
     private $createDate;
     private $lastLogin;
-    private $contactDetails;
     private $position;
     //constructor
     public function _construct($position, $userId, $name, $email, $phoneNumber, $birthdate, $password, $lastLogin, $photo=null)
@@ -28,7 +27,6 @@ abstract class User {
         $this->password = $password;
         $this->birthdate = $birthdate;
         $this->lastLogin = $lastLogin;
-        $this->contactDetails = new ContactDetail($userId, $name, $phoneNumber, $email, $photo);
         /**
          * We need some algorithm to capture create date of the account...
          * Following method is not good
@@ -51,7 +49,7 @@ abstract class User {
 
     public function getPassword()
     {
-        return $this->contactDetails->password;
+        return $this->password;
     }
     /**
      * @param mixed $password
