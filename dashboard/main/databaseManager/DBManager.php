@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dfdf
- * Date: 28.04.2017
- * Time: 2:37
- */
 
 namespace databaseManager;
 require_once "DBConnect.php";
