@@ -6,15 +6,17 @@
  * 2) get functions must return $this-><property of the class>
  */
 
+include_once "User.php";
+
 class Student extends User
 {
     private $birthdate;
     private $totalPoints;
     private $groups = array();
-    private $parent;
+    private $parent ;
     private $submittedAssignments = array();
 
-    public function __construct($userId, $name, $surname, $parent, $password = null, $birthdate = null, $email = null, $phoneNumber = null)
+    public function __construct($userId, $name, $surname, \_Parent $parent, $password = null, $birthdate = null, $email = null, $phoneNumber = null, $totalPoints = 0)
     {
         parent::__construct($userId, $name, $surname, $email, $phoneNumber, $password);
         $this->parent = $parent;

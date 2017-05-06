@@ -1,20 +1,27 @@
 <?php
 
 include "./ObjectSources/_Parent.php";
+include "./ObjectSources/Student.php";
 include "functions.php";
 
-$parent = new _Parent();
+$parent = new _Parent(2, "Abdulbosid", "Khamidov", "abd", "abd@abd", "911");
 
 if (isset($parent))
 {
     $students = array();
     $courses = array();
-    $groups = array();
-    $countStudents = 0;
+
+    $temp = new Student(7, "Sardor", "Islomov", $parent);
+    array_push($students, $temp);
+    $temp = new Student(8, "Muhammad", "Islomov", $parent);
+    array_push($students, $temp);
+    $temp = new Student(9, "Sarvar", "Islomov", $parent);
+    array_push($students, $temp);
 
     $connection = connect();
 
     $query = "SELECT studentID FROM customer WHERE parentID=$parent->getId()";
+    echo $parent->getContactDetails()->getId();
     if ($result = $connection->query($query))
     {
         while($tempStudent = $result->fetch_object())//object fetches only id of the student
@@ -34,24 +41,6 @@ if (isset($parent))
         while($tempObject = $result->fetch_object())//object fetches only id of the student
         {
             array_push($courses, new Course($tempObject->id, $tempObject->title, $tempObject->length));
-        }
-    }
-
-    if($_SERVER["REQUEST_METHOD"] == "POST")
-    {
-        if (isset($_POST["selectCourse"]))
-        {
-            $courseId = $_POST["selectCourse"];
-            $query = "SELECT * FROM group WHERE courseId=?";
-            $statement = $connection->prepare($query);
-            $statement->bind_param("i", $_POST["selectCourse"]);
-            if ($result = $statement->execute())
-            {
-                while($tempObject = $result->fetch_object())//object fetches only id of the student
-                {
-                    array_push($groups, new Group($tempObject->id, $tempObject->courseID, $tempObject->venue, $tempObject->startingTime));
-                }
-            }
         }
     }
 }
@@ -143,7 +132,7 @@ if (isset($parent))
                     </a>
                 </li>
                 <li>
-                    <a href="../dashboard.html">
+                    <a href="./dashboard.html">
                         <i class="material-icons">account_circle</i>
                         <p>Track kid performance</p>
                     </a>
@@ -243,7 +232,9 @@ if (isset($parent))
                                                     <?php
                                                         for($i = 0; $i < count($students); $i++)
                                                         {
-                                                            echo "<option value='$id'>$students[$i]->getName()</option>";
+                                                            $id = $students[$i]->getId();
+                                                            $name = $students[$i]->$students[$i]->getName();
+                                                            echo "<option value='$id'>$name</option>";
                                                         }
                                                     ?>
                                                 </select>
@@ -264,16 +255,13 @@ if (isset($parent))
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-md-2 label-on-left">Choose the group</label>
+                                        <label class="col-md-2 label-on-left">Choose the time</label>
                                         <div class="col-md-9">
                                             <select name="selectGroup" class="selectpicker" data-style="select-with-transition" title="Single Select" data-size="7">
-                                                <option disabled selected>Choose group</option>
-                                                <?php
-                                                for($i = 0; $i < count($groups); $i++)
-                                                {
-                                                    echo "<option value='$id'>$groups[$i]->getDays()</option>";
-                                                }
-                                                ?>
+                                                <option disabled selected>Choose time</option>
+                                                <option value="0">Doesn't matter</option>
+                                                <option value="1">Monday/Wednesday/Friday</option>
+                                                <option value="2">Tuesday/Thursday/Saturday</option>
                                             </select>
                                         </div>
                                     </div>
@@ -340,11 +328,5 @@ if (isset($parent))
 <!-- Material Dashboard javascript methods -->
 <script src="../../assets/js/material-dashboard.js"></script>
 <script src="../../assets/js/main.js"></script>
-
-<script>
-    function change(){
-        document.getElementById("RangeValidation").submit();
-    }
-</script>
 
 </html>

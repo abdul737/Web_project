@@ -6,13 +6,14 @@ use \ContactDetail;
 class User {
     private $id;
     private $password;
-    private $contactDetails;
+    private $contactDetails = null;
+    private $photo;
 
-    public function __construct($userId, $name, $surname, $password, $email, $phoneNumber)
+    //constructor
+    public function __construct($userId, $name, $surname, $email, $phoneNumber, $password)
     {
         $this->password = $password;
-        $this->contactDetails = new ContactDetail($userId, $name, $surname, $phoneNumber, $email, $photo = null);
-        echo "<h1> constructor called </h1>>";
+        $this->contactDetails = new ContactDetail($userId, $name, $surname, $phoneNumber, $email, null);
     }
 
     public function getSurname(){
@@ -71,6 +72,25 @@ class User {
     public function setId($id)
     {
         $this->id = $id;
+    }
+    public function getContactDetails()
+    {
+        return $this->contactDetails;
+    }
+
+    public function setContactDetails($contactDetails)
+    {
+        $this->contactDetails = $contactDetails;
+    }
+
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto($photo)
+    {
+        $this->photo = $photo;
     }
 }
 ?>

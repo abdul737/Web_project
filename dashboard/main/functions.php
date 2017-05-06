@@ -19,11 +19,10 @@ function connect(){
     $DB_NAME = "lcm";
     $DB_HOST = "localhost";
 
-    $connection = new mysqli($DB_HOST, $DB_USERNAME,
-        $DB_PASSWORD, $DB_NAME);
+    $connection = new mysqli($DB_HOST, $DB_USERNAME, $DB_PASSWORD, $DB_NAME);
     if(mysqli_connect_errno())
     {
-        throw new Exception("Connection to MySQL error: ".mysqli_connect_error());
+        //throw new Exception("Connection to MySQL error: ".mysqli_connect_error());
     }
 
     return $connection;

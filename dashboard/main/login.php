@@ -41,7 +41,7 @@ function getParent($id, $password){
         ///
         ///
         /// In the future it should
-        ///
+        /// really?
         ///
         return;
     }

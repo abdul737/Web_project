@@ -74,7 +74,7 @@
                                 </span>
                                         <div class="form-group label-floating">
                                             <label class="control-label">Login</label>
-                                            <input name="login" id="check" data-minlength="6" type="text" required class="form-control">
+                                            <input title="login" name="login" id="check" data-minlength="6" type="text" required class="form-control">
                                         </div>
                                     </div>
                                     <div class="input-group">
@@ -83,7 +83,7 @@
                                 </span>
                                         <div class="form-group label-floating">
                                             <label class="control-label">Password</label>
-                                            <input name="password" type="password" required
+                                            <input title="password" name="password" type="password" required
                                                    class="form-control">
                                         </div>
                                     </div>
@@ -167,8 +167,7 @@
         setTimeout(function () {
             // after 1000 ms we add the class animated to the login/register card
             $('.card').removeClass('card-hidden');
-        }, 700)
-        main.checkFullPageBackgroundImage();
+        }, 700);
         if(!($('#check').value.length >= 6)){
             $('button[type="submit"]').prop('disabled', true);
         }
@@ -179,7 +178,7 @@
                 $('button[type="submit"]').prop('disabled', true);
             }
         });
-
+        main.checkFullPageBackgroundImage();
     });
 </script>
 
