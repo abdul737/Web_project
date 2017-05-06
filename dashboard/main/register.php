@@ -32,33 +32,32 @@ if (!preg_match("/^[a-zA-Z ]*$/",$name)) {
 if(isset($_POST['password'])){
     if($_POST['password'] == $_POST['confirmPassword']){
         $connection = connect();
-        echo "Connected";
-
         $statement = $connection->prepare('INSERT INTO user (name, surname, password, email, phoneNumber, position)
             VALUES (?, ?, ?, ?, ?, ?)');
         if(!$statement){
-            echo "Statement is false";
+            error_log("reg.php: error with the prepared statement");
+            return;
         }
 
         $statement->bind_param("ssssss", $name, $surname, $password, $email, $phoneNumber, $position);
 
         $result = $statement->execute();
         if($result){
-            echo "Inserted into USER table";
+            error_log("reg.php: inserted into USER table");
             $parent_id = $statement->insert_id;
             $stmt = $connection->prepare('INSERT INTO parent (id) VALUE (?)');
             $stmt->bind_param("i", $parent_id);
             $result = $stmt->execute();
             if($result){
-                echo "Inserted into PARENT table";
+                error_log("reg.php: inserted into PARENT table");
+                echo "<script>alert('Your ID is $parent_id\nYou should use it as login')</script>";
                 require_once("login.html");
                 exit;
             }else{
-                echo "result Problem";
+                error_log("reg.php: not inserted into PARENT table");
             }
-
         }else {
-            echo "Error in Insertion";
+            error_log("reg.php: not inserted into USER table");
         }
         if($connection != null){
             $statement->close();

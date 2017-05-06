@@ -8,20 +8,20 @@ include "Student.php";
  */
 class Group
 {
+    private $id;
     private $venue;
     private $startTime;
     private $kids = array();            //Array of kids
-    private $id;
-    private $courseId;
+    private $course;
     private $instructor = array();
     private $assignment = array();
     private $days; //for example Monday/Wednesday/Friday
 
 
-    public function _construct($id, $courseId, $venue, $startTime, $kids = null)
+    public function _construct($id, $course, $venue, $startTime, $kids = null)
     {
         $this->setId($id);
-        $this->setCourseId($courseId);
+        $this->setCourseId($course);
         $this->setStartTime($startTime);
         $this->setVenue($venue);
 
@@ -167,7 +167,7 @@ class Group
     /**
      * @return mixed
      */
-    public function getCourseId()
+    public function getCourse()
     {
         return $this->courseId;
     }
@@ -175,9 +175,9 @@ class Group
     /**
      * @param mixed $courseId
      */
-    public function setCourseId($courseId)
+    public function setCourse($course)
     {
-        $this->courseId = $courseId;
+        $this->courseId = $course;
     }
 
     /**
