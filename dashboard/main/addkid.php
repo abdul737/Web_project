@@ -4,7 +4,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
      $points = 0;
      $parent = null;
      $lastLogin = $photo = $email = $phoneNumber = null;
-
+     $test = new User();
+     $test2 = $test->getPhoneNumber();
 }
 ?>
 
