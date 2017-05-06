@@ -62,7 +62,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">z
-                        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                        <form method="POST" action='<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>'>
                             <div class="card card-login card-hidden">
                                 <div class="card-header text-center" data-background-color="blue">
                                     <h4 class="card-title">Login</h4>
@@ -165,8 +165,9 @@
 <script type="text/javascript">
     $().ready(function () {
         main.checkFullPageBackgroundImage();
-
-        $('button[type="submit"]').prop('disabled', true);
+        if(!($('#check').value.length === 6)){
+            $('button[type="submit"]').prop('disabled', true);
+        }
         $('#check').on('input', function() {
             if(this.value.length === 6) {
                 $('button[type="submit"]').prop('disabled', false);

@@ -21,9 +21,6 @@ if(isset($_POST["login"])){
         check($login, $pwd);
    }
 }
-
-require_once ("login.html");
-
 function check($login, $password){
     $id = (int)substr($login, 1);
     $userType = $login[0];
@@ -31,7 +28,7 @@ function check($login, $password){
     if($userType == 'p')
         getParent($id, $password);
     else if($userType == 'a')
-        getAdmin($id, )
+        getAdmin($id, $password);
 }
 
 function getParent($id, $password){
@@ -132,3 +129,4 @@ function getParentChild($connection, $id, $parent){
     $stmt->close();
     $statement->close();
 }
+?>
