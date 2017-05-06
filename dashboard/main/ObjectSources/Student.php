@@ -16,7 +16,7 @@ class Student extends User
 
     public function _construct($userId, $name, $surname, $parent, $password = null, $birthdate = null, $email = null, $phoneNumber = null)
     {
-        parent::_construct('s', $userId, $name, $surname, $email, $phoneNumber, $password);
+        parent::_construct($userId, $name, $surname, $email, $phoneNumber, $password);
         $this->parent = $parent;
         $this->setGroups(null);
         $this->setBirthdate($birthdate);

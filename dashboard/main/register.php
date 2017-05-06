@@ -5,20 +5,16 @@
  * Date: 4/24/17
  * Time: 9:46 AM
  */
-
 require_once ("functions.php");
-
 $name =
 $email =
 $surname =
 $password =
 $phoneNumber = null;
-
 $error = null;
 $position = "p";
 
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['password'])) {
     $name = (string)test_input($_POST["name"]);
     $email = (string)test_input($_POST["email"]);
     $surname = (string)test_input($_POST["surname"]);
@@ -28,7 +24,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 if (!preg_match("/^[a-zA-Z ]*$/",$name)) {
     $nameErr = "Only letters and white space allowed";
 }
-
 if(isset($_POST['password'])){
     if($_POST['password'] == $_POST['confirmPassword']){
         $connection = connect();
@@ -38,9 +33,7 @@ if(isset($_POST['password'])){
             error_log("reg.php: error with the prepared statement");
             return;
         }
-
         $statement->bind_param("ssssss", $name, $surname, $password, $email, $phoneNumber, $position);
-
         $result = $statement->execute();
         if($result){
             error_log("reg.php: inserted into USER table");
@@ -50,8 +43,8 @@ if(isset($_POST['password'])){
             $result = $stmt->execute();
             if($result){
                 error_log("reg.php: inserted into PARENT table");
-                echo "<script>alert('Your ID is $parent_id\nYou should use it as login')</script>";
-                require_once("login.html");
+                echo "<script>alert('Your ID is $parent_id. You should use it as login')</script>";
+                require_once("login.php");
                 exit;
             }else{
                 error_log("reg.php: not inserted into PARENT table");
@@ -63,11 +56,9 @@ if(isset($_POST['password'])){
             $statement->close();
             $connection->close();
         }
+    }else{
+        echo "<script>alert('Passwords does not match')</script>";
     }
 }
-
-    require_once ("register.htm");
-
+require_once ("register.htm");
 ?>
-
-

@@ -5,33 +5,22 @@
  * Date: 4/10/17
  * Time: 11:16 AM
  */
+
 class ContactDetail
 {
-    private $id;
     private $name;
     private $surname;
     private $photo;
     private $phoneNumber;
     private $email;
 
-    public function _construct($id, $name, $surname, $phoneNumber, $email , $photo)
+    public function _construct($name, $surname, $phoneNumber, $email , $photo)
     {
-        $this->setId($id);
         $this->setEmail($email);
         $this->setName($name);
         $this->setSurname($surname);
         $this->setPhoneNumber($phoneNumber);
         $this->setPhoto($photo);
-    }
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function setId($id)
-    {
-        $this->id = $id;
     }
 
     public function getName()

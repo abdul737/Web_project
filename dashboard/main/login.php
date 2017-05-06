@@ -1,26 +1,18 @@
 <?php
-
 require_once ("functions.php");
 require_once ("ObjectSources/_Parent.php");
-require_once ("ObjectSources/Student.php");
-require_once ("ObjectSources/Group.php");
-require_once ("ObjectSources/Course.php");
+
 use \_Parent;
-use \Student;
-use \Group;
-use \Course;
-
-
 if(isset($_POST["login"])){
     $login = (string)test_input($_POST["login"]);
     $pwd = (string)test_input($_POST["password"]);
-
-   if (empty($login) && empty($pwd)) {
+    if (empty($login) && empty($pwd)) {
         echo "<script>alert('Login or password not written')</script>";
-   } else {
+    } else {
         check($login, $pwd);
-   }
+    }
 }
+
 function check($login, $password){
     $id = (int)substr($login, 1);
     $userType = $login[0];
@@ -104,7 +96,7 @@ function getParentChild($connection, $id, $parent){
     $statement->bind_result($groupID);
     $stmt = $connection->prepare('SELECT courseID FROM group WHERE id = ?');
     $stmt->bind_param("i", $gID);
-    $st = $connection->prepare('SELECt title FROM course WHERE id = ?');
+    $st = $connection->prepare('SELECT title FROM course WHERE id = ?');
     $st->bind_param("i", $cID);
     while($statement->fetch()){
         $gID = $groupID;
@@ -129,4 +121,5 @@ function getParentChild($connection, $id, $parent){
     $stmt->close();
     $statement->close();
 }
-?>
+
+require_once ("login.html");

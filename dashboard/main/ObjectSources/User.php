@@ -1,16 +1,18 @@
 <?php
 
-abstract class User {
+require_once ("ContactDetail.php");
+use \ContactDetail;
+
+class User {
+    private $id;
     private $password;
-    private $position;
     private $contactDetails;
 
-    //constructor
-    public function _construct($position, $userId, $name, $surname, $email, $phoneNumber, $password)
+    public function _construct($userId, $name, $surname, $password, $email, $phoneNumber)
     {
-        $this->position = $position;
         $this->password = $password;
         $this->contactDetails = new ContactDetail($userId, $name, $surname, $phoneNumber, $email, null);
+        echo "constructor called";
     }
 
     public function getSurname(){
@@ -23,22 +25,12 @@ abstract class User {
 
     public function getName()
     {
-        return $this->contactDetails->name;
+        return $this->contactDetails->getName();
     }
 
     public function setName($name)
     {
         $this->contactDetails->name = $name;
-    }
-
-    public function getPosition()
-    {
-        return $this->position;
-    }
-
-    public function setPosition($pos)
-    {
-        $this->position = $pos;
     }
 
     public function getEmail()
@@ -69,6 +61,16 @@ abstract class User {
     public function setPassword($password)
     {
         $this->password = $password;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 }
 ?>
