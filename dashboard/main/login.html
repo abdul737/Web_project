@@ -61,7 +61,7 @@
         <div class="content">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">z
+                    <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
                         <form method="POST" action='<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>'>
                             <div class="card card-login card-hidden">
                                 <div class="card-header text-center" data-background-color="blue">
@@ -74,7 +74,7 @@
                                 </span>
                                         <div class="form-group label-floating">
                                             <label class="control-label">Login</label>
-                                            <input name="login" id="check" data-minlength="6" maxlength="6" type="text" required class="form-control">
+                                            <input title="login" name="login" id="check" data-minlength="6" type="text" required class="form-control">
                                         </div>
                                     </div>
                                     <div class="input-group">
@@ -83,7 +83,7 @@
                                 </span>
                                         <div class="form-group label-floating">
                                             <label class="control-label">Password</label>
-                                            <input name="password" type="password" required
+                                            <input title="password" name="password" type="password" required
                                                    class="form-control">
                                         </div>
                                     </div>
@@ -164,21 +164,21 @@
 <script src="../../assets/js/main.js"></script>
 <script type="text/javascript">
     $().ready(function () {
-        main.checkFullPageBackgroundImage();
-        if(!($('#check').value.length === 6)){
+        setTimeout(function () {
+            // after 1000 ms we add the class animated to the login/register card
+            $('.card').removeClass('card-hidden');
+        }, 700);
+        if(!($('#check').value.length >= 6)){
             $('button[type="submit"]').prop('disabled', true);
         }
         $('#check').on('input', function() {
-            if(this.value.length === 6) {
+            if(this.value.length >= 6) {
                 $('button[type="submit"]').prop('disabled', false);
             } else {
                 $('button[type="submit"]').prop('disabled', true);
             }
         });
-        setTimeout(function () {
-            // after 1000 ms we add the class animated to the login/register card
-            $('.card').removeClass('card-hidden');
-        }, 700)
+        main.checkFullPageBackgroundImage();
     });
 </script>
 

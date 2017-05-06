@@ -13,18 +13,17 @@ use \Exception;
 
 class DBConnect
 {
-    public static $connection;
+    private static $connection = null;
 
-    /**
-     * @throws ConnectionException
-     */
-    public static function connect()
+    public static function getConnection()
     {
-        $connection = new mysqli(DBConfig::getDBHOST(), DBConfig::getDBUSERNAME(),
-            DBConfig::getDBPASSWORD(), DBConfig::getDBNAME());
-        if (mysqli_connect_errno()) {
-            throw new Exception("Connection to MySQL error: " . mysqli_connect_error());
+        if(self::$connection == null){
+            self::$connection = new mysqli(DBConfig::getDBHOST(), DBConfig::getDBUSERNAME(), DBConfig::getDBPASSWORD(), DBConfig::getDBNAME());
+            if (mysqli_connect_errno()) {
+                throw new Exception("Connection to MySQL error: " . mysqli_connect_error());
+            }
         }
+        return self::$connection;
     }
 
     public static function closeConnection()

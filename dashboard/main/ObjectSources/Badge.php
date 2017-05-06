@@ -14,7 +14,7 @@ class Badge
 
 
 
-    public function _construct($icon, $title, $info)
+    public function __construct($icon, $title, $info)
     {
         $this->setInfo($info);
         $this->setTitle($title);

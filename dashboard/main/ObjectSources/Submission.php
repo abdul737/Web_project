@@ -11,10 +11,10 @@ class Submission extends Homework
   private $grade;
   private $isGood;
 
-  public function _construct($hwId, $instructorId, $kidId, $title, $content, $attachment, $startTime, $endTime, $courseId,
+  public function __construct($hwId, $instructorId, $kidId, $title, $content, $attachment, $startTime, $endTime, $courseId,
     $submitFile, $answerTitle, $answer, $isSubmitted, $submitTime, $isChecked, $grade, $isGood)
   {
-    parent::_parent($hwId, $instructorId, $kidId, $title, $content, $attachment, $startTime, $endTime, $courseId);
+    parent::__construct($hwId, $instructorId, $kidId, $title, $content, $attachment, $startTime, $endTime, $courseId);
     $this->submitFile = $submitFile;
     $this->answerTitle = $answerTitle;
     $this->answer = $answer;

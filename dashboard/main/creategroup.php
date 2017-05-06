@@ -146,10 +146,9 @@
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
                         <div class="card">
-                            <form class="form-horizontal" action="#" method="#">
+                            <form class="form-horizontal" action="#" method="post">
                                 <div class="card-header card-header-text" data-background-color="blue">
                                     <i class="material-icons">add</i>
-                                    <p>Create group</p>
                                 </div>
                                 <div class="card-content">
                                     <div class="row">

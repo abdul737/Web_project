@@ -1,14 +1,17 @@
 <?php
 
-abstract class User {
+require_once ("ContactDetail.php");
+use \ContactDetail;
+
+class User {
+    private $id;
     private $password;
-    private $position;
-    private $contactDetails;
+    private $contactDetails = null;
+    private $photo;
 
     //constructor
-    public function _construct($position, $userId, $name, $surname, $email, $phoneNumber, $password)
+    public function __construct($userId, $name, $surname, $email, $phoneNumber, $password)
     {
-        $this->position = $position;
         $this->password = $password;
         $this->contactDetails = new ContactDetail($userId, $name, $surname, $phoneNumber, $email, null);
     }
@@ -23,52 +26,71 @@ abstract class User {
 
     public function getName()
     {
-        return $this->contactDetails->name;
+        return $this->contactDetails->getName();
     }
 
     public function setName($name)
     {
-        $this->contactDetails->name = $name;
-    }
-
-    public function getPosition()
-    {
-        return $this->position;
-    }
-
-    public function setPosition($pos)
-    {
-        $this->position = $pos;
+        $this->contactDetails->setName($name);
     }
 
     public function getEmail()
     {
-        return $this->contactDetails->email;
+        return $this->contactDetails->getEmail();
     }
 
     public function setEmail($email)
     {
-        $this->contactDetails->email = $email;
+        $this->contactDetails->setEmail($email);
     }
 
     public function getPhoneNumber()
     {
-        return $this->contactDetails->phoneNumber;
+        return $this->contactDetails->getPhoneNumber();
     }
 
     public function setPhoneNumber($phoneNumber)
     {
-        $this->contactDetails->phoneNumber = $phoneNumber;
+        $this->contactDetails->setPhoneNumber($phoneNumber);
     }
 
     public function getPassword()
     {
-        return $this->contactDetails->password;
+        return $this->password;
     }
 
     public function setPassword($password)
     {
         $this->password = $password;
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+    public function getContactDetails()
+    {
+        return $this->contactDetails;
+    }
+
+    public function setContactDetails($contactDetails)
+    {
+        $this->contactDetails = $contactDetails;
+    }
+
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto($photo)
+    {
+        $this->photo = $photo;
     }
 }
 ?>
