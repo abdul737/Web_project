@@ -1,3 +1,13 @@
+<?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+     $name = $birthdate = $password =  $groups = "";
+     $points = 0;
+     $parent = null;
+     $lastLogin = $photo = $email = $phoneNumber = null;
+
+}
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -64,17 +74,29 @@
             </div>
             <ul class="nav">
                 <li>
-                    <a href="#">
+                    <a href="../dashboard.html">
                         <i class="material-icons">dashboard</i>
                         <p>Dashboard</p>
                     </a>
                 </li>
                 <li class="active">
                     <a href="#" >
-                        <i class="material-icons">add</i>
-                        <p>Create group</p>
+                        <i class="material-icons">face</i>
+                        <p>Register kid</p>
                     </a>
-                </li>   
+                </li>
+                <li>
+                    <a href="../dashboard.html">
+                        <i class="material-icons">content_paste</i>
+                        <p>Register to the course</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="../dashboard.html">
+                        <i class="material-icons">account_circle</i>
+                        <p>Track kid performance</p>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -94,6 +116,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
+                    <a class="navbar-brand" href="#"> Profile </a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
@@ -138,6 +161,16 @@
                         </li>
                         <li class="separator hidden-lg hidden-md"></li>
                     </ul>
+                    <form class="navbar-form navbar-right" role="search">
+                        <div class="form-group form-search is-empty">
+                            <input type="text" class="form-control" placeholder="Search">
+                            <span class="material-input"></span>
+                        </div>
+                        <button type="submit" class="btn btn-white btn-round btn-just-icon">
+                            <i class="material-icons">search</i>
+                            <div class="ripple-container"></div>
+                        </button>
+                    </form>
                 </div>
             </div>
         </nav>
@@ -146,45 +179,41 @@
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
                         <div class="card">
-                            <form class="form-horizontal" action="#" method="#">
+                            <form id="RangeValidation" class="form-horizontal" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="get">
                                 <div class="card-header card-header-text" data-background-color="blue">
                                     <i class="material-icons">add</i>
                                 </div>
                                 <div class="card-content">
                                     <div class="row">
-                                        <label class="col-md-2 label-on-left">Select instructor</label>
-                                        <div class="col-sm-5">
-                                            <select class="selectpicker" data-style="select-with-transition" title="Single Select" data-size="7">
-                                                <option disabled selected>Choose instructor</option>
-                                                <option value="2">asdasda</option>
-                                                <option value="3">asdasdasd</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="col-md-2 label-on-left">Starting date</label>
-                                        <div class="col-md-5">
+                                        <label class="col-md-2 label-on-left">First name</label>
+                                        <div class="col-md-9">
                                             <div class="form-group label-floating">
                                                 <label class="control-label"></label>
-                                                <input  class="form-control" type="date" name="start_date" />
+                                                <input class="form-control" type="text" name="first_name" />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-md-2 label-on-left">Time/venue</label>
-                                        <div class="col-sm-5">
-                                        <select class="selectpicker" data-style="select-with-transition" title="Single Select" data-size="7">
-                                            <option disabled selected>Choose time</option>
-                                            <option value="2">Monday/Wednesday/Friday</option>
-                                            <option value="3">Tuesday/Thursday/Saturday</option>
-                                        </select>
-                                        </div>
+                                        <label class="col-md-2 label-on-left">Last name</label>
+                                        <div class="col-md-9">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label"></label>
+                                                <input class="form-control" type="text" name="last_name" />
+                                            </div>
                                         </div>
                                     </div>
-                            </form>
+                                    <div class="row">
+                                        <label class="col-md-2 label-on-left">Date of birth</label>
+                                        <div class="col-md-9">
+                                            <div class="form-group label-floating ">
+                                                <label class="control-label"></label>
+                                                <input class="form-control" name="date" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="card-footer text-center">
-                                    <button type="submit" class="btn btn-info btn-fill">Create</button>
+                                    <button type="submit" class="btn btn-info btn-fill">Add kid</button>
                                 </div>
                             </form>
                         </div>

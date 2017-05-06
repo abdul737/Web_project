@@ -11,7 +11,7 @@ class Course
   private $courseId;
   private $assignments = array();
 
-  public function _construct($title, $length, $ageLimit,$courseId, $assignments = null)
+  public function _construct($courseId, $title, $length, $ageLimit = null, $assignments = null)
   {
      $this->setAgeLimit($ageLimit);
      $this->setCourseId($courseId);

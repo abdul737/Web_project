@@ -1,3 +1,64 @@
+<?php
+
+include "./ObjectSources/_Parent.php";
+include "functions.php";
+
+$parent = new _Parent();
+
+if (isset($parent))
+{
+    $students = array();
+    $courses = array();
+    $groups = array();
+    $countStudents = 0;
+
+    $connection = connect();
+
+    $query = "SELECT studentID FROM customer WHERE parentID=$parent->getId()";
+    if ($result = $connection->query($query))
+    {
+        while($tempStudent = $result->fetch_object())//object fetches only id of the student
+        {
+            $query2 = "SELECT * FROM user WHERE id=$tempStudent->studentID";
+            if ($result2 = $connection->query($query2))
+            {
+                $tempStudent2 = $result2->fetch_object(); //fetches all attributes of student
+                array_push($students, new Student($tempStudent->studentID, $tempStudent2->fullName, null, null));
+                $countStudents++;
+            }
+        }
+    }
+    $query = "SELECT * FROM course";
+    if ($result = $connection->query($query))
+    {
+        while($tempObject = $result->fetch_object())//object fetches only id of the student
+        {
+            array_push($courses, new Course($tempObject->id, $tempObject->title, $tempObject->length));
+        }
+    }
+
+    if($_SERVER["REQUEST_METHOD"] == "POST")
+    {
+        if (isset($_POST["selectCourse"]))
+        {
+            $courseId = $_POST["selectCourse"];
+            $query = "SELECT * FROM group WHERE courseId=?";
+            $statement = $connection->prepare($query);
+            $statement->bind_param("i", $_POST["selectCourse"]);
+            if ($result = $statement->execute())
+            {
+                while($tempObject = $result->fetch_object())//object fetches only id of the student
+                {
+                    array_push($groups, new Group($tempObject->id, $tempObject->courseID, $tempObject->venue, $tempObject->startingTime));
+                }
+            }
+        }
+    }
+}
+
+
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -64,19 +125,19 @@
             </div>
             <ul class="nav">
                 <li>
-                    <a href="../dashboard.html">
+                    <a href="#">
                         <i class="material-icons">dashboard</i>
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li class="active">
+                <li>
                     <a href="#" >
                         <i class="material-icons">face</i>
                         <p>Register kid</p>
                     </a>
                 </li>
-                <li>
-                    <a href="../dashboard.html">
+                <li class="active">
+                    <a href="#">
                         <i class="material-icons">content_paste</i>
                         <p>Register to the course</p>
                     </a>
@@ -169,36 +230,51 @@
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
                         <div class="card">
-                            <form id="RangeValidation" class="form-horizontal" action="#" method="#">
+                            <form id="RangeValidation" class="form-horizontal" action="#" method="post">
                                 <div class="card-header card-header-text" data-background-color="blue">
                                     <i class="material-icons">add</i>
                                 </div>
                                 <div class="card-content">
                                     <div class="row">
-                                        <label class="col-md-2 label-on-left">First name</label>
-                                        <div class="col-md-9">
-                                            <div class="form-group label-floating">
-                                                <label class="control-label"></label>
-                                                <input class="form-control" type="text" name="first_name" />
+                                        <label class="col-md-2 label-on-left">Choose your kid</label>
+                                            <div class="col-md-9">
+                                                <select name="selectStudent" class="selectpicker" data-style="select-with-transition" title="Single Select" data-size="7">
+                                                    <option disabled selected>Choose student</option>
+                                                    <?php
+                                                        for($i = 0; $i < count($students); $i++)
+                                                        {
+                                                            echo "<option value='$id'>$students[$i]->getName()</option>";
+                                                        }
+                                                    ?>
+                                                </select>
                                             </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-md-2 label-on-left">Choose the course</label>
+                                        <div class="col-md-9">
+                                            <select name="selectCourse" onchange="change()" class="selectpicker" data-style="select-with-transition" title="Single Select" data-size="7">
+                                                <option disabled selected>Choose course</option>
+                                                <?php
+                                                for($i = 0; $i < count($courses); $i++)
+                                                {
+                                                    echo "<option value='$id'>$courses[$i]->getTitle()</option>";
+                                                }
+                                                ?>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-md-2 label-on-left">Last name</label>
+                                        <label class="col-md-2 label-on-left">Choose the group</label>
                                         <div class="col-md-9">
-                                            <div class="form-group label-floating">
-                                                <label class="control-label"></label>
-                                                <input class="form-control" type="text" name="last_name" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="col-md-2 label-on-left">Date of birth</label>
-                                        <div class="col-md-9">
-                                            <div class="form-group label-floating ">
-                                                <label class="control-label"></label>
-                                                <input class="form-control" name="date" type="text">
-                                            </div>
+                                            <select name="selectGroup" class="selectpicker" data-style="select-with-transition" title="Single Select" data-size="7">
+                                                <option disabled selected>Choose group</option>
+                                                <?php
+                                                for($i = 0; $i < count($groups); $i++)
+                                                {
+                                                    echo "<option value='$id'>$groups[$i]->getDays()</option>";
+                                                }
+                                                ?>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -265,5 +341,10 @@
 <script src="../../assets/js/material-dashboard.js"></script>
 <script src="../../assets/js/main.js"></script>
 
+<script>
+    function change(){
+        document.getElementById("RangeValidation").submit();
+    }
+</script>
 
 </html>

@@ -1,5 +1,5 @@
 <?php
-include "Kid.php";
+include "Student.php";
 /**
  * Created by PhpStorm.
  * User: hamlet
@@ -8,16 +8,20 @@ include "Kid.php";
  */
 class Group
 {
+    private $id;
     private $venue;
     private $startTime;
     private $kids = array();            //Array of kids
-    private $id;
+    private $course;
     private $instructor = array();
     private $assignment = array();
+    private $days; //for example Monday/Wednesday/Friday
 
-    public function _construct($id , $venue, $startTime, $kids = null)
+
+    public function _construct($id, $course, $venue, $startTime, $kids = null)
     {
         $this->setId($id);
+        $this->setCourseId($course);
         $this->setStartTime($startTime);
         $this->setVenue($venue);
 
@@ -142,6 +146,38 @@ class Group
             throw new OutOfBoundsException();
 
         return $this->kids[$index];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDays()
+    {
+        return $this->days;
+    }
+
+    /**
+     * @param mixed $days
+     */
+    public function setDays($days)
+    {
+        $this->days = $days;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCourse()
+    {
+        return $this->courseId;
+    }
+
+    /**
+     * @param mixed $courseId
+     */
+    public function setCourse($course)
+    {
+        $this->courseId = $course;
     }
 
     /**

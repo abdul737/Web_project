@@ -69,24 +69,12 @@
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li>
-                    <a href="#" >
-                        <i class="material-icons">face</i>
-                        <p>Register kid</p>
-                    </a>
-                </li>
                 <li class="active">
-                    <a href="#">
-                        <i class="material-icons">content_paste</i>
-                        <p>Register to the course</p>
+                    <a href="#" >
+                        <i class="material-icons">add</i>
+                        <p>Create group</p>
                     </a>
-                </li>
-                <li>
-                    <a href="../dashboard.html">
-                        <i class="material-icons">account_circle</i>
-                        <p>Track kid performance</p>
-                    </a>
-                </li>
+                </li>   
             </ul>
         </div>
     </div>
@@ -106,7 +94,6 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#"> Profile </a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
@@ -151,16 +138,6 @@
                         </li>
                         <li class="separator hidden-lg hidden-md"></li>
                     </ul>
-                    <form class="navbar-form navbar-right" role="search">
-                        <div class="form-group form-search is-empty">
-                            <input type="text" class="form-control" placeholder="Search">
-                            <span class="material-input"></span>
-                        </div>
-                        <button type="submit" class="btn btn-white btn-round btn-just-icon">
-                            <i class="material-icons">search</i>
-                            <div class="ripple-container"></div>
-                        </button>
-                    </form>
                 </div>
             </div>
         </nav>
@@ -169,44 +146,75 @@
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
                         <div class="card">
-                            <form id="RangeValidation" class="form-horizontal" action="#" method="#">
+                            <form class="form-horizontal" action="#" method="#">
                                 <div class="card-header card-header-text" data-background-color="blue">
                                     <i class="material-icons">add</i>
+                                    <p>Create group</p>
                                 </div>
                                 <div class="card-content">
                                     <div class="row">
-                                        <label class="col-md-2 label-on-left">Choose your kid</label>
-                                            <div class="col-md-9">
-                                                <select class="selectpicker" data-style="select-with-transition" title="Single Select" data-size="7">
-                                                    <option disabled selected>Choose kid</option>
-                                                    <option value="2">Adiba Alimova</option>
-                                                    <option value="3">Sardor Alimov</option>
-                                                </select>
-                                            </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="col-md-2 label-on-left">Choose the course</label>
-                                        <div class="col-md-9">
+                                        <label class="col-md-2 label-on-left">Select course</label>
+                                        <div class="col-sm-5">
                                             <select class="selectpicker" data-style="select-with-transition" title="Single Select" data-size="7">
                                                 <option disabled selected>Choose course</option>
-                                                <option value="2">Math</option>
-                                                <option value="3">English</option>
+                                                <?php
+                                                for ($i = 0; $i < count($courses); $i++)
+                                                {
+                                                    echo "<option value='$courses[$i]->getCourseId()'>$courses[$i]->getTitle()</option>";
+                                                }
+                                                ?>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <label class="col-md-2 label-on-left">Choose the time</label>
-                                        <div class="col-md-9">
+                                        <label class="col-md-2 label-on-left">Select instructor</label>
+                                        <div class="col-sm-5">
+                                            <select class="selectpicker" data-style="select-with-transition" title="Single Select" data-size="7">
+                                                <option disabled selected>Choose instructor</option>
+                                                <?php
+                                                    for ($i = 0; $i < count($instructors); $i++)
+                                                    {
+                                                        echo "<option value='$instructor->getId()'>$instructors[$i]->getName() $instructors[$i]->getSurname()</option>";
+                                                    }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-md-2 label-on-left">Starting date</label>
+                                        <div class="col-md-5">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label"></label>
+                                                <input  class="form-control" type="datetime-local" name="start_date" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-md-2 label-on-left">Time/venue</label>
+                                        <div class="col-sm-5">
                                             <select class="selectpicker" data-style="select-with-transition" title="Single Select" data-size="7">
                                                 <option disabled selected>Choose time</option>
-                                                <option value="2">Monday/Wednesday/Friday</option>
-                                                <option value="3">Tuesday/Thursday/Saturday</option>
+                                                <option value="Monday/Wednesday/Friday">Monday/Wednesday/Friday</option>
+                                                <option value="Tuesday/Thursday/Saturday">Tuesday/Thursday/Saturday</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-md-2 label-on-left">Venue</label>
+                                        <div class="col-sm-5">
+                                            <select class="selectpicker" data-style="select-with-transition" title="Single Select" data-size="7">
+                                                <option disabled selected>Choose venue</option>
+                                                <option value="101">Room 101</option>
+                                                <option value="514">Room 514</option>
+                                                <option value="701">Room 701</option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
+                            </form>
+                                </div>
                                 <div class="card-footer text-center">
-                                    <button type="submit" class="btn btn-info btn-fill">Add kid</button>
+                                    <button type="submit" class="btn btn-info btn-fill">Create</button>
                                 </div>
                             </form>
                         </div>

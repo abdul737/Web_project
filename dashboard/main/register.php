@@ -6,10 +6,8 @@
  * Time: 9:46 AM
  */
 
-////GET is used because phpstorm has issue with POST
+require_once ("functions.php");
 
-require_once("../databaseManager/DBManager.php");
-require_once ("register.html");
 $name =
 $email =
 $surname =
@@ -17,21 +15,15 @@ $password =
 $phoneNumber = null;
 
 $error = null;
+$position = "p";
 
-function test_input($data) {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    $data = mysqli_real_escape_string($data);
-    return $data;
-}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = test_input($_POST["name"]);
-    $email = test_input($_POST["email"]);
-    $surname = test_input($_POST["surname"]);
-    $password = test_input($_POST["password"]);
-    $phoneNumber = test_input($_POST["phoneNumber"]);
+    $name = (string)test_input($_POST["name"]);
+    $email = (string)test_input($_POST["email"]);
+    $surname = (string)test_input($_POST["surname"]);
+    $password = (string)test_input($_POST["password"]);
+    $phoneNumber = (string)test_input($_POST["phoneNumber"]);
 }
 if (!preg_match("/^[a-zA-Z ]*$/",$name)) {
     $nameErr = "Only letters and white space allowed";
@@ -39,30 +31,43 @@ if (!preg_match("/^[a-zA-Z ]*$/",$name)) {
 
 if(isset($_POST['password'])){
     if($_POST['password'] == $_POST['confirmPassword']){
-            $connection = DatabaseManager\DBConnect::connect();
-            $statement = $connection->prepare("INSERT INTO user (name, surname, password, email, phoneNumber) VALUE (?, ?, ?, ?)");
-            $statement->bind_params("ssss", $name, $surname, $password, $email, $phoneNumber);
-
-            $result = mysqli_query($connection, $query);
-            if($result){
-                $parent_id = mysqli_insert_id($connection);
-                $query = sprintf("INSERT INTO parent (id) VALUE (%d)",
-                    mysqli_real_escape_decimal($parent_id));
-                $result = mysqli_query($connection, $query);
-                if($result){
-                    echo '<meta http-equiv="refresh" content="0; URL=login.html" />';
-                }else{
-                    $error = "result Problem";
-                }
-
-            }else {
-                $error = "Error in Insertion";
-            }
-            $statement->close();
+        $connection = connect();
+        $statement = $connection->prepare('INSERT INTO user (name, surname, password, email, phoneNumber, position)
+            VALUES (?, ?, ?, ?, ?, ?)');
+        if(!$statement){
+            error_log("reg.php: error with the prepared statement");
+            return;
         }
-    }else{
-        $error = "Null Password!";
+
+        $statement->bind_param("ssssss", $name, $surname, $password, $email, $phoneNumber, $position);
+
+        $result = $statement->execute();
+        if($result){
+            error_log("reg.php: inserted into USER table");
+            $parent_id = $statement->insert_id;
+            $stmt = $connection->prepare('INSERT INTO parent (id) VALUE (?)');
+            $stmt->bind_param("i", $parent_id);
+            $result = $stmt->execute();
+            if($result){
+                error_log("reg.php: inserted into PARENT table");
+                echo "<script>alert('Your ID is $parent_id\nYou should use it as login')</script>";
+                require_once("login.html");
+                exit;
+            }else{
+                error_log("reg.php: not inserted into PARENT table");
+            }
+        }else {
+            error_log("reg.php: not inserted into USER table");
+        }
+        if($connection != null){
+            $statement->close();
+            $connection->close();
+        }
     }
-    echo "<h1>$error</h1>";
+}
+
+    require_once ("register.htm");
 
 ?>
+
+

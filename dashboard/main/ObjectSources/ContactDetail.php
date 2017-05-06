@@ -9,85 +9,78 @@ class ContactDetail
 {
     private $id;
     private $name;
+    private $surname;
     private $photo;
     private $phoneNumber;
     private $email;
-    public function _construct($id, $name, $phoneNumber, $email , $photo = null)
+
+    public function _construct($id, $name, $surname, $phoneNumber, $email , $photo)
     {
         $this->setId($id);
         $this->setEmail($email);
         $this->setName($name);
+        $this->setSurname($surname);
         $this->setPhoneNumber($phoneNumber);
         $this->setPhoto($photo);
     }
-    /**
-     * @return mixed
-     */
+
     public function getId()
     {
         return $this->id;
     }
-    /**
-     * @param mixed $id
-     */
+
     public function setId($id)
     {
         $this->id = $id;
     }
-    /**
-     * @return mixed
-     */
+
     public function getName()
     {
         return $this->name;
     }
-    /**
-     * @param mixed $name
-     */
+
     public function setName($name)
     {
         $this->name = $name;
     }
-    /**
-     * @return mixed
-     */
+
     public function getPhoto()
     {
         return $this->photo;
     }
-    /**
-     * @param mixed $photo
-     */
+
     public function setPhoto($photo)
     {
         $this->photo = $photo;
     }
-    /**
-     * @return mixed
-     */
+
     public function getPhoneNumber()
     {
         return $this->phoneNumber;
     }
-    /**
-     * @param mixed $phoneNumber
-     */
+
     public function setPhoneNumber($phoneNumber)
     {
         $this->phoneNumber = $phoneNumber;
     }
-    /**
-     * @param mixed $email
-     */
+
     public function setEmail($email)
     {
         $this->email = $email;
     }
-    /**
-     * @return mixed
-     */
+
     public function getEmail()
     {
         return $this->email;
+    }
+
+    public function getSurname()
+    {
+        return $this->surname;
+    }
+
+    public function setSurname($surname)
+    {
+        $this->surname = $surname;
     }
 }
