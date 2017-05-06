@@ -43,7 +43,8 @@ if(isset($_POST['password'])){
             $result = $stmt->execute();
             if($result){
                 error_log("reg.php: inserted into PARENT table");
-                echo "<script>alert('Your ID is $parent_id. You should use it as login')</script>";
+                $id = str_pad($parent_id,  6, "0", STR_PAD_LEFT);
+                echo "<script>alert('Your ID is p$id. You should use it as login')</script>";
                 require_once("login.php");
                 exit;
             }else{

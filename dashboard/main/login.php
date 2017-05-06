@@ -36,7 +36,13 @@ function getParent($id, $password){
     $num_rows = $statement->num_rows;
     $statement->close();
     if($num_rows == 0){
-        echo "<script>alert('*The login or password is incorrect');</script>";
+        echo "<script>alert('There is no such user');</script>";
+        ////////////////////
+        ///
+        ///
+        /// In the future it should
+        ///
+        ///
         return;
     }
 

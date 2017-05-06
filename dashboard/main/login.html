@@ -74,7 +74,7 @@
                                 </span>
                                         <div class="form-group label-floating">
                                             <label class="control-label">Login</label>
-                                            <input name="login" id="check" data-minlength="6" maxlength="6" type="text" required class="form-control">
+                                            <input name="login" id="check" data-minlength="6" type="text" required class="form-control">
                                         </div>
                                     </div>
                                     <div class="input-group">
@@ -169,11 +169,11 @@
             $('.card').removeClass('card-hidden');
         }, 700)
         main.checkFullPageBackgroundImage();
-        if(!($('#check').value.length === 6)){
+        if(!($('#check').value.length >= 6)){
             $('button[type="submit"]').prop('disabled', true);
         }
         $('#check').on('input', function() {
-            if(this.value.length === 6) {
+            if(this.value.length >= 6) {
                 $('button[type="submit"]').prop('disabled', false);
             } else {
                 $('button[type="submit"]').prop('disabled', true);
