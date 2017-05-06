@@ -21,7 +21,7 @@ class Assignment
 
 
 
-    public function _construct($id, $group, $title, $info, $startTime, $deadLine, $maxPoint , $solution  = null, $attachment = null)
+    public function __construct($id, $group, $title, $info, $startTime, $deadLine, $maxPoint , $solution  = null, $attachment = null)
     {
         $this->setId($id);
         $this->setGroup($group);

@@ -14,7 +14,7 @@ class ContactDetail
     private $phoneNumber;
     private $email;
 
-    public function _construct($name, $surname, $phoneNumber, $email , $photo)
+    public function __construct($name, $surname, $phoneNumber, $email , $photo)
     {
         $this->setEmail($email);
         $this->setName($name);

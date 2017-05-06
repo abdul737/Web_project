@@ -13,7 +13,7 @@ class Homework
   private $courseId;
 
   //constructor
-  public function _construct($hwId, $instructorId, $kidId, $title, $content, $attachment, $startTime, $endTime, $courseId)
+  public function __construct($hwId, $instructorId, $kidId, $title, $content, $attachment, $startTime, $endTime, $courseId)
   {
     $this->hwId = $hwId;
     $this->instructorId = $instructorId;

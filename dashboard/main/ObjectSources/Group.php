@@ -18,7 +18,7 @@ class Group
     private $days; //for example Monday/Wednesday/Friday
 
 
-    public function _construct($id, $course, $venue, $startTime, $kids = null)
+    public function __construct($id, $course, $venue, $startTime, $kids = null)
     {
         $this->setId($id);
         $this->setCourseId($course);

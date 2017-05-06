@@ -12,8 +12,8 @@ class _Parent extends User
   private $passport;
   private $students;
 
-  public function _construct($userId, $name, $surname, $password, $email, $phoneNumber){
-      parent::_construct($userId, $name, $surname, $password, $email, $phoneNumber);
+  public function __construct($userId, $name, $surname, $password, $email, $phoneNumber){
+      parent::__construct($userId, $name, $surname, $password, $email, $phoneNumber);
       $this->passport = null;
       $this->students = null;
   }
