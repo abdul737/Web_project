@@ -8,11 +8,10 @@ class User {
     private $password;
     private $contactDetails;
 
-    public function _construct($userId, $name, $surname, $password, $email, $phoneNumber)
+    public function __construct($userId, $name, $surname, $password, $email, $phoneNumber)
     {
         $this->password = $password;
-        $this->contactDetails = new ContactDetail($userId, $name, $surname, $phoneNumber, $email, null);
-        echo "constructor called";
+        $this->contactDetails = new ContactDetail($name, $surname, $phoneNumber, $email, null);
     }
 
     public function getSurname(){
@@ -30,32 +29,32 @@ class User {
 
     public function setName($name)
     {
-        $this->contactDetails->name = $name;
+        $this->contactDetails->setName($name);
     }
 
     public function getEmail()
     {
-        return $this->contactDetails->email;
+        return $this->contactDetails->getEmail();
     }
 
     public function setEmail($email)
     {
-        $this->contactDetails->email = $email;
+        $this->contactDetails->setEmail($email);
     }
 
     public function getPhoneNumber()
     {
-        return $this->contactDetails->phoneNumber;
+        return $this->contactDetails->getPhoneNumber();
     }
 
     public function setPhoneNumber($phoneNumber)
     {
-        $this->contactDetails->phoneNumber = $phoneNumber;
+        $this->contactDetails->setPhoneNumber($phoneNumber);
     }
 
     public function getPassword()
     {
-        return $this->contactDetails->password;
+        return $this->password;
     }
 
     public function setPassword($password)

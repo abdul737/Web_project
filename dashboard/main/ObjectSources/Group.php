@@ -1,5 +1,5 @@
 <?php
-include "Student.php";
+require_once ("Student.php");
 /**
  * Created by PhpStorm.
  * User: hamlet
@@ -17,11 +17,10 @@ class Group
     private $assignment = array();
     private $days; //for example Monday/Wednesday/Friday
 
-
-    public function _construct($id, $course, $venue, $startTime, $kids = null)
+    public function __construct($id, $course, $venue, $startTime, $kids = null)
     {
         $this->setId($id);
-        $this->setCourseId($course);
+        $this->setCourse($course);
         $this->setStartTime($startTime);
         $this->setVenue($venue);
 

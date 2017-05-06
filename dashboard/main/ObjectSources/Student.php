@@ -14,9 +14,9 @@ class Student extends User
     private $parent;
     private $submittedAssignments = array();
 
-    public function _construct($userId, $name, $surname, $parent, $password = null, $birthdate = null, $email = null, $phoneNumber = null)
+    public function __construct($userId, $name, $surname, $parent, $birthdate = null, $email = null, $phoneNumber = null)
     {
-        parent::_construct($userId, $name, $surname, $email, $phoneNumber, $password);
+        parent::__construct($userId, $name, $surname, null, $email, $phoneNumber);
         $this->parent = $parent;
         $this->setGroups(null);
         $this->setBirthdate($birthdate);
@@ -44,7 +44,9 @@ class Student extends User
     }
 
     public function addGroup($group){
-        throw new Exception("not done yet");
+        if($this->groups == null)
+            $this->groups = array();
+        array_push($this->groups, $group);
     }
 
     public function deleteGroup($group){

@@ -13,6 +13,8 @@ use \Exception;
 
 class DBManager
 {
+    private function __construct(){}
+
     private static function getConnection()
     {
         try{
@@ -37,10 +39,10 @@ class DBManager
         $password = $parent->getPassword();
         $email = $parent->getEmail();
         $phoneNumber = $parent->getPhoneNumber();
-        $statement->bind_param("ssssss", $name, $surname, $password, $email, $phoneNumber, "p");
+        $position = "p";
+        $statement->bind_param("ssssss", $name, $surname, $password, $email, $phoneNumber, $position);
 
-        $result = $statement->execute();
-        if($result){
+        if($statement->execute()){
             error_log("reg.php: inserted into USER table");
             $parent_id = $statement->insert_id;
             $stmt = $connection->prepare('INSERT INTO parent (id) VALUE (?)');
@@ -50,6 +52,7 @@ class DBManager
                 error_log("reg.php: inserted into PARENT table");
                 $stmt->close();
                 $statement->close();
+                $connection->close();
                 return $parent_id;
             }else{
                 error_log("reg.php: not inserted into PARENT table");
@@ -62,6 +65,6 @@ class DBManager
         if($connection != null){
             $statement->close();
         }
-        return 0;
+        return -1;
     }
 }
