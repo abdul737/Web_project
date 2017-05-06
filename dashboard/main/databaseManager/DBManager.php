@@ -58,8 +58,6 @@ class DBManager
         return 0;
     }
 
-    /* NEW CHANGES FROM HERE*/
-
     public static function insertStudent(\Student $student, \_Parent $bindParent = null)
     {
         $id = null;
