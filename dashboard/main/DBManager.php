@@ -11,6 +11,8 @@ use \Course;
 
 class DBManager
 {
+    private function __construct(){}
+
     private static function getConnection()
     {
         try{
@@ -34,10 +36,10 @@ class DBManager
         $password = $parent->getPassword();
         $email = $parent->getEmail();
         $phoneNumber = $parent->getPhoneNumber();
-        $statement->bind_param("ssssss", $name, $surname, $password, $email, $phoneNumber, "p");
+        $position = "p";
+        $statement->bind_param("ssssss", $name, $surname, $password, $email, $phoneNumber, $position);
 
-        $result = $statement->execute();
-        if($result){
+        if($statement->execute()){
             error_log("reg.php: inserted into USER table");
             if($stmt = $connection->prepare('INSERT INTO parent (id) VALUE (?)')){
                 $stmt->bind_param("i", $parent_id);
@@ -50,6 +52,7 @@ class DBManager
                 $stmt->close();
                 $statement->free_result();
                 $statement->close();
+                $connection->close();
                 return $parent_id;
             }else{
                 error_log("reg.php: not inserted into PARENT table");
@@ -63,7 +66,7 @@ class DBManager
             $statement->free_result();
             $statement->close();
         }
-        return 0;
+        return -1;
     }
 
     public static function insertStudent(\Student $student, \_Parent $bindParent = null)

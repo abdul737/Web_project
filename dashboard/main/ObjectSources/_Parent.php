@@ -27,7 +27,9 @@ class _Parent extends User
   }
 
   public function addStudent($student){
-        throw new Exception("Not done yet");
+      if($this->students == null)
+          $this->students = array();
+      array_push($this->students, $student);
   }
 }
 ?>

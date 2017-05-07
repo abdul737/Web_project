@@ -11,7 +11,6 @@ class Group
     private $assignment = array();
     private $days; //for example Monday/Wednesday/Friday
 
-
     public function __construct($id, $course, $venue, $startTime, $kids = null)
     {
         $this->setId($id);

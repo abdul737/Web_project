@@ -6,11 +6,9 @@ require_once ("ContactDetail.php");
 class User {
     private $id;
     private $password;
-    private $contactDetails = null;
-    private $photo;
+    private $contactDetails;
 
-    //constructor
-    public function __construct($userId, $name, $surname, $email, $phoneNumber, $password)
+    public function __construct($userId, $name, $surname, $password, $email, $phoneNumber)
     {
         $this->setId($userId);
         $this->password = $password;
@@ -74,25 +72,6 @@ class User {
     public function setId($id)
     {
         $this->id = $id;
-    }
-    public function getContactDetails()
-    {
-        return $this->contactDetails;
-    }
-
-    public function setContactDetails($contactDetails)
-    {
-        $this->contactDetails = $contactDetails;
-    }
-
-    public function getPhoto()
-    {
-        return $this->photo;
-    }
-
-    public function setPhoto($photo)
-    {
-        $this->photo = $photo;
     }
 }
 ?>
