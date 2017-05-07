@@ -13,7 +13,7 @@ class Student extends User
     private $birthdate;
     private $totalPoints;
     private $groups = array();
-    private $parent ;
+    private $parent;
     private $submittedAssignments = array();
 
     public function __construct($userId, $name, $surname, \_Parent $parent, $password = null, $birthdate = null, $email = null, $phoneNumber = null, $totalPoints = 0)

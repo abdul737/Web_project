@@ -4,9 +4,9 @@ namespace databaseManager;
 
 class DBConfig
 {
-    private static $DB_USERNAME = "admin";
-    private static $DB_PASSWORD = "admin";
-    private static $DB_NAME = "codecraft_moodle";
+    private static $DB_USERNAME = "root";
+    private static $DB_PASSWORD = "toor";
+    private static $DB_NAME = "lcm";
     private static $DB_HOST = "localhost";
 
     public static function setDBHOST($DB_HOST)

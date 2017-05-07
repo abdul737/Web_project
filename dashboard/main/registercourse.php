@@ -1,48 +1,17 @@
 <?php
+require_once("DBManager.php");
 
-include "./ObjectSources/_Parent.php";
-include "./ObjectSources/Student.php";
-include "functions.php";
-
-$parent = new _Parent(2, "Abdulbosid", "Khamidov", "abd", "abd@abd", "911");
+$parent = new _Parent(10, "Tom", "Khamidov", "passmefirst", "abdulbosid.kh@gmail.com", "+998909110044");
 
 if (isset($parent))
 {
-    $students = array();
-    $courses = array();
-
-    $temp = new Student(7, "Sardor", "Islomov", $parent);
-    array_push($students, $temp);
-    $temp = new Student(8, "Muhammad", "Islomov", $parent);
-    array_push($students, $temp);
-    $temp = new Student(9, "Sarvar", "Islomov", $parent);
-    array_push($students, $temp);
-
-    $connection = connect();
-
-    $query = "SELECT studentID FROM customer WHERE parentID=$parent->getId()";
-    echo $parent->getContactDetails()->getId();
-    if ($result = $connection->query($query))
-    {
-        while($tempStudent = $result->fetch_object())//object fetches only id of the student
-        {
-            $query2 = "SELECT * FROM user WHERE id=$tempStudent->studentID";
-            if ($result2 = $connection->query($query2))
-            {
-                $tempStudent2 = $result2->fetch_object(); //fetches all attributes of student
-                array_push($students, new Student($tempStudent->studentID, $tempStudent2->fullName, null, null));
-                $countStudents++;
-            }
-        }
-    }
-    $query = "SELECT * FROM course";
-    if ($result = $connection->query($query))
-    {
-        while($tempObject = $result->fetch_object())//object fetches only id of the student
-        {
-            array_push($courses, new Course($tempObject->id, $tempObject->title, $tempObject->length));
-        }
-    }
+    $students = \databaseManager\DBManager::selectAllStudentsOfParent($parent);
+    $courses = \databaseManager\DBManager::selectAllCourses();
+}else
+{
+    echo '<script>alert("Session timed out or not found!");</script>';
+    header("Location: login.php");
+    exit;
 }
 
 
@@ -132,7 +101,7 @@ if (isset($parent))
                     </a>
                 </li>
                 <li>
-                    <a href="./dashboard.html">
+                    <a href="leaderboard.html">
                         <i class="material-icons">account_circle</i>
                         <p>Track kid performance</p>
                     </a>
@@ -161,7 +130,7 @@ if (isset($parent))
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="material-icons">dashboard</i>
                                 <p class="hidden-lg hidden-md">Dashboard</p>
                             </a>
@@ -194,7 +163,7 @@ if (isset($parent))
                             </ul>
                         </li>
                         <li>
-                            <a href="#pablo" class="dropdown-toggle" data-toggle="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="material-icons">person</i>
                                 <p class="hidden-lg hidden-md">Profile</p>
                             </a>
@@ -233,9 +202,10 @@ if (isset($parent))
                                                         for($i = 0; $i < count($students); $i++)
                                                         {
                                                             $id = $students[$i]->getId();
-                                                            $name = $students[$i]->$students[$i]->getName();
-                                                            echo "<option value='$id'>$name</option>";
-                                                        }
+                                                            $surname = $students[$i]->getSurname();
+                                                            $name = $students[$i]->getName();
+                                                            echo "<option value='$id'>$name $surname</option>";
+                                                    }
                                                     ?>
                                                 </select>
                                             </div>
@@ -248,7 +218,7 @@ if (isset($parent))
                                                 <?php
                                                 for($i = 0; $i < count($courses); $i++)
                                                 {
-                                                    echo "<option value='$id'>$courses[$i]->getTitle()</option>";
+                                                    echo "<option value=".$courses[$i]->getCourseId().">".$courses[$i]->getTitle()."</option>";
                                                 }
                                                 ?>
                                             </select>

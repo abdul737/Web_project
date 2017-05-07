@@ -1,4 +1,7 @@
 <?php
+
+require_once "User.php";
+
 class Instructor extends User
 {
     private $taughtGroup = array();

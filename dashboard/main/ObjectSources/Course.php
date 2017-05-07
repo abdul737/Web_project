@@ -1,7 +1,7 @@
 <?php
 
- include "Group.php";
- include "Instructor.php";
+ require_once "Group.php";
+ require_once "Instructor.php";
 
 class Course
 {

@@ -2,8 +2,12 @@
 
 namespace databaseManager;
 require_once "DBConnect.php";
+require_once "./ObjectSources/_Parent.php";
+require_once "./ObjectSources/Student.php";
+require_once "ObjectSources/Course.php";
 
 use \Exception;
+use \Course;
 
 class DBManager
 {
@@ -35,13 +39,16 @@ class DBManager
         $result = $statement->execute();
         if($result){
             error_log("reg.php: inserted into USER table");
-            $parent_id = $statement->insert_id;
-            $stmt = $connection->prepare('INSERT INTO parent (id) VALUE (?)');
-            $stmt->bind_param("i", $parent_id);
-            $result = $stmt->execute();
-            if($result){
+            if($stmt = $connection->prepare('INSERT INTO parent (id) VALUE (?)')){
+                $stmt->bind_param("i", $parent_id);
+                $stmt->execute();
+                $parent_id = $statement->insert_id;
+
                 error_log("reg.php: inserted into PARENT table");
+
+                $stmt->free_result();
                 $stmt->close();
+                $statement->free_result();
                 $statement->close();
                 return $parent_id;
             }else{
@@ -53,6 +60,7 @@ class DBManager
         }
 
         if($connection != null){
+            $statement->free_result();
             $statement->close();
         }
         return 0;
@@ -80,15 +88,17 @@ class DBManager
         $query = "INSERT INTO user VALUES(?,?,?,?,?,?,?)";
         if ($statement = self::getConnection()->prepare($query))
         {
-            $statement->bind_param("ssss", $password, $email, $name, $surname, $phoneNumber, "s", $birthdate, $photo);
+            $statement->bind_param("ssss", $password, $email, $name,
+                $surname, $phoneNumber, "s", $birthdate, $photo);
             $statement->execute();
             $id = $statement->insert_id;
             $student->setId($id);
 
+            $statement->free_result();
             $statement->close();
         } else
         {
-            error_log("WHILE INSERTING STUDENT TO USER TABLE", "MYSQLi ERROR");
+            error_log("WHILE INSERTING STUDENT TO USER TABLE");
         }
 
         /* INSERTING STUDENT PARENT RELATIONSHIP INTO TABLE CUSTOMER*/
@@ -98,10 +108,11 @@ class DBManager
             $statement->bind_param("ii", $id, $parent->getId());
             $statement->execute();
 
+            $statement->free_result();
             $statement->close();
         } else
         {
-            error_log("WHILE INSERTING STUDENT PARENT RELATIONSHIP INTO TABLE CUSTOMER", "MYSQLi ERROR");
+            error_log("WHILE INSERTING STUDENT PARENT RELATIONSHIP INTO TABLE CUSTOMER");
         }
         /* INSERTING STUDENT AND TOTALPOINTS INTO TABLE STUDENT*/
         $query = "INSERT INTO student VALUES(?,?)";
@@ -110,10 +121,11 @@ class DBManager
             $statement->bind_param($id, $totalPoints);
             $statement->execute();
 
+            $statement->free_result();
             $statement->close();
         } else
         {
-            error_log("WHILE INSERTING STUDENT AND TOTALPOINTS INTO TABLE STUDENT", "MYSQLi ERROR");
+            error_log("WHILE INSERTING STUDENT AND TOTALPOINTS INTO TABLE STUDENT");
         }
         /*RETURNS STUDENT BACK, WITH ID, PROBABLY WITH PARENT ALSO*/
         return $student;
@@ -130,7 +142,7 @@ class DBManager
         $photo = null;
         $totalPoints = null;
         /* SELECTING STUDENT FROM USER TABLE*/
-        $query = "SELECT password, email, name, surname, phoneNumber, birthdate, photo FROM user WHERE id=?";
+        $query = "SELECT password, email, name, surname, phoneNumber, birthdate, photoFileId FROM user WHERE id=?";
         if ($statement = self::getConnection()->prepare($query)) {
             $statement->bind_param("i", $id);
             $statement->execute();
@@ -138,10 +150,11 @@ class DBManager
             $statement->bind_result($password, $email, $name, $surname, $phoneNumber, $birthdate, $photo);
             $statement->fetch();
 
+            $statement->free_result();
             $statement->close();
         } else
         {
-            error_log("While selecting student with id = " . $id, "MYSQLi ERROR");
+            error_log("While selecting student with id = " . $id);
         }
         /* SELECTING TOTALPOINTS FROM TABLE STUDENT*/
         $query = "SELECT totalPoints FROM student WHERE id=?";
@@ -153,11 +166,12 @@ class DBManager
             $statement->bind_result($totalPoints);
             $statement->fetch();
 
+            $statement->free_result();
             $statement->close();
         }
         else
         {
-            error_log("WHILE SELECTING TOTALPOINTS FROM TABLE STUDENT", "MYSQLi ERROR");
+            error_log("WHILE SELECTING TOTALPOINTS FROM TABLE STUDENT");
         }
         /* RETURNING NEW STUDENT OBJECT, EXCEPT PARENT EVERYTHING WAS FETCHED*/
         return new \Student($id, $name, $surname, $parent, $password, $birthdate, $email, $phoneNumber, $totalPoints);
@@ -165,30 +179,43 @@ class DBManager
 
     public static function selectAllStudentsOfParent(\_Parent $parent)
     {
+        echo "\nSelecting";
         $allStudents = array();
-        $allStudentIds = array();
         $parentId = $parent->getId();
+
+
         /* GETTING ARRAY OF IDS' FOR PARENT FROM CUSTOMER*/
-        $query = "SELECT studentID FROM customer WHERE parentID=?";
+        $query = "SELECT * FROM customer INNER JOIN user ON user.id=customer.studentID INNER JOIN student ON student.id=customer.studentID WHERE customer.parentID=? ";
         if ($statement = self::getConnection()->prepare($query))
         {
             $statement->bind_param("i", $parentId);
             $statement->execute();
-            $statement->store_result();
-            $statement->bind_result($studentId);
-            while ($statement->fetch())
+            $result = $statement->get_result();
+            while ($row = $result->fetch_assoc())
             {
-                array_push($allStudentIds, $studentId);
-            }
-            foreach ($allStudentIds as $studentId) {
-                $student = self::selectStudent($studentId, $parent);
-                array_push($allStudents, $student);
+                if ($row["position"] == "s")
+                {
+                    $id = $row["id"];
+                    $password = $row["password"];
+                    $name = $row["name"];
+                    $surname = $row["surname"];
+                    $email = $row["email"];
+                    $phoneNumber = $row["phoneNumber"];
+                    $birthdate = $row["birthdate"];
+                    $totalPoints = $row["totalPoints"];
+                    $student = new \Student($id, $name, $surname, $parent, $password, $birthdate, $email, $phoneNumber, $totalPoints);
+                    array_push($allStudents, $student);
+                }else
+                {
+                    error_log("Error: Id(".$id.") doesn't belong to student!");
+                }
             }
 
+            $statement->free_result();
             $statement->close();
         } else
         {
-            error_log("WHILE GETTING ARRAY OF studentIDS' FOR PARENT FROM CUSTOMER", "MYSQLi ERROR");
+            error_log("WHILE GETTING ARRAY OF studentIDS' FOR PARENT FROM CUSTOMER");
         }
         return $allStudents;
     }
@@ -215,12 +242,35 @@ class DBManager
                 array_push($allStudents, $student);
             }
 
+            $statement->free_result();
             $statement->close();
         } else
         {
-            error_log("WHILE GETTING ARRAY OF studentIDS' FOR GROUP FROM attendingStudents", "MYSQLi ERROR");
+            error_log("WHILE GETTING ARRAY OF studentIDS' FOR GROUP FROM attendingStudents");
         }
         return $allStudents;
+    }
+    public static function selectAllCourses()
+    {
+        $courses = array();
+        $query = "SELECT * FROM course";
+        if ($statement = self::getConnection()->prepare($query))
+        {
+            $statement->execute();
+            $statement->store_result();
+            $statement->bind_result($id, $title, $length);
+            while($statement->fetch())//object fetches only id of the student
+            {
+                array_push($courses, new Course($id, $title, $length));
+            }
+
+            $statement->free_result();
+            $statement->close();
+        }else
+        {
+            error_log("WHILE GETTING ARRAY OF studentIDS' FOR GROUP FROM attendingStudents");
+        }
+        return $courses;
     }
 }
 

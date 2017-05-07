@@ -1,18 +1,12 @@
 <?php
-include "Student.php";
-/**
- * Created by PhpStorm.
- * User: hamlet
- * Date: 4/9/17
- * Time: 11:18 PM
- */
+require_once "Student.php";
 class Group
 {
     private $id;
     private $venue;
     private $startTime;
     private $kids = array();            //Array of kids
-    private $course;
+    private $course;    //stores course object id only within it
     private $instructor = array();
     private $assignment = array();
     private $days; //for example Monday/Wednesday/Friday
@@ -21,7 +15,7 @@ class Group
     public function __construct($id, $course, $venue, $startTime, $kids = null)
     {
         $this->setId($id);
-        $this->setCourseId($course);
+        $this->setCourse($course);
         $this->setStartTime($startTime);
         $this->setVenue($venue);
 
@@ -164,20 +158,14 @@ class Group
         $this->days = $days;
     }
 
-    /**
-     * @return mixed
-     */
     public function getCourse()
     {
-        return $this->courseId;
+        return $this->course;
     }
 
-    /**
-     * @param mixed $courseId
-     */
     public function setCourse($course)
     {
-        $this->courseId = $course;
+        $this->course = $course;
     }
 
     /**

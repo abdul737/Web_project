@@ -15,14 +15,20 @@ function test_input($data) {
 
 function connect(){
     $DB_USERNAME = "root";
-    $DB_PASSWORD = "tHISpaSSWORDiSvERYsTRONG12345";
+    $DB_PASSWORD = "toor";
     $DB_NAME = "lcm";
-    $DB_HOST = "localhost";
+    $DB_HOST = "127.0.0.1";
 
     $connection = new mysqli($DB_HOST, $DB_USERNAME, $DB_PASSWORD, $DB_NAME);
+
     if(mysqli_connect_errno())
     {
-        //throw new Exception("Connection to MySQL error: ".mysqli_connect_error());
+        error_log("MySQL error: ".$connection->error);
+        throw new Exception("Connection to MySQL error: ".$connection->error);
+    }
+    else
+    {
+        echo "<h3>Connected!</h3>";
     }
 
     return $connection;

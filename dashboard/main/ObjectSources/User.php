@@ -1,7 +1,7 @@
 <?php
 
 require_once ("ContactDetail.php");
-use \ContactDetail;
+//use \ContactDetail;
 
 class User {
     private $id;
@@ -12,17 +12,11 @@ class User {
     //constructor
     public function __construct($userId, $name, $surname, $email, $phoneNumber, $password)
     {
+        $this->setId($userId);
         $this->password = $password;
-        $this->contactDetails = new ContactDetail($userId, $name, $surname, $phoneNumber, $email, null);
+        $this->contactDetails = new ContactDetail($name, $surname, $phoneNumber, $email, null);
     }
 
-    public function getSurname(){
-        return $this->contactDetails->getSurname();
-    }
-
-    public function setSurname($surname){
-        $this->contactDetails->setSurname($surname);
-    }
 
     public function getName()
     {
@@ -32,6 +26,14 @@ class User {
     public function setName($name)
     {
         $this->contactDetails->setName($name);
+    }
+    
+    public function getSurname(){
+        return $this->contactDetails->getSurname();
+    }
+
+    public function setSurname($surname){
+        $this->contactDetails->setSurname($surname);
     }
 
     public function getEmail()
