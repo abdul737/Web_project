@@ -12,6 +12,7 @@ class User {
     {
         $this->setId($userId);
         $this->password = $password;
+        $this->id = $userId;
         $this->contactDetails = new ContactDetail($name, $surname, $phoneNumber, $email, null);
     }
 

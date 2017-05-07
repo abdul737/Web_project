@@ -14,8 +14,8 @@ class _Parent extends User
 
   public function __construct($userId, $name, $surname, $password, $email, $phoneNumber){
       parent::__construct($userId, $name, $surname, $password, $email, $phoneNumber);
+      $this->students = array();
       $this->passport = null;
-      $this->students = null;
   }
 
   public function getStudents(){
@@ -27,8 +27,6 @@ class _Parent extends User
   }
 
   public function addStudent($student){
-      if($this->students == null)
-          $this->students = array();
       array_push($this->students, $student);
   }
 }

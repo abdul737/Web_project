@@ -74,7 +74,7 @@
                                 </span>
                                         <div class="form-group label-floating">
                                             <label class="control-label">Login</label>
-                                            <input name="login" id="check" data-minlength="6" type="text" required class="form-control">
+                                            <input title="login" name="login" id="login" data-minlength="6" type="text" required class="form-control">
                                         </div>
                                     </div>
                                     <div class="input-group">
@@ -83,7 +83,7 @@
                                 </span>
                                         <div class="form-group label-floating">
                                             <label class="control-label">Password</label>
-                                            <input name="l_password" type="password" required
+                                            <input title="password" name="password" type="password" required
                                                    class="form-control">
                                         </div>
                                     </div>
@@ -112,7 +112,7 @@
                 <p class="copyright pull-right">
                     &copy;
                     <script>
-                        document.write(new Date().getFullYear())
+                        document.write((new Date().getFullYear()).toString());
                     </script>
                     <a href="#">Edu Management System</a>
                 </p>
@@ -164,14 +164,12 @@
 <script src="../../assets/js/main.js"></script>
 <script type="text/javascript">
     $().ready(function () {
+        main.checkFullPageBackgroundImage();
         setTimeout(function () {
             // after 1000 ms we add the class animated to the login/register card
             $('.card').removeClass('card-hidden');
-        }, 700)
-        main.checkFullPageBackgroundImage();
-        if(!($('#check').value.length >= 6)){
-            $('button[type="submit"]').prop('disabled', true);
-        }
+        }, 700);
+        $('button[type="submit"]').prop('disabled', false);
         $('#check').on('input', function() {
             if(this.value.length >= 6) {
                 $('button[type="submit"]').prop('disabled', false);
@@ -179,9 +177,6 @@
                 $('button[type="submit"]').prop('disabled', true);
             }
         });
-
     });
 </script>
-
-
 </html>
