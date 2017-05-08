@@ -17,7 +17,6 @@ use \databaseManager\DBManager;
 session_start();
 
 if(isset($_POST["login"]) && $_SERVER["REQUEST_METHOD"] == "POST"){
-    echo "checking";
     $login = (string)test_input($_POST["login"]);
     $pwd = (string)test_input($_POST["password_l"]);
     if (empty($login) && empty($pwd)) {
@@ -133,21 +132,31 @@ function getParent($id, $user){
 function getStudent($id){
     $student = null;
     $connection = connect();
-    $statement = $connection->prepare('SELECT name, surname FROM user WHERE id = ?');
+    $statement = $connection->prepare('SELECT birthdate FROM student WHERE id = ?');
+    $statement->bind_param("i", $id);
+    $statement->execute();
+    $birthdate = null;
+    $statement->bind_result($birthdate);
+    $statement->fetch();
+    $statement->close();
+
+    $statement = $connection->prepare('SELECT name, surname, email, phoneNumber FROM user WHERE id = ?');
     $statement->bind_param("i", $id);
     $statement->execute();
     $name = null;
     $surname = null;
-    $statement->bind_result($name, $surname);
+    $email = null;
+    $phoneNumber = null;
+    $statement->bind_result($name, $surname, $email, $phoneNumber);
     if($statement->fetch()){
-        $student = new Student($id, $name, $surname, null);
+        $student = new Student($id, $name, $surname, null, $birthdate, $email, $phoneNumber);
+        error_log($student->getEmail());
     }else{
         error_log(__FILE__.": not found in USER table");
         return;
     }
     $statement->close();
-    $gID = null;
-    $cID = null;
+
     $statement = $connection->prepare('SELECT groupID FROM attendingStudent WHERE studentID = ?');
     $statement->bind_param("i", $id);
     $statement->execute();

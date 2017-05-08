@@ -10,12 +10,13 @@ $admin = $_SESSION['admin'];
 
 
 require_once("adminPageTop.html");
+require_once("courseListTop.html");
 
 foreach($admin->getAllCourses() as $course){
     $title = $course->getTitle();
     $length = $course->getLength();
     $ageLimit = $course->getAgeLimit();
-    include("adminPageCourseListContent.html");
+    include("courseList.html");
 }
 
 

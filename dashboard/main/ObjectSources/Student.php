@@ -17,10 +17,10 @@ class Student extends User
     private $parent;
     private $submittedAssignments = array();
 
-    public function __construct($userId, $name, $surname, $parent, $birthdate = null, $email = null, $phoneNumber = null)
+    public function __construct($userId, $name, $surname, $password, $birthdate = null, $email = null, $phoneNumber = null)
     {
-        parent::__construct($userId, $name, $surname, null, $email, $phoneNumber);
-        $this->parent = $parent;
+        parent::__construct($userId, $name, $surname, $password, $email, $phoneNumber);
+        $this->parent = null;
         $this->setGroups(null);
         $this->setBirthdate($birthdate);
     }
