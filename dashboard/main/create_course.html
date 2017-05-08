@@ -64,27 +64,33 @@
             </div>
             <ul class="nav">
                 <li>
-                    <a href="#">
+                    <a href="adminPage.html">
                         <i class="material-icons">dashboard</i>
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li>
-                    <a href="addkid.php">
-                        <i class="material-icons">face</i>
-                        <p>Register kid</p>
+                <li class="active">
+                    <a href="course_list.html" >
+                        <i class="material-icons">assignment</i>
+                        <p>Courses</p>
                     </a>
                 </li>
-                <li>
-                    <a href="regcourse.html">
-                        <i class="material-icons">content_paste</i>
-                        <p>Register to the course</p>
+                <li class="active">
+                    <a href="create_course.html" >
+                        <i class="material-icons">assignment</i>
+                        <p>Create Course</p>
                     </a>
                 </li>
-                <li>
-                    <a href="#">
-                        <i class="material-icons">account_circle</i>
-                        <p>Track kid performance</p>
+                <li class="active">
+                    <a href="create_instructor.html" >
+                        <i class="material-icons">assignment</i>
+                        <p>Add Instructor</p>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="creategroup.php" >
+                        <i class="material-icons">assignment</i>
+                        <p>Create Group</p>
                     </a>
                 </li>
             </ul>
@@ -106,7 +112,6 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#"> Profile </a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
@@ -151,16 +156,6 @@
                         </li>
                         <li class="separator hidden-lg hidden-md"></li>
                     </ul>
-                    <form class="navbar-form navbar-right" role="search">
-                        <div class="form-group form-search is-empty">
-                            <input type="text" class="form-control" placeholder="Search">
-                            <span class="material-input"></span>
-                        </div>
-                        <button type="submit" class="btn btn-white btn-round btn-just-icon">
-                            <i class="material-icons">search</i>
-                            <div class="ripple-container"></div>
-                        </button>
-                    </form>
                 </div>
             </div>
         </nav>
@@ -169,108 +164,169 @@
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
                         <div class="card">
-                            <div class="card-header card-header-icon" data-background-color="blue">
-                                <i class="material-icons">perm_identity</i>
-                            </div>
-                            <div class="card-content">
-                                <h4 class="card-title">Edit Profile -
-                                    <small class="category">Complete your profile</small>
-                                </h4>
-                                <form>
+                            <form class="form-horizontal" action="#" method="#">
+                                <div class="card-header card-header-text" data-background-color="blue">
+                                    <h6>Create course</h6>
+                                </div>
+                                <div class="card-content">
                                     <div class="row">
-                                        <div class="col-md-3">
+                                        <label class="col-md-3 label-on-left">Course name</label>
+                                        <div class="col-md-8">
                                             <div class="form-group label-floating">
-                                                <label class="control-label">ID Number</label>
-                                                <input type="text" class="form-control" disabled value="P00001">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <div class="form-group label-floating">
-                                                <label class="control-label">Phone Number</label>
-                                                <input type="text" class="form-control" value="+(998) 97 454 78 78">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group label-floating">
-                                                <label class="control-label">Email address</label>
-                                                <input type="email" class="form-control" value="briancameron@gmail.com">
+                                                <label class="control-label"></label>
+                                                <input class="form-control" type="text" name="course_name" />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <label class="col-md-3 label-on-left">Price</label>
+                                        <div class="col-md-8">
                                             <div class="form-group label-floating">
-                                                <label class="control-label">Fist Name</label>
-                                                <input type="text" class="form-control" value="Brian">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group label-floating">
-                                                <label class="control-label">Last Name</label>
-                                                <input type="text" class="form-control" value="Cameron">
-                                            </div>
-                                        </div>
-                                    </div> </br >
-                                    <h4 class="card-title">Passport Info</h4>
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="form-group label-floating">
-                                                <label class="control-label">Fist Name</label>
-                                                <input type="text" class="form-control" value="Brian">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group label-floating">
-                                                <label class="control-label">Last Name</label>
-                                                <input type="text" class="form-control" value="Cameron">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group label-floating">
-                                                <label class="control-label">Patronymic</label>
-                                                <input type="text" class="form-control" value="Paulo">
+                                                <label class="control-label"></label>
+                                                <input class="form-control" type="text" name="price" />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <label class="col-md-3 label-on-left">Course duration</label>
+                                        <div class="col-md-8">
                                             <div class="form-group label-floating">
-                                                <label class="control-label">Address</label>
-                                                <input type="text" class="form-control" value="Amir-Temur street, 23a">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group label-floating">
-                                                <label class="control-label">Passport Serial Number</label>
-                                                <input type="text" class="form-control" value="AA1578854">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group label-floating">
-                                                <label class="control-label">Issued by</label>
-                                                <input type="text" class="form-control" value="Toshkent shahar, Yunusobod tuman IIB">
+                                                <label class="control-label"></label>
+                                                <input class="form-control" type="text" name="course_dur" />
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <label class="col-md-3 label-on-left">Lesson duration</label>
+                                        <div class="col-md-8">
                                             <div class="form-group label-floating">
-                                                <label class="control-label">Date of issue</label>
-                                                <input type="text" class="form-control" value="11/10/2017">
+                                                <label class="control-label"></label>
+                                                <input class="form-control" type="text" name="lesson_dur" />
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-md-3 label-on-left">Start date</label>
+                                        <div class="col-md-8">
                                             <div class="form-group label-floating">
-                                                <label class="control-label">Date of expiry</label>
-                                                <input type="text" class="form-control" value="11/10/2025">
+                                                <label class="control-label"></label>
+                                                <input class="form-control" type="date" name="start_date" />
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-md-3 label-on-left">End date</label>
+                                        <div class="col-md-8">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label"></label>
+                                                <input class="form-control" type="date" name="end_date" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-md-3 label-on-left">Days of the week</label>
+                                        <div class="col-sm-8 checkbox-radios">
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="optionsRadios" checked="true"> Monday/Wednesday/Friday
+                                                </label>
+                                            </div>
+                                            <div class="radio">
+                                                <label>
+                                                    <input type="radio" name="optionsRadios"> Tuesday/Thursday/Saturday
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-md-3 label-on-left">Lesson start time</label>
+                                        <div class="col-md-8">
+                                            <div class="form-group label-floating">
+                                                <label class="control-label"></label>
+                                                <input class="form-control" type="time" name="less_start_time" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-md-3 label-on-left">Instructor</label>
+                                        <div class="col-lg-8 col-md-6 col-sm-3">
+                                            <select class="selectpicker" data-style="select-with-transition" multiple title="Choose" data-size="7">
+                                                <option disabled> Choose</option>
+                                                <option value="2">asdasd </option>
+                                                <option value="3">asdasd</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <label class="col-md-3 label-on-left">Assistant</label>
+                                        <div class="col-lg-8 col-md-6 col-sm-3">
+                                            <select class="selectpicker" data-style="select-with-transition" multiple title="Choose" data-size="7">
+                                                <option disabled> Choose</option>
+                                                <option value="2">asdasd </option>
+                                                <option value="3">asdasd</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <br /><br />
+                                    <div class="card-header card-header-icon" data-background-color="blue">
+                                        <i class="material-icons">assignment</i>
+                                    </div>
+                                    <h4 class="card-title">Select student</h4>
+                                    <div class="card-content">
+                                        <div class="table-responsive">
+                                            <table class="table table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th class="text-center">#</th>
+                                                    <th></th>
+                                                    <th>First name</th>
+                                                    <th>Last name</th>
+                                                    <th>Age</th>
+                                                    <th class="text-right">Parent full name</th>
+                                                    <th class="text-right">Parent status</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td class="text-center">1</td>
+                                                    <td>
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" name="optionsCheckboxes" checked>
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td>Madina</td>
+                                                    <td>Saidova</td>
+                                                    <td>12</td>
+                                                    <td class="text-right">Jamshid Saidov</td>
+                                                    <td class="text-right">Completed <i class="material-icons">done</i></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center">2</td>
+                                                    <td>
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <input type="checkbox" name="optionsCheckboxes">
+                                                            </label>
+                                                        </div>
+                                                    </td>
+                                                    <td>Madina</td>
+                                                    <td>Saidova</td>
+                                                    <td>12</td>
+                                                    <td class="text-right">Jamshid Saidov</td>
+                                                    <td class="text-right">Not completed <i class="material-icons">close</i></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
 
-                                    <button type="submit" class="btn btn-info pull-right">Update Profile</button>
-                                    <div class="clearfix"></div>
-                                </form>
-                            </div>
+                                </div>
+                                <div class="card-footer text-center">
+                                    <button type="submit" class="btn btn-info btn-fill">Create</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

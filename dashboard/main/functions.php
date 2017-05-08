@@ -6,6 +6,9 @@
  * Time: 4:11
  */
 
+require_once ("DBConfig.php");
+use \databaseManager\DBConfig;
+
 function test_input($data) {
     $data = trim($data);
     $data = stripslashes($data);
@@ -14,17 +17,27 @@ function test_input($data) {
 }
 
 function connect(){
-    $DB_USERNAME = "root";
-    $DB_PASSWORD = "tHISpaSSWORDiSvERYsTRONG12345";
-    $DB_NAME = "lcm";
-    $DB_HOST = "localhost";
+    $DB_USERNAME = DBConfig::getDBUSERNAME();
+    $DB_PASSWORD = DBConfig::getDBPASSWORD();
+    $DB_NAME = DBConfig::getDBNAME();
+    $DB_HOST = DBConfig::getDBHOST();
 
     $connection = new mysqli($DB_HOST, $DB_USERNAME, $DB_PASSWORD, $DB_NAME);
+
     if(mysqli_connect_errno())
     {
-        //throw new Exception("Connection to MySQL error: ".mysqli_connect_error());
+        error_log("MySQL error: ".$connection->error);
+        throw new Exception("Connection to MySQL error: ".$connection->error);
+    }
+    else
+    {
+        error_log("connected");
     }
 
     return $connection;
+}
+
+function display($message){
+    echo "<h6>".$message."</h6>";
 }
 ?>

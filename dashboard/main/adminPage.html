@@ -1,14 +1,3 @@
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-     $name = $birthdate = $password =  $groups = "";
-     $points = 0;
-     $parent = null;
-     $lastLogin = $photo = $email = $phoneNumber = null;
-     $test = new User();
-     $test2 = $test->getPhoneNumber();
-}
-?>
-
 <!doctype html>
 <html lang="en">
 
@@ -18,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="apple-touch-icon" sizes="76x76" href="http://demos.creative-tim.com/material-dashboard-pro/assets/img/apple-icon.png" />
     <link rel="icon" type="image/png" href="http://demos.creative-tim.com/material-dashboard-pro/assets/img/favicon.png" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Edu Management System</title>
+    <title>ADMINISTRATOR</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
     <!-- Bootstrap core CSS     -->
@@ -55,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <div class="info">
                     <a data-toggle="collapse" href="#collapseExample" class="collapsed">
-                        Brian Cameron
+                        Flappy Bird
                         <b class="caret"></b>
                     </a>
                     <div class="collapse" id="collapseExample">
@@ -75,27 +64,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <ul class="nav">
                 <li>
-                    <a href="../dashboard.html">
+                    <a href="adminPage.html">
                         <i class="material-icons">dashboard</i>
                         <p>Dashboard</p>
                     </a>
                 </li>
                 <li class="active">
-                    <a href="#" >
-                        <i class="material-icons">face</i>
-                        <p>Register kid</p>
+                    <a href="course_list.html" >
+                        <i class="material-icons">assignment</i>
+                        <p>Courses</p>
                     </a>
                 </li>
-                <li>
-                    <a href="../dashboard.html">
-                        <i class="material-icons">content_paste</i>
-                        <p>Register to the course</p>
+                <li class="active">
+                    <a href="create_course.html" >
+                        <i class="material-icons">assignment</i>
+                        <p>Create Course</p>
                     </a>
                 </li>
-                <li>
-                    <a href="../dashboard.html">
-                        <i class="material-icons">account_circle</i>
-                        <p>Track kid performance</p>
+                <li class="active">
+                    <a href="create_instructor.html" >
+                        <i class="material-icons">assignment</i>
+                        <p>Add Instructor</p>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="creategroup.php" >
+                        <i class="material-icons">assignment</i>
+                        <p>Create Group</p>
                     </a>
                 </li>
             </ul>
@@ -117,7 +112,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#"> Profile </a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
@@ -162,61 +156,75 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </li>
                         <li class="separator hidden-lg hidden-md"></li>
                     </ul>
-                    <form class="navbar-form navbar-right" role="search">
-                        <div class="form-group form-search is-empty">
-                            <input type="text" class="form-control" placeholder="Search">
-                            <span class="material-input"></span>
-                        </div>
-                        <button type="submit" class="btn btn-white btn-round btn-just-icon">
-                            <i class="material-icons">search</i>
-                            <div class="ripple-container"></div>
-                        </button>
-                    </form>
                 </div>
             </div>
         </nav>
         <div class="content">
             <div class="container-fluid">
+                <div class="text-right">
+                    <button type="submit" class="btn btn-info btn-fill">Create course</button>
+                </div>
                 <div class="row">
-                    <div class="col-md-10 col-md-offset-1">
+                    <div class="col-md-12">
                         <div class="card">
-                            <form id="RangeValidation" class="form-horizontal" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="get">
-                                <div class="card-header card-header-text" data-background-color="blue">
-                                    <i class="material-icons">add</i>
+                            <div class="card-header card-header-icon" data-background-color="blue">
+                                <i class="material-icons">assignment</i>
+                            </div>
+                            <h4 class="card-title">Course list</h4>
+                            <div class="card-content">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th class="text-center">#</th>
+                                            <th>Name</th>
+                                            <th>Level</th>
+                                            <th>Started</th>
+                                            <th>Finished</th>
+                                            <th class="text-right">Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="text-center">1</td>
+                                            <td>Scratch</td>
+                                            <td>Basic</td>
+                                            <td>01.01.2017</td>
+                                            <td>01.02.2017</td>
+                                            <td class="td-actions text-right">
+                                                <button type="button" rel="tooltip" class="btn btn-info">
+                                                    <i class="material-icons">info</i>
+                                                </button>
+                                                <button type="button" rel="tooltip" class="btn btn-success">
+                                                    <i class="material-icons">edit</i>
+                                                </button>
+                                                <button type="button" rel="tooltip" class="btn btn-danger">
+                                                    <i class="material-icons">close</i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">2</td>
+                                            <td>Scratch</td>
+                                            <td>Basic</td>
+                                            <td>01.01.2017</td>
+                                            <td>01.02.2017</td>
+                                            <td class="td-actions text-right">
+                                                <button type="button" rel="tooltip" class="btn btn-info">
+                                                    <i class="material-icons">info</i>
+                                                </button>
+                                                <button type="button" rel="tooltip" class="btn btn-success">
+                                                    <i class="material-icons">edit</i>
+                                                </button>
+                                                <button type="button" rel="tooltip" class="btn btn-danger">
+                                                    <i class="material-icons">close</i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <div class="card-content">
-                                    <div class="row">
-                                        <label class="col-md-2 label-on-left">First name</label>
-                                        <div class="col-md-9">
-                                            <div class="form-group label-floating">
-                                                <label class="control-label"></label>
-                                                <input class="form-control" type="text" name="first_name" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="col-md-2 label-on-left">Last name</label>
-                                        <div class="col-md-9">
-                                            <div class="form-group label-floating">
-                                                <label class="control-label"></label>
-                                                <input class="form-control" type="text" name="last_name" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <label class="col-md-2 label-on-left">Date of birth</label>
-                                        <div class="col-md-9">
-                                            <div class="form-group label-floating ">
-                                                <label class="control-label"></label>
-                                                <input class="form-control" name="date" type="text">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-footer text-center">
-                                    <button type="submit" class="btn btn-info btn-fill">Add kid</button>
-                                </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>

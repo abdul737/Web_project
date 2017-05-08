@@ -64,39 +64,33 @@
             </div>
             <ul class="nav">
                 <li>
-                    <a href="#">
+                    <a href="adminPage.html">
                         <i class="material-icons">dashboard</i>
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li>
-                    <a href="#" >
-                        <i class="material-icons">face</i>
-                        <p>Register kid</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="material-icons">content_paste</i>
-                        <p>Register to the course</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="material-icons">account_circle</i>
-                        <p>Track kid performance</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="material-icons">assessment</i>
-                        <p>Account info</p>
+                <li class="active">
+                    <a href="course_list.html" >
+                        <i class="material-icons">assignment</i>
+                        <p>Courses</p>
                     </a>
                 </li>
                 <li class="active">
-                    <a href="#">
-                        <i class="material-icons">grade</i>
-                        <p>Leader board</p>
+                    <a href="create_course.html" >
+                        <i class="material-icons">assignment</i>
+                        <p>Create Course</p>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="create_instructor.html" >
+                        <i class="material-icons">assignment</i>
+                        <p>Add Instructor</p>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="creategroup.php" >
+                        <i class="material-icons">assignment</i>
+                        <p>Create Group</p>
                     </a>
                 </li>
             </ul>
@@ -167,55 +161,65 @@
         </nav>
         <div class="content">
             <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-10 col-md-offset-1">
-                        <div class="row">
-                            <label class="col-sm-2 label-on-left">Choose</label>
-                            <div class="col-sm-3">
-                                <select class="selectpicker" data-style="select-with-transition" title="Single Select" data-size="7">
-                                    <option disabled selected>Choose kid</option>
-                                    <option value="2">Adiba Alimova</option>
-                                    <option value="3">Sardor Alimov</option>
-                                </select>
-                            </div>
-                            <div class="col-sm-3">
-                                <select class="selectpicker" data-style="select-with-transition" title="Single Select" data-size="7">
-                                    <option disabled selected>Choose course</option>
-                                    <option value="2">Math</option>
-                                    <option value="3">English</option>
-                                </select>
-                            </div>
-                            <label class="btn btn-info">
-                                View
-                            </label>
-                        </div>
-                    </div>
+                <div class="text-right">
+                    <button type="submit" class="btn btn-info btn-fill">Create course</button>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header card-header-icon" data-background-color="blue">
-                                <i class="material-icons">grade</i>
+                                <i class="material-icons">assignment</i>
                             </div>
+                            <h4 class="card-title">Course list</h4>
                             <div class="card-content">
-                                <h4 class="card-title">Leader board</h4>
                                 <div class="table-responsive">
                                     <table class="table">
-                                        <thead class="text-info">
-                                        <th>Name</th>
-                                        <th>Course name</th>
-                                        <th>Grade</th>
+                                        <thead>
+                                        <tr>
+                                            <th class="text-center">#</th>
+                                            <th>Name</th>
+                                            <th>Level</th>
+                                            <th>Started</th>
+                                            <th>Finished</th>
+                                            <th class="text-right">Actions</th>
+                                        </tr>
                                         </thead>
                                         <tbody>
                                         <tr>
-                                            <td>Malika</td>
-                                            <td>Math</td>
-                                            <td>B+</td>
+                                            <td class="text-center">1</td>
+                                            <td>Scratch</td>
+                                            <td>Basic</td>
+                                            <td>01.01.2017</td>
+                                            <td>01.02.2017</td>
+                                            <td class="td-actions text-right">
+                                                <button type="button" rel="tooltip" class="btn btn-info">
+                                                    <i class="material-icons">info</i>
+                                                </button>
+                                                <button type="button" rel="tooltip" class="btn btn-success">
+                                                    <i class="material-icons">edit</i>
+                                                </button>
+                                                <button type="button" rel="tooltip" class="btn btn-danger">
+                                                    <i class="material-icons">close</i>
+                                                </button>
+                                            </td>
                                         </tr>
                                         <tr>
-                                            <td>Sardor</td>
-                                            <td>Math</td>
-                                            <td>B0</td>
+                                            <td class="text-center">2</td>
+                                            <td>Scratch</td>
+                                            <td>Basic</td>
+                                            <td>01.01.2017</td>
+                                            <td>01.02.2017</td>
+                                            <td class="td-actions text-right">
+                                                <button type="button" rel="tooltip" class="btn btn-info">
+                                                    <i class="material-icons">info</i>
+                                                </button>
+                                                <button type="button" rel="tooltip" class="btn btn-success">
+                                                    <i class="material-icons">edit</i>
+                                                </button>
+                                                <button type="button" rel="tooltip" class="btn btn-danger">
+                                                    <i class="material-icons">close</i>
+                                                </button>
+                                            </td>
                                         </tr>
                                         </tbody>
                                     </table>
