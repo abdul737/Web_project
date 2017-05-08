@@ -64,19 +64,19 @@
             </div>
             <ul class="nav">
                 <li>
-                    <a href="adminPage.html">
+                    <a href="adminPage.php">
                         <i class="material-icons">dashboard</i>
                         <p>Dashboard</p>
                     </a>
                 </li>
                 <li class="active">
-                    <a href="course_list.html" >
+                    <a href="adminPage.php" >
                         <i class="material-icons">assignment</i>
                         <p>Courses</p>
                     </a>
                 </li>
                 <li class="active">
-                    <a href="create_course.html" >
+                    <a href="adminPage.php" >
                         <i class="material-icons">assignment</i>
                         <p>Create Course</p>
                     </a>

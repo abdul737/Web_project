@@ -17,8 +17,9 @@ use \databaseManager\DBManager;
 session_start();
 
 if(isset($_POST["login"]) && $_SERVER["REQUEST_METHOD"] == "POST"){
+    echo "checking";
     $login = (string)test_input($_POST["login"]);
-    $pwd = (string)test_input($_POST["password"]);
+    $pwd = (string)test_input($_POST["password_l"]);
     if (empty($login) && empty($pwd)) {
         echo "<script>alert('Login or password not written')</script>";
     } else {
@@ -56,6 +57,7 @@ function check($login, $password){
             }else if($userType == 'a'){
                 $admin = getAdmin($user);
                 $_SESSION['admin'] = $admin;
+                header('Location: adminPage.php');
                 exit;
             }
         }

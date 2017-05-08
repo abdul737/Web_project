@@ -6,6 +6,9 @@
  * 2) get functions must return $this-><property of the class>
  */
 
+require_once ("User.php");
+use \User;
+
 class Student extends User
 {
     private $birthdate;

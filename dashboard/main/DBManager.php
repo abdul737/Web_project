@@ -266,11 +266,11 @@ class DBManager
         {
             $statement->execute();
             $statement->store_result();
-            $statement->bind_result($id, $title, $length);
+            $statement->bind_result($id, $title, $length, $ageLimit);
             $courses = array();
             while($statement->fetch())//object fetches only id of the student
             {
-                array_push($courses, new Course($id, $title, $length));
+                array_push($courses, new Course($id, $title, $length, $ageLimit));
             }
 
             $statement->free_result();

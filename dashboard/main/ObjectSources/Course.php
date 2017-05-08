@@ -23,22 +23,15 @@ class Course
 
   }
 
-  //Setters and Getters
-    /**
-     * @return mixed
-     */
-    public function getTitle()
-    {
+  public function getTitle()
+  {
         return $this->title;
-    }
+  }
 
-    /**
-     * @param mixed $title
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-    }
+  public function setTitle($title)
+  {
+      $this->title = $title;
+  }
 
     /**
      * @return mixed
