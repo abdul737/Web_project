@@ -22,4 +22,14 @@ foreach($admin->getAllStudents() as $student){
     $i++;
 }
 
+echo "</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>";
+
 require_once("adminPageBottom.html");

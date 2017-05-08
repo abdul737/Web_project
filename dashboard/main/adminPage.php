@@ -21,5 +21,15 @@ foreach($admin->getAllCourses() as $course){
     $i++;
 }
 
+echo "</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>";
+
 
 require_once("adminPageBottom.html");
