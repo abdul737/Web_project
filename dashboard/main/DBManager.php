@@ -74,6 +74,54 @@ class DBManager
         return -1;
     }
 
+    public static function updateParent(\_Parent $parent){
+        $connection = self::getConnection();
+        $query = 'UPDATE user SET name=?, surname=?, password=?, email=?, phoneNumber=? WHERE id=?';
+        $statement = $connection->prepare($query);
+        if(!$statement){
+            error_log("reg.php: error with the prepared statement");
+            return;
+        }
+        $id = $parent->getId();
+        $name = $parent->getName();
+        $surname = $parent->getSurname();
+        $password = $parent->getPassword();
+        $email = $parent->getEmail();
+        $phoneNumber = $parent->getPhoneNumber();
+        $statement->bind_param("sssssi", $name, $surname, $password, $email, $phoneNumber, $id);
+
+        if($statement->execute()){
+            error_log("reg.php: parent updated into USER table");
+            /* CAN BE USED IF THERE WILL BE OTHER PARAMETERS THAN ID IN PARENT TABLE
+             * if($stmt = $connection->prepare('INSERT INTO parent (id) VALUE (?)')){
+                $stmt->bind_param("i", $parent_id);
+                $stmt->execute();
+                $parent_id = $statement->insert_id;
+
+                error_log("reg.php: inserted into PARENT table");
+
+                $stmt->free_result();
+                $stmt->close();
+                $statement->free_result();
+                $statement->close();
+                $connection->close();
+                return $parent_id;
+            }else{
+                error_log("reg.php: not inserted into PARENT table");
+            }
+            $stmt->close();
+            */
+        }else {
+            error_log("reg.php: not inserted into USER table");
+        }
+
+        if($connection != null){
+            $statement->free_result();
+            $statement->close();
+        }
+        return -1;
+    }
+
     public static function insertStudent(\Student $student, \_Parent $bindParent = null)
     {
         $id = null;

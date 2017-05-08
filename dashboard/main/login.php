@@ -121,8 +121,10 @@ function getParent($id, $user){
         $student->setParent($parent);
         $parent->addStudent($student);
     }
+    session_start();
     $_SESSION['parent'] = $parent;
     echo "<script>alert('Parent info is gotten from database')</script>";
+    header("Location: parentprofile.php");
     exit;
 }
 
