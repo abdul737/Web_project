@@ -7,7 +7,6 @@
  */
 
 require_once ("User.php");
-use \User;
 
 class Student extends User
 {

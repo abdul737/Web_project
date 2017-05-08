@@ -8,18 +8,21 @@ if(isset($parent))
 {
     $students = \databaseManager\DBManager::selectAllStudentsOfParent($parent);
     if ($_POST) {
-        $name = $birthdate = $password =  $groups = "";
-        $points = 0;
-        $parent = null;
-        $lastLogin = $photo = $email = $phoneNumber = null;
-        $test = new User();
-        $test2 = $test->getPhoneNumber();
+        $first_name = $_POST["first_name"];
+        $last_name = $_POST["last_name"];
+        $date = $_POST["date"];
+        $student = new Student(null, $first_name, $last_name, $parent, $date);
+        $student = \databaseManager\DBManager::insertStudent($student, $parent);
+        printf("<script>alert('New student with id s%06d successfully created!')</script>", $student->getId());
+        $_POST = array();
+        include "addstudent.php";
+        exit;
     }
 }
 else
 {
     echo '<script>alert("Session timed out or not found!");</script>';
-    header("Location: login.php");
+    include_once("login.php");
     exit;
 }
 ?>
@@ -42,6 +45,7 @@ else
 
         <?php include "include/siteLogo.php"; ?>
         <?php include "include/profileWrapper.php"; ?>
+    </div>
 
     <div class="main-panel">
 
@@ -52,7 +56,7 @@ else
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
                         <div class="card">
-                            <form id="RangeValidation" class="form-horizontal" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="get">
+                            <form id="RangeValidation" class="form-horizontal" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
                                 <div class="card-header card-header-text" data-background-color="blue">
                                     <i class="material-icons">add</i>
                                 </div>
@@ -80,7 +84,7 @@ else
                                         <div class="col-md-9">
                                             <div class="form-group label-floating ">
                                                 <label class="control-label"></label>
-                                                <input class="form-control" name="date" type="text">
+                                                <input class="form-control" name="date" type="date">
                                             </div>
                                         </div>
                                     </div>

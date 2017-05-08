@@ -74,5 +74,21 @@ class User {
     {
         $this->id = $id;
     }
+    public function getPhoto()
+    {
+        return $this->contactDetails->getPhoto();
+    }
+    public function setPhoto($photo)
+    {
+        return $this->contactDetails->setPhoto();
+    }
+    public function getContactDetails()
+    {
+        return $this->contactDetails;
+    }
+    public function setContactDetails($contact)
+    {
+        $this->contactDetails = $contact;
+    }
 }
 ?>

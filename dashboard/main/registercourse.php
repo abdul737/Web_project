@@ -3,28 +3,41 @@ require_once("DBManager.php");
 session_start();
 $selectCourseId = null;
 $selectStudentId = null;
+$selectTimeId = null;
 $selectTime = null;
 
 $parent = $_SESSION["parent"];
-
 if (isset($parent))
 {
-    $students = \databaseManager\DBManager::selectAllStudentsOfParent($parent);
-    $courses = \databaseManager\DBManager::selectAllCourses();
-    $times = array("Doesn't matter", "Monday/Wednesday/Friday", "Tuesday/Thursday/Saturday");
-
+    if (!(isset($_COOKIE["students"])))
+    {
+        $_COOKIE["students"] = \databaseManager\DBManager::selectAllStudentsOfParent($parent);
+        $_COOKIE["courses"] = \databaseManager\DBManager::selectAllCourses();
+        $_COOKIE["times"] = array("Doesn't matter", "Monday/Wednesday/Friday", "Tuesday/Thursday/Saturday");
+    }
+    $students = $_COOKIE["students"];
+    $courses = $_COOKIE["courses"];
+    $times = $_COOKIE["times"];
+    if ($_GET)
+    {
+        if ($_GET["inserted"])
+            echo "<script>alert('Student added to waitlist');</script>";
+    }
     if ($_POST) {
         $selectCourseId = $_POST["selectCourseId"];
         $selectStudentId = $_POST["selectStudentId"];
-        $selectTime = $_POST["selectTime"];
+        $selectTimeId = $_POST["selectTimeId"];
         $selectCourseId = \databaseManager\DBManager::test_input($selectCourseId);
         $selectStudentId = \databaseManager\DBManager::test_input($selectStudentId);
-        $selectTime = \databaseManager\DBManager::test_input($selectTime);
-        $selectStudentId = $students[$selectStudentId - 1]->getId();
-        $selectCourseId = $courses[$selectCourseId - 1]->getCourseId();
-        $selectTime = $times[$selectTime - 1];
+        $selectTimeId = \databaseManager\DBManager::test_input($selectTimeId);
+        $selectStudentId = $students[$selectStudentId - 2]->getId();
+        $selectCourseId = $courses[$selectCourseId - 2]->getCourseId();
+        $selectTime = $times[$selectTimeId - 2];
+        echo $selectStudentId;
+        echo $selectCourseId;
+        echo $selectTime;
         $waitList = \databaseManager\DBManager::insertOrGetWaitlist($parent->getId(), $selectStudentId, $selectCourseId, $selectTime);
-        header('Location: registercourse.php');
+        header('Location: registercourse.php?inserted=true');
         exit;
     }
     $waitList = \databaseManager\DBManager::insertOrGetWaitlist($parent->getId(), $selectStudentId, $selectCourseId, $selectTime);
@@ -116,7 +129,7 @@ if (isset($parent))
                                                 }
                                                 ?>
                                             </select>
-                                            <input type="hidden" name="selectTime">
+                                            <input type="hidden" name="selectTimeId">
                                         </div>
                                     </div>
                                 </div>

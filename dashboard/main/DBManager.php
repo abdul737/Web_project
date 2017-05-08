@@ -144,10 +144,13 @@ class DBManager
         $query = "INSERT INTO user VALUES(?,?,?,?,?,?,?)";
         if ($statement = self::getConnection()->prepare($query))
         {
-            $statement->bind_param("ssss", $password, $email, $name,
+            echo "test<br>";
+            $statement->bind_param("ssssssi", $password, $email, $name,
                 $surname, $phoneNumber, "s", $photo);
             $statement->execute();
             $id = $statement->insert_id;
+            echo "ID: ";
+            echo $statement->insert_id;
             $student->setId($id);
 
             $statement->free_result();
@@ -340,8 +343,6 @@ class DBManager
                 $statement->bind_param("iiis", $parentID, $studentId, $courseId, $selectTime);
                 $statement->execute();
 
-                print("<script>alert('Student successfully registered to course')</script>");
-
                 $statement->free_result();
                 $statement->close();
             } else {
@@ -487,5 +488,13 @@ class DBManager
         $group->setCourse($course);
         return $group;
     }
+
+    public static function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
 }
 
