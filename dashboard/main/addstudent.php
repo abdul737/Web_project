@@ -27,7 +27,6 @@ else
 <!doctype html>
 <html lang="en">
 
-
 <head>
     <?php include "include/parentProfileHeader.php"; ?>
 </head>
