@@ -5,6 +5,7 @@ require_once "DBConnect.php";
 require_once "./ObjectSources/_Parent.php";
 require_once "./ObjectSources/Student.php";
 require_once "ObjectSources/Course.php";
+require_once "ObjectSources/Waitlist.php";
 
 use \Exception;
 use \Course;
@@ -22,6 +23,13 @@ class DBManager
             error_log($err->getTrace());
         }
         return;
+    }
+
+    public static function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
     }
 
     public static function insertParent(\_Parent $parent){
@@ -92,7 +100,7 @@ class DBManager
         if ($statement = self::getConnection()->prepare($query))
         {
             $statement->bind_param("ssss", $password, $email, $name,
-                $surname, $phoneNumber, "s", $birthdate, $photo);
+                $surname, $phoneNumber, "s", $photo);
             $statement->execute();
             $id = $statement->insert_id;
             $student->setId($id);
@@ -118,10 +126,10 @@ class DBManager
             error_log("WHILE INSERTING STUDENT PARENT RELATIONSHIP INTO TABLE CUSTOMER");
         }
         /* INSERTING STUDENT AND TOTALPOINTS INTO TABLE STUDENT*/
-        $query = "INSERT INTO student VALUES(?,?)";
+        $query = "INSERT INTO student VALUES(?,?,?)";
         if ($statement = self::getConnection()->prepare($query))
         {
-            $statement->bind_param($id, $totalPoints);
+            $statement->bind_param("ids", $id, $totalPoints, $birthdate);
             $statement->execute();
 
             $statement->free_result();
@@ -145,12 +153,12 @@ class DBManager
         $photo = null;
         $totalPoints = null;
         /* SELECTING STUDENT FROM USER TABLE*/
-        $query = "SELECT password, email, name, surname, phoneNumber, birthdate, photoFileId FROM user WHERE id=?";
+        $query = "SELECT password, email, name, surname, phoneNumber, photoFileId FROM user WHERE id=?";
         if ($statement = self::getConnection()->prepare($query)) {
             $statement->bind_param("i", $id);
             $statement->execute();
             $statement->store_result();
-            $statement->bind_result($password, $email, $name, $surname, $phoneNumber, $birthdate, $photo);
+            $statement->bind_result($password, $email, $name, $surname, $phoneNumber, $photo);
             $statement->fetch();
 
             $statement->free_result();
@@ -160,13 +168,13 @@ class DBManager
             error_log("While selecting student with id = " . $id);
         }
         /* SELECTING TOTALPOINTS FROM TABLE STUDENT*/
-        $query = "SELECT totalPoints FROM student WHERE id=?";
+        $query = "SELECT totalPoints, birthdate FROM student WHERE id=?";
         if($statement = self::getConnection()->prepare($query))
         {
             $statement->bind_param("i", $id);
             $statement->execute();
             $statement->store_result();
-            $statement->bind_result($totalPoints);
+            $statement->bind_result($totalPoints, $birthdate);
             $statement->fetch();
 
             $statement->free_result();
@@ -182,7 +190,6 @@ class DBManager
 
     public static function selectAllStudentsOfParent(\_Parent $parent)
     {
-        echo "\nSelecting";
         $allStudents = array();
         $parentId = $parent->getId();
 
@@ -274,6 +281,46 @@ class DBManager
             error_log("WHILE GETTING ARRAY OF studentIDS' FOR GROUP FROM attendingStudents");
         }
         return $courses;
+    }
+
+    public static function insertOrGetWaitlist($parentID, $studentId = null, $courseId = null, $selectTime = null)
+    {
+        $waitlist = array();
+        if(isset($studentId) && isset($courseId) && isset($selectTime))
+        {
+            /* INSERTING TO WAITLIST */
+            $query = "INSERT INTO waitlist(parentID, studentID, courseID, days) VALUES(?,?,?,?)";
+            if ($statement = self::getConnection()->prepare($query))
+            {
+                $statement->bind_param("iiis", $parentID, $studentId, $courseId, $selectTime);
+                $statement->execute();
+
+                print("<script>alert('Student successfully registered to course')</script>");
+
+                $statement->free_result();
+                $statement->close();
+            }else
+            {
+                error_log("ERROR WHILE INSERTING TO WAITLIST");
+            }
+        }
+        /* SELECTING FROM WAITLIST */
+        $query = "SELECT * FROM waitlist WHERE parentID=?";
+        if ($statement = self::getConnection()->prepare($query))
+        {
+            $statement->bind_param("i", $parentID);
+            $statement->execute();
+            $result = $statement->get_result();
+            while ($row = $result->fetch_assoc())
+            {
+                $wait = new \Waitlist($parentID, $row["studentID"], $row["courseID"], $row["days"]);
+                array_push($waitlist, $wait);
+            }
+        } else
+        {
+            error_log("ERROR WHILE SELECTING FROM WAITLIST");
+        }
+        return $waitlist;
     }
 }
 

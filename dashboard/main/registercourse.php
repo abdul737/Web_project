@@ -7,14 +7,30 @@ if (isset($parent))
 {
     $students = \databaseManager\DBManager::selectAllStudentsOfParent($parent);
     $courses = \databaseManager\DBManager::selectAllCourses();
+    $times = array("Doesn't matter", "Monday/Wednesday/Friday", "Tuesday/Thursday/Saturday");
+
+    if ($_POST) {
+        $selectCourseId = $_POST["selectCourseId"];
+        $selectStudentId = $_POST["selectStudentId"];
+        $selectTime = $_POST["selectTime"];
+        $selectCourseId = \databaseManager\DBManager::test_input($selectCourseId);
+        $selectStudentId = \databaseManager\DBManager::test_input($selectStudentId);
+        $selectTime = \databaseManager\DBManager::test_input($selectTime);
+        $selectStudentId = $students[$selectStudentId - 1]->getId();
+        $selectCourseId = $courses[$selectCourseId - 1]->getCourseId();
+        $selectTime = $times[$selectTime - 1];
+        $waitList = \databaseManager\DBManager::insertOrGetWaitlist($parent->getId(), $selectStudentId, $selectCourseId, $selectTime);
+        header('Location: registercourse.php');
+        exit;
+    }
+    $waitList = \databaseManager\DBManager::insertOrGetWaitlist($parent->getId(), $selectStudentId, $selectCourseId, $selectTime);
+
 }else
 {
     echo '<script>alert("Session timed out or not found!");</script>';
     header("Location: login.php");
     exit;
 }
-
-
 ?>
 
 <!doctype html>
@@ -188,15 +204,15 @@ if (isset($parent))
                 <div class="row">
                     <div class="col-md-10 col-md-offset-1">
                         <div class="card">
-                            <form id="RangeValidation" class="form-horizontal" action="#" method="post">
+                            <form id="RangeValidation" class="form-horizontal" method="post" action='<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>'>
                                 <div class="card-header card-header-text" data-background-color="blue">
                                     <i class="material-icons">add</i>
                                 </div>
                                 <div class="card-content">
-                                    <div class="row">
+                                    <div class="row student">
                                         <label class="col-md-2 label-on-left">Choose your kid</label>
-                                            <div class="col-md-9">
-                                                <select name="selectStudent" class="selectpicker" data-style="select-with-transition" title="Single Select" data-size="7">
+                                            <div class="col-md-9" name="selectStudent">
+                                                <select id="students" class="selectpicker" data-style="select-with-transition" title="Single Select" data-size="7">
                                                     <option disabled selected>Choose student</option>
                                                     <?php
                                                         for($i = 0; $i < count($students); $i++)
@@ -208,31 +224,34 @@ if (isset($parent))
                                                     }
                                                     ?>
                                                 </select>
+                                                <input type="hidden" name="selectStudentId">
                                             </div>
                                     </div>
                                     <div class="row">
                                         <label class="col-md-2 label-on-left">Choose the course</label>
-                                        <div class="col-md-9">
-                                            <select name="selectCourse" onchange="change()" class="selectpicker" data-style="select-with-transition" title="Single Select" data-size="7">
+                                        <div class="col-md-9" name="selectCourse">
+                                            <select id="courses" class="selectpicker" data-style="select-with-transition" title="Single Select" data-size="7">
                                                 <option disabled selected>Choose course</option>
                                                 <?php
                                                 for($i = 0; $i < count($courses); $i++)
                                                 {
-                                                    echo "<option value=".$courses[$i]->getCourseId().">".$courses[$i]->getTitle()."</option>";
+                                                    echo "  <option value=".$courses[$i]->getCourseId().">".$courses[$i]->getTitle()."</option>";
                                                 }
                                                 ?>
                                             </select>
+                                            <input type="hidden" name="selectCourseId">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <label class="col-md-2 label-on-left">Choose the time</label>
-                                        <div class="col-md-9">
-                                            <select name="selectGroup" class="selectpicker" data-style="select-with-transition" title="Single Select" data-size="7">
+                                        <div class="col-md-9" name="selectTime">
+                                            <select id="times" class="selectpicker" data-style="select-with-transition" title="Single Select" data-size="7">
                                                 <option disabled selected>Choose time</option>
-                                                <option value="0">Doesn't matter</option>
-                                                <option value="1">Monday/Wednesday/Friday</option>
-                                                <option value="2">Tuesday/Thursday/Saturday</option>
+                                                <option value="Doesn't matter">Doesn't matter</option>
+                                                <option value="Monday/Wednesday/Friday">Monday/Wednesday/Friday</option>
+                                                <option value="Tuesday/Thursday/Saturday">Tuesday/Thursday/Saturday</option>
                                             </select>
+                                            <input type="hidden" name="selectTime">
                                         </div>
                                     </div>
                                 </div>
@@ -298,5 +317,33 @@ if (isset($parent))
 <!-- Material Dashboard javascript methods -->
 <script src="../../assets/js/material-dashboard.js"></script>
 <script src="../../assets/js/main.js"></script>
+<script>
+    $(document).ready(function(){
+        //Listen for a click on selectStudent of the dropdown items
+        $("div[name='selectStudent'] ul[role='listbox'] > li").click(function(){
+            //Get the value
+            var value = $(this).attr("data-original-index");
+            alert(value);
+            //Put the retrieved value into the hidden input
+            $("input[name='selectStudentId']").val(value);
+        });
+        //Listen for a click on selectCourse of the dropdown items
+        $("div[name='selectCourse'] ul[role='listbox'] > li").click(function(){
+            //Get the value
+            var value = $(this).attr("data-original-index");
+            alert(value);
+            //Put the retrieved value into the hidden input
+            $("input[name='selectCourseId']").val(value);
+        });
+        //Listen for a click on selectTime of the dropdown items
+        $("div[name='selectTime'] ul[role='listbox'] > li").click(function(){
+            //Get the value
+            var value = $(this).attr("data-original-index");
+            alert(value);
+            //Put the retrieved value into the hidden input
+            $("input[name='selectTimeId']").val(value);
+        });
+    });
+</script>
 
 </html>
