@@ -1,6 +1,10 @@
 <?php
 require_once("DBManager.php");
 
+$selectCourseId = null;
+$selectStudentId = null;
+$selectTime = null;
+
 $parent = new _Parent(10, "Tom", "Khamidov", "passmefirst", "abdulbosid.kh@gmail.com", "+998909110044");
 
 if (isset($parent))
@@ -247,9 +251,12 @@ if (isset($parent))
                                         <div class="col-md-9" name="selectTime">
                                             <select id="times" class="selectpicker" data-style="select-with-transition" title="Single Select" data-size="7">
                                                 <option disabled selected>Choose time</option>
-                                                <option value="Doesn't matter">Doesn't matter</option>
-                                                <option value="Monday/Wednesday/Friday">Monday/Wednesday/Friday</option>
-                                                <option value="Tuesday/Thursday/Saturday">Tuesday/Thursday/Saturday</option>
+                                                <?php
+                                                for($i = 0; $i < count($times); $i++)
+                                                {
+                                                    echo "  <option>".$times[$i]."</option>";
+                                                }
+                                                ?>
                                             </select>
                                             <input type="hidden" name="selectTime">
                                         </div>
@@ -323,7 +330,6 @@ if (isset($parent))
         $("div[name='selectStudent'] ul[role='listbox'] > li").click(function(){
             //Get the value
             var value = $(this).attr("data-original-index");
-            alert(value);
             //Put the retrieved value into the hidden input
             $("input[name='selectStudentId']").val(value);
         });
@@ -331,7 +337,6 @@ if (isset($parent))
         $("div[name='selectCourse'] ul[role='listbox'] > li").click(function(){
             //Get the value
             var value = $(this).attr("data-original-index");
-            alert(value);
             //Put the retrieved value into the hidden input
             $("input[name='selectCourseId']").val(value);
         });
@@ -339,7 +344,6 @@ if (isset($parent))
         $("div[name='selectTime'] ul[role='listbox'] > li").click(function(){
             //Get the value
             var value = $(this).attr("data-original-index");
-            alert(value);
             //Put the retrieved value into the hidden input
             $("input[name='selectTimeId']").val(value);
         });

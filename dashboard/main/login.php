@@ -13,7 +13,7 @@ session_start();
 
 $test = new _Parent("id", "name", "sur", "pas", "ema", "ph");
 
-if(isset($_POST["login"]) && $_SERVER["REQUEST_METHOD"] === "post"){
+if(isset($_POST["login"])){
     $login = (string)test_input($_POST["login"]);
     $pwd = (string)test_input($_POST["password"]);
     if (empty($login) && empty($pwd)) {
@@ -102,6 +102,7 @@ function getUser($id, $password){
 }
 
 function getParent($id, $user){
+    echo "login to parent";
     $parent = new _Parent($id, $user->getName(), $user->getSurname(), $user->getPassword(), $user->getEmail(), $user->getPhoneNumber());
 
     $connection = connect();

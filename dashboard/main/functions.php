@@ -16,7 +16,7 @@ function test_input($data) {
 function connect(){
     $DB_USERNAME = "root";
     $DB_PASSWORD = "toor";
-    $DB_NAME = "lcm";
+    $DB_NAME = "codecraft_moodle";
     $DB_HOST = "127.0.0.1";
 
     $connection = new mysqli($DB_HOST, $DB_USERNAME, $DB_PASSWORD, $DB_NAME);
@@ -28,7 +28,7 @@ function connect(){
     }
     else
     {
-        echo "<h3>Connected!</h3>";
+        error_log("Connected!");
     }
 
     return $connection;
