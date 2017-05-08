@@ -2,13 +2,17 @@
 
 namespace databaseManager;
 require_once "DBConnect.php";
+
 require_once "./ObjectSources/_Parent.php";
 require_once "./ObjectSources/Student.php";
 require_once "ObjectSources/Course.php";
 require_once "ObjectSources/Waitlist.php";
 
+require_once ("functions.php");
+
 use \Exception;
 use \Course;
+use \Student;
 
 class DBManager
 {
@@ -23,13 +27,6 @@ class DBManager
             error_log($err->getTrace());
         }
         return;
-    }
-
-    public static function test_input($data) {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
     }
 
     public static function insertParent(\_Parent $parent){
@@ -260,15 +257,17 @@ class DBManager
         }
         return $allStudents;
     }
+
     public static function selectAllCourses()
     {
-        $courses = array();
+        $courses = null;
         $query = "SELECT * FROM course";
         if ($statement = self::getConnection()->prepare($query))
         {
             $statement->execute();
             $statement->store_result();
             $statement->bind_result($id, $title, $length);
+            $courses = array();
             while($statement->fetch())//object fetches only id of the student
             {
                 array_push($courses, new Course($id, $title, $length));
@@ -286,12 +285,10 @@ class DBManager
     public static function insertOrGetWaitlist($parentID, $studentId = null, $courseId = null, $selectTime = null)
     {
         $waitlist = array();
-        if(isset($studentId) && isset($courseId) && isset($selectTime))
-        {
+        if (isset($studentId) && isset($courseId) && isset($selectTime)) {
             /* INSERTING TO WAITLIST */
             $query = "INSERT INTO waitlist(parentID, studentID, courseID, days) VALUES(?,?,?,?)";
-            if ($statement = self::getConnection()->prepare($query))
-            {
+            if ($statement = self::getConnection()->prepare($query)) {
                 $statement->bind_param("iiis", $parentID, $studentId, $courseId, $selectTime);
                 $statement->execute();
 
@@ -299,28 +296,138 @@ class DBManager
 
                 $statement->free_result();
                 $statement->close();
-            }else
-            {
+            } else {
                 error_log("ERROR WHILE INSERTING TO WAITLIST");
             }
         }
         /* SELECTING FROM WAITLIST */
         $query = "SELECT * FROM waitlist WHERE parentID=?";
-        if ($statement = self::getConnection()->prepare($query))
-        {
+        if ($statement = self::getConnection()->prepare($query)) {
             $statement->bind_param("i", $parentID);
             $statement->execute();
             $result = $statement->get_result();
-            while ($row = $result->fetch_assoc())
-            {
+            while ($row = $result->fetch_assoc()) {
                 $wait = new \Waitlist($parentID, $row["studentID"], $row["courseID"], $row["days"]);
                 array_push($waitlist, $wait);
             }
-        } else
-        {
+        } else {
             error_log("ERROR WHILE SELECTING FROM WAITLIST");
         }
         return $waitlist;
+    }
+
+    public static function selectAllParents(){
+        $parents = null;
+        $query = "SELECT user.id, name, surname, email, phoneNumber, password FROM parent INNER JOIN user ON user.id = parent.id";
+        if ($statement = self::getConnection()->prepare($query))
+        {
+            $statement->execute();
+            $statement->store_result();
+            $statement->bind_result($id, $name, $surname, $email, $phoneNumber, $password);
+            $parents = array();
+            while($statement->fetch())//object fetches only id of the student
+            {
+                array_push($parents, new \_Parent($id, $name, $surname, $password, $email, $phoneNumber));
+            }
+
+            $statement->free_result();
+            $statement->close();
+        }else
+        {
+            error_log("WHILE GETTING ARRAY OF studentIDS' FOR GROUP FROM attendingStudents");
+        }
+        return $parents;
+    }
+
+    public static function selectAllStudents(){
+        $students = null;
+        $query = "SELECT id FROM student";
+        if ($statement = self::getConnection()->prepare($query))
+        {
+            $statement->execute();
+            $statement->store_result();
+            $statement->bind_result($id);
+            $students = array();
+            while($statement->fetch())//object fetches only id of the student
+            {
+                $student = self::getStudent($id);
+                array_push($students, $student);
+            }
+
+            $statement->free_result();
+            $statement->close();
+        }else
+        {
+            error_log("WHILE GETTING ARRAY OF studentIDS' FOR GROUP FROM attendingStudents");
+        }
+        return $students;
+    }
+
+    public static function getStudent($id){
+        $student = null;
+        $connection = self::getConnection();
+        $statement = $connection->prepare('SELECT name, surname FROM user WHERE id = ?');
+        $statement->bind_param("i", $id);
+        $statement->execute();
+        $name = null;
+        $surname = null;
+        $statement->bind_result($name, $surname);
+        if($statement->fetch()){
+            $student = new Student($id, $name, $surname, null);
+        }else{
+            error_log(__FILE__.": not found in USER table");
+            return;
+        }
+        $statement->close();
+        $gID = null;
+        $cID = null;
+        $statement = $connection->prepare('SELECT groupID FROM attendingStudent WHERE studentID = ?');
+        $statement->bind_param("i", $id);
+        $statement->execute();
+        $statement->store_result();
+        $num_rows = $statement->num_rows;
+        if($num_rows == 0){
+            error_log(__FILE__.": there is no group");
+            return;
+        }
+        $groupID = null;
+        $statement->bind_result($groupID);
+        while($statement->fetch()){
+            $group = getChildGroup($groupID);
+            $student->addGroup($group);
+        }
+        error_log(__FILE__.": all groups are inserted for ". $id);
+        return $student;
+    }
+
+    private static function getChildGroup($groupID){
+        $group = new Group($groupID, null, null, null);
+        $connection = self::getConnection();
+        $stmt = $connection->prepare('SELECT courseID FROM `group` WHERE id = ?');
+        $stmt->bind_param("i", $groupID);
+        $stmt->execute();
+        $courseID = null;
+        $stmt->bind_result($courseID);
+        if(!$stmt->fetch()){
+            error_log(__FILE__.": error in getting COURSE_ID FROM GROUP table");
+            return;
+        }
+        $stmt->close();
+        error_log(__FILE__.": course id gotten");
+
+        $stmt = $connection->prepare('SELECT title FROM course WHERE id = ?');
+        $stmt->bind_param("i", $courseID);
+        $stmt->execute();
+        $courseTitle = null;
+        $stmt->bind_result($courseTitle);
+        if(!$stmt->fetch()){
+            error_log(__FILE__.": error in getting TITLE FROM COURSE table");
+            return;
+        }
+        $course = new Course($courseID, $courseTitle, 0);
+        $stmt->close();
+        $group->setCourse($course);
+        return $group;
     }
 }
 
