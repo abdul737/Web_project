@@ -64,15 +64,33 @@
             </div>
             <ul class="nav">
                 <li>
-                    <a href="#">
+                    <a href="adminPage.html">
                         <i class="material-icons">dashboard</i>
                         <p>Dashboard</p>
                     </a>
                 </li>
                 <li class="active">
-                    <a href="#" >
-                        <i class="material-icons">add</i>
-                        <p>Create group</p>
+                    <a href="course_list.html" >
+                        <i class="material-icons">assignment</i>
+                        <p>Courses</p>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="create_course.html" >
+                        <i class="material-icons">assignment</i>
+                        <p>Create Course</p>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="create_instructor.html" >
+                        <i class="material-icons">assignment</i>
+                        <p>Add Instructor</p>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="creategroup.php" >
+                        <i class="material-icons">assignment</i>
+                        <p>Create Group</p>
                     </a>
                 </li>   
             </ul>

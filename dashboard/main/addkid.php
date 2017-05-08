@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <ul class="nav">
                 <li>
-                    <a href="../dashboard.html">
+                    <a href="parentprofile.html">
                         <i class="material-icons">dashboard</i>
                         <p>Dashboard</p>
                     </a>
@@ -87,13 +87,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </a>
                 </li>
                 <li>
-                    <a href="../dashboard.html">
+                    <a href="registercourse.php">
                         <i class="material-icons">content_paste</i>
                         <p>Register to the course</p>
                     </a>
                 </li>
                 <li>
-                    <a href="../dashboard.html">
+                    <a href="leaderboard.html">
                         <i class="material-icons">account_circle</i>
                         <p>Track kid performance</p>
                     </a>
@@ -138,13 +138,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="#">Mike John responded to your email</a>
+                                    <a href="#">Darkhonbek responded to your email</a>
                                 </li>
                                 <li>
                                     <a href="#">You have 5 new tasks</a>
                                 </li>
                                 <li>
-                                    <a href="#">You're now friend with Andrew</a>
+                                    <a href="#">You're now friend with Muslimbek</a>
                                 </li>
                                 <li>
                                     <a href="#">Another Notification</a>
