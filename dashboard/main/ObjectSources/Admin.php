@@ -1,60 +1,87 @@
 <?php
 class Admin extends User
 {
+    private $allParents;
+    private $allStudents;
+    private $allCourses;
+    private $allInstructors;
 
-
-    //constructor
-    public function __construct($userId, $name,$surname,  $birthdate, $password , $lastLogin = null, $photo = null, $email = null, $phoneNumber = null)
+    public function __construct($userId, $name, $surname,  $password , $email = null, $phoneNumber = null)
     {
-        parent::__construct($userId, $name,$surname, $email, $phoneNumber,  $birthdate, $password,  $lastLogin , $photo);
+        parent::__construct($userId, $name, $surname, $password, $email,  $phoneNumber);
+        $this->allCourses = array();
+        $this->allInstructors = array();
+        $this->allParents = array();
+        $this->allStudents = array();
     }
 
+    public function setAllParents($allParents)
+    {
+        if($allParents != null)
+            $this->allParents = $allParents;
+    }
 
-    /**
-     * @param Course $course
-     */
+    public function getAllParents()
+    {
+        return $this->allParents;
+    }
+
+    public function getAllStudents()
+    {
+        return $this->allStudents;
+    }
+
+    public function setAllStudents(array $allStudents)
+    {
+        if($allStudents != null)
+            $this->allStudents = $allStudents;
+    }
+
+    public function getAllCourses()
+    {
+        return $this->allCourses;
+    }
+
+    public function setAllCourses($allCourses)
+    {
+        if($allCourses != null)
+            $this->allCourses = $allCourses;
+    }
+
+    public function getAllInstructors()
+    {
+        return $this->allInstructors;
+    }
+
+    public function setAllInstructors($allInstructors)
+    {
+        if($allInstructors != null)
+            $this->allInstructors = $allInstructors;
+    }
+
     public function addCourse(Course $course)
     {
-        return;
+        throw new Exception("not implemented yet");
     }
 
-    /**
-     * @param Instructor $instructor
-     */
     public function addInstructor(Instructor $instructor)
     {
-        return;
+        throw new Exception("Not implemented yet");
     }
 
-    /**
-     * @param Group $group
-     * @param Course $course
-     * @param Instructor $instructor
-     * @param array $instructors
-     */
     public function assignGroup(Group $group, Course $course, Instructor $instructor, array $instructors)
     {
-        return;
+        throw new Exception("not implemented yet");
     }
 
-    /**
-     * @param Student $kid
-     * @param Course $course
-     */
     public function acceptKid(Student $kid, Course $course)
     {
-        return;
+        throw new Exception("not implemented yet");
     }
 
-    /**
-     * @param Student $kid
-     * @param Course $course
-     */
     public function addRequest(Student $kid, Course $course)
     {
-        return;
+        throw new Exception("not implemented yet");
     }
-
-
 }
 ?>

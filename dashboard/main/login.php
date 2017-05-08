@@ -8,17 +8,21 @@ require_once ("ObjectSources/_Parent.php");
 require_once ("ObjectSources/Group.php");
 require_once ("ObjectSources/Course.php");
 require_once ("ObjectSources/Student.php");
+require_once ("ObjectSources/Admin.php");
+
+require_once ("DBManager.php");
+
+use \databaseManager\DBManager;
 
 session_start();
 
-$test = new _Parent("id", "name", "sur", "pas", "ema", "ph");
-
-if(isset($_POST["login"]) && $_SERVER["REQUEST_METHOD"] === "post"){
+if(isset($_POST["login"]) && $_SERVER["REQUEST_METHOD"] == "POST"){
     $login = (string)test_input($_POST["login"]);
     $pwd = (string)test_input($_POST["password"]);
     if (empty($login) && empty($pwd)) {
         echo "<script>alert('Login or password not written')</script>";
     } else {
+        error_log("check");
         check($login, $pwd);
     }
 }
@@ -46,10 +50,13 @@ function check($login, $password){
             else if($userType == 's'){
                 $student = getStudent($id);
                 $_SESSION['student'] = $student;
+                exit;
             }else if($userType == 'i'){
-
+                // read instructor from the database
             }else if($userType == 'a'){
-
+                $admin = getAdmin($user);
+                $_SESSION['admin'] = $admin;
+                exit;
             }
         }
     }
@@ -58,7 +65,7 @@ function check($login, $password){
 function isExists($statement, $id){
     if(!$statement){
         error_log(__FILE__.": error with the prepared statement");
-        return;
+        return false;
     }
     $statement->bind_param("i", $id);
     $statement->execute();
@@ -87,7 +94,6 @@ function getUser($id, $password){
     if($statement->fetch()){
         if($password == null){
             $user = new User($id, $name, $surname, $password, $email, $phoneNumber);
-            display($user->getId());
             error_log(__FILE__.": user is created");
         } else if($actual_password == $password){
             $user = new User($id, $name, $surname, $password, $email, $phoneNumber);
@@ -185,6 +191,17 @@ function getChildGroup($groupID){
     $stmt->close();
     $group->setCourse($course);
     return $group;
+}
+
+function getAdmin(User $user){
+    $admin = new Admin($user->getId(), $user->getName(), $user->getSurname(), $user->getPassword(), $user->getEmail(), $user->getPhoneNumber());
+    $courses = DBManager::selectAllCourses();
+    $admin->setAllCourses($courses);
+    $parents = DBManager::selectAllParents();
+    $admin->setAllParents($parents);
+    $students = DBManager::selectAllStudents();
+    $admin->setAllStudents($students);
+    return $admin;
 }
 
 require_once ("login.html");
