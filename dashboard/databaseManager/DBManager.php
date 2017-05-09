@@ -242,7 +242,7 @@ class DBManager
         return new \Student($id, $name, $surname, $parent, $password, $birthdate, $email, $phoneNumber, $totalPoints);
     }
 
-    public static function selectAllStudentsOfParent(\_Parent $parent)
+    public static function selectAllStudentIdOfParent(\_Parent $parent)
     {
         $allStudents = array();
         $parentId = $parent->getId();
@@ -270,6 +270,33 @@ class DBManager
         return $allStudents;
     }
 
+    public static function selectAllStudentsOfParent(\_Parent $parent)
+    {
+        $allStudents = array();
+        $parentId = $parent->getId();
+
+        /* GETTING ARRAY OF IDS' FOR PARENT FROM CUSTOMER*/
+        $query = 'SELECT studentID FROM customer WHERE customer.parentID=?';
+        if ($statement = self::getConnection()->prepare($query))
+        {
+            $id = null;
+            $statement->bind_param("i", $parentId);
+            $statement->execute();
+            $statement->bind_result($id);
+            while ($statement->fetch())
+            {
+                $student = self::getStudent($id);
+                array_push($allStudents, $student);
+            }
+
+            $statement->free_result();
+            $statement->close();
+        } else
+        {
+            error_log("WHILE GETTING ARRAY OF studentIDS' FOR PARENT FROM CUSTOMER");
+        }
+        return $allStudents;
+    }
     public static function selectAllStudentsOfGroup($group)
     {
         $allStudents = array();

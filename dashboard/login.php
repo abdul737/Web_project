@@ -135,7 +135,7 @@ function getAdmin(User $user){
     $admin->setAllCourses($courses);
     $parents = DBManager::selectAllParents();
     foreach ($parents as $parent){
-        $parent->setStudents(DBManager::selectAllStudentsOfParent($parent));
+        $parent->setStudents(DBManager::selectAllStudentIdOfParent($parent));
     }
     $admin->setAllParents($parents);
     $students = DBManager::selectAllStudents();
