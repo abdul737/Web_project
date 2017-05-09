@@ -22,7 +22,7 @@ class _Parent extends User
       return $this->students;
   }
 
-  public function setStudents($students){
+  public function setStudents(array $students){
       $this->students = $students;
   }
 

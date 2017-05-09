@@ -211,6 +211,9 @@ function getAdmin(User $user){
     $courses = DBManager::selectAllCourses();
     $admin->setAllCourses($courses);
     $parents = DBManager::selectAllParents();
+    foreach ($parents as $parent){
+        $parent->setStudents(DBManager::selectAllStudentsOfParent($parent));
+    }
     $admin->setAllParents($parents);
     $students = DBManager::selectAllStudents();
     $admin->setAllStudents($students);

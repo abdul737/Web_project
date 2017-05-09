@@ -241,32 +241,18 @@ class DBManager
         $allStudents = array();
         $parentId = $parent->getId();
 
-
         /* GETTING ARRAY OF IDS' FOR PARENT FROM CUSTOMER*/
-        $query = "SELECT * FROM customer INNER JOIN user ON user.id=customer.studentID INNER JOIN student ON student.id=customer.studentID WHERE customer.parentID=? ";
+        $query = "SELECT studentID FROM customer WHERE customer.parentID=? ";
         if ($statement = self::getConnection()->prepare($query))
         {
             $statement->bind_param("i", $parentId);
             $statement->execute();
-            $result = $statement->get_result();
-            while ($row = $result->fetch_assoc())
+            $s_id = null;
+            $statement->bind_result($s_id);
+            while ($statement->fetch())
             {
-                if ($row["position"] == "s")
-                {
-                    $id = $row["id"];
-                    $password = $row["password"];
-                    $name = $row["name"];
-                    $surname = $row["surname"];
-                    $email = $row["email"];
-                    $phoneNumber = $row["phoneNumber"];
-                    $birthdate = $row["birthdate"];
-                    $totalPoints = $row["totalPoints"];
-                    $student = new \Student($id, $name, $surname, $parent, $password, $birthdate, $email, $phoneNumber, $totalPoints);
+                    $student = self::getStudent($s_id);
                     array_push($allStudents, $student);
-                }else
-                {
-                    error_log("Error: Id(".$id.") doesn't belong to student!");
-                }
             }
 
             $statement->free_result();
@@ -488,13 +474,5 @@ class DBManager
         $group->setCourse($course);
         return $group;
     }
-
-    public static function test_input($data) {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-    }
-
 }
 
