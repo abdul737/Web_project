@@ -2,7 +2,6 @@
 require_once("databaseManager/DBManager.php");
 
 session_start();
-
 $parent = $_SESSION["parent"];
 if(isset($parent))
 {
