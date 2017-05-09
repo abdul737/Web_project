@@ -276,19 +276,33 @@ class DBManager
         $parentId = $parent->getId();
 
         /* GETTING ARRAY OF IDS' FOR PARENT FROM CUSTOMER*/
-        $query = 'SELECT studentID FROM customer WHERE customer.parentID=?';
+        $query = 'SELECT "user".id, password, name, surname, email, phoneNumber, birthdate, totalPoints, "position" FROM customer INNER JOIN user ON user.id=customer.studentID INNER JOIN student ON student.id=customer.studentID WHERE customer.parentID=?';
         if ($statement = self::getConnection()->prepare($query))
         {
             $id = null;
+            $password = null;
+            $name = null;
+            $surname = null;
+            $email = null;
+            $phoneNumber = null;
+            $birthdate = null;
+            $totalPoints = null;
+            $position = null;
             $statement->bind_param("i", $parentId);
             $statement->execute();
-            $statement->bind_result($id);
+            $statement->store_result();
+            $statement->bind_result($id, $password, $name, $surname, $email, $phoneNumber, $birthdate, $totalPoints, $position);
             while ($statement->fetch())
             {
-                $student = self::getStudent($id);
-                array_push($allStudents, $student);
+                if ($position == "s")
+                {
+                    $student = new \Student($id, $name, $surname, $parent, $password, $birthdate, $email, $phoneNumber, $totalPoints);
+                    array_push($allStudents, $student);
+                }else
+                {
+                    error_log("Error: Id(".$id.") doesn't belong to student!");
+                }
             }
-
             $statement->free_result();
             $statement->close();
         } else
@@ -297,6 +311,7 @@ class DBManager
         }
         return $allStudents;
     }
+
     public static function selectAllStudentsOfGroup($group)
     {
         $allStudents = array();
