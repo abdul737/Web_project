@@ -18,6 +18,12 @@ if (isset($_SESSION['parent']))
             {
                 $user = $_SESSION['student'];
             }
+            else
+            {
+                echo '<script>alert("Session timed out or not found!");</script>';
+                header("Location: login.php");
+                exit;
+            }
 
 if(isset($user))
 {

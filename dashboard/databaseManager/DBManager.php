@@ -3,8 +3,8 @@
 namespace databaseManager;
 require_once "DBConnect.php";
 
-require_once "./ObjectSources/_Parent.php";
-require_once "./ObjectSources/Student.php";
+require_once "ObjectSources/_Parent.php";
+require_once "ObjectSources/Student.php";
 require_once "ObjectSources/Course.php";
 require_once "ObjectSources/Waitlist.php";
 
@@ -24,7 +24,7 @@ class DBManager
             return DBConnect::getConnection();
         } catch (Exception $err){
             error_log($err->getMessage());
-            error_log($err->getTrace());
+            error_log($err->getTraceAsString());
         }
         return;
     }
@@ -130,27 +130,28 @@ class DBManager
         $birthdate = $student->getBirthdate();
         $password = $student->getPassword();
         $totalPoints = $student->getTotalPoints();
-        $photo = $student->getPhoto();
+        $photoFileId = $student->getPhotoFileId();
         $email = $student->getEmail();
         $phoneNumber = $student->getPhoneNumber();
+        $position = "s";
 
-        if($student->getParent() == null)
+        if($student->getParent() == null && $bindParent != null)
         {
             $student->setParent($bindParent);
+        }else
+        {
+            error_log("WHILE INSERTING STUDENT PARENT NOT FOUND");
+            return false;
         }
         $parent = $student->getParent();
 
         /* INSERTING STUDENT TO USER TABLE*/
-        $query = "INSERT INTO user VALUES(?,?,?,?,?,?,?)";
+        $query = "INSERT INTO user(password, email, name, surname, phoneNumber, position, photoFieldId) VALUES(?,?,?,?,?,?,?)";
         if ($statement = self::getConnection()->prepare($query))
         {
-            echo "test<br>";
-            $statement->bind_param("ssssssi", $password, $email, $name,
-                $surname, $phoneNumber, "s", $photo);
+            $statement->bind_param("ssssssi", $password, $email, $name, $surname, $phoneNumber, $position, $photoFileId);
             $statement->execute();
             $id = $statement->insert_id;
-            echo "ID: ";
-            echo $statement->insert_id;
             $student->setId($id);
 
             $statement->free_result();
@@ -158,6 +159,7 @@ class DBManager
         } else
         {
             error_log("WHILE INSERTING STUDENT TO USER TABLE");
+            return false;
         }
 
         /* INSERTING STUDENT PARENT RELATIONSHIP INTO TABLE CUSTOMER*/
@@ -172,6 +174,7 @@ class DBManager
         } else
         {
             error_log("WHILE INSERTING STUDENT PARENT RELATIONSHIP INTO TABLE CUSTOMER");
+            return false;
         }
         /* INSERTING STUDENT AND TOTALPOINTS INTO TABLE STUDENT*/
         $query = "INSERT INTO student VALUES(?,?,?)";
@@ -185,6 +188,7 @@ class DBManager
         } else
         {
             error_log("WHILE INSERTING STUDENT AND TOTALPOINTS INTO TABLE STUDENT");
+            return false;
         }
         /*RETURNS STUDENT BACK, WITH ID, PROBABLY WITH PARENT ALSO*/
         return $student;
@@ -242,17 +246,33 @@ class DBManager
         $parentId = $parent->getId();
 
         /* GETTING ARRAY OF IDS' FOR PARENT FROM CUSTOMER*/
-        $query = "SELECT studentID FROM customer WHERE customer.parentID=? ";
+        $query = 'SELECT "user".id, password, name, surname, email, phoneNumber, birthdate, totalPoints, "position" FROM customer INNER JOIN user ON user.id=customer.studentID INNER JOIN student ON student.id=customer.studentID WHERE customer.parentID=?';
         if ($statement = self::getConnection()->prepare($query))
         {
+            $id = null;
+            $password = null;
+            $name = null;
+            $surname = null;
+            $email = null;
+            $phoneNumber = null;
+            $birthdate = null;
+            $totalPoints = null;
+            $position = null;
+
             $statement->bind_param("i", $parentId);
             $statement->execute();
-            $s_id = null;
-            $statement->bind_result($s_id);
+            $statement->store_result();
+            $statement->bind_result($id, $password, $name, $surname, $email, $phoneNumber, $birthdate, $totalPoints, $position);
             while ($statement->fetch())
             {
-                    $student = self::getStudent($s_id);
+                if ($position == "s")
+                {
+                    $student = new \Student($id, $name, $surname, $parent, $password, $birthdate, $email, $phoneNumber, $totalPoints);
                     array_push($allStudents, $student);
+                }else
+                {
+                    error_log("Error: Id(".$id.") doesn't belong to student!");
+                }
             }
 
             $statement->free_result();
@@ -297,14 +317,13 @@ class DBManager
 
     public static function selectAllCourses()
     {
-        $courses = null;
+        $courses = array();
         $query = "SELECT * FROM course";
         if ($statement = self::getConnection()->prepare($query))
         {
             $statement->execute();
             $statement->store_result();
             $statement->bind_result($id, $title, $length, $ageLimit);
-            $courses = array();
             while($statement->fetch())//object fetches only id of the student
             {
                 array_push($courses, new Course($id, $title, $length, $ageLimit));
@@ -474,5 +493,13 @@ class DBManager
         $group->setCourse($course);
         return $group;
     }
+
+    public static function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
 }
 
