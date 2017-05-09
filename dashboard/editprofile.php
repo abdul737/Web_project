@@ -1,35 +1,30 @@
 <?php
 require_once("databaseManager/DBManager.php");
-session_start();
+require_once("common_pages/logoutcheck.php");
 
-if (isset($_SESSION['parent']))
+if ($_SESSION['position'] === 'p')
 {
     $user = $_SESSION['parent'];
+} else if ($_SESSION['position'] === 'a')
+{
+    $user = $_SESSION['admin'];
+} else if ($_SESSION['position'] === 's')
+{
+    $user = $_SESSION['student'];
+} else if ($_SESSION['position'] === 'i')
+{
+    $user = $_SESSION['instructor'];
 } else
-    if(isset($_SESSION['admin']))
-    {
-        $user = $_SESSION['admin'];
-    } else
-        if(isset($_SESSION['instructor']))
-        {
-            $user = $_SESSION['instructor'];
-        } else
-            if (isset($_SESSION['student']))
-            {
-                $user = $_SESSION['student'];
-            }
-            else
-            {
-                print "<SCRIPT type='text/javascript'>
-                    alert('Session timed out or not found!');
-                    window.location.replace('addstudent.php');
-                </SCRIPT > ";
-                exit;
-            }
+{
+    print "<SCRIPT type='text/javascript'>
+        alert('Session timed out or not found!');
+        window.location.replace('addstudent.php');
+    </SCRIPT > ";
+    exit;
+}
 
 if(isset($user))
 {
-    $students = \databaseManager\DBManager::selectAllStudentsOfParent($user);
     if ($_POST) {
         foreach ($_POST as $item)
         {
@@ -125,7 +120,7 @@ else
                                         <div class="col-md-3">
                                             <div class="form-group label-floating">
                                                 <label class="control-label">ID Number</label>
-                                                <input type="text" class="form-control" disabled value="p<?php printf("%06d", $user->getId());?>">
+                                                <input type="text" class="form-control" disabled value="p<?php printf("%05d", $user->getId());?>">
                                             </div>
                                         </div>
                                         <div class="col-md-5">

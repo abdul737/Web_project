@@ -45,6 +45,7 @@ function check($login, $password){
     if(isExists($statement, $id)){
         $user = getUser($id, $password);
         if($user) {
+            $_SESSION['position'] = $userType;
             if($userType == 'p')
                 getParent($id, $user);
             else if($userType == 's'){
@@ -124,7 +125,7 @@ function getParent($id, $user){
     session_start();
     $_SESSION['parent'] = $parent;
     echo "<script>alert('Parent info is gotten from database')</script>";
-    header("Location: editprofile.php");
+    header("Location: parentprofile.php");
     exit;
 }
 
@@ -134,7 +135,7 @@ function getAdmin(User $user){
     $admin->setAllCourses($courses);
     $parents = DBManager::selectAllParents();
     foreach ($parents as $parent){
-        $parent->setStudents(DBManager::selectAllStudentIdOfParent($parent));
+        $parent->setStudents(DBManager::selectAllStudentsOfParentById($parent->getId(), $parent));
     }
     $admin->setAllParents($parents);
     $students = DBManager::selectAllStudents();

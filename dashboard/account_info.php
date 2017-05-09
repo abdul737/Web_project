@@ -1,17 +1,14 @@
 <?php
 require_once("databaseManager/DBManager.php");
+require_once("common_pages/logoutcheck.php");
 
-session_start();
 $parent = $_SESSION["parent"];
 if(isset($parent))
 {
-    $students = \databaseManager\DBManager::selectAllStudentsOfParent($parent);
+    $students = \databaseManager\DBManager::selectAllStudentsOfParentById($parent->getId(), $parent);
     if ($_POST) {
 
     }
-}
-else
-{
 }
 ?>
 

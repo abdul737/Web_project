@@ -1,13 +1,12 @@
 <?php
 require_once("databaseManager/DBManager.php");
 require_once("functions.php");
-session_start();
-require_once "common_pages/logoutcheck.php";
+require_once("common_pages/logoutcheck.php");
 
 $parent = $_SESSION["parent"];
 if(isset($parent))
 {
-    $students = \databaseManager\DBManager::selectAllStudentsOfParent($parent);
+    $students = \databaseManager\DBManager::selectAllStudentsOfParentById($parent->getId(), $parent);
     if ($_POST) {
         $first_name = $_POST["first_name"];
         $last_name = $_POST["last_name"];
@@ -18,7 +17,7 @@ if(isset($parent))
 
         $student = new Student(null, $first_name, $last_name, $date, $date, $parent->getEmail(), $parent->getPhoneNumber(), $parent);
         $student = \databaseManager\DBManager::insertStudent($student, $parent);
-        printf("<script>alert('New student with id s%06d successfully created!')</script>", $student->getId());
+        printf("<script>alert('New student with id s%05d successfully created!')</script>", $student->getId());
         $_POST = array();
         include "addstudent.php";
         exit;

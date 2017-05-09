@@ -1,6 +1,12 @@
+<?php
+    $path= $_SERVER["SCRIPT_FILENAME"];
+    $file = basename($path);         // $file is set to "index.php"
+    $file = basename($path, ".php"); // $file is set to "index"
+?>
+
 <ul class="nav">
-    <li <?php echo ($file=="editprofile")?"class='active'":""; ?>>
-        <a href="editprofile.php">
+    <li <?php echo ($file=="parentprofile")?"class='active'":""; ?>>
+        <a href="parentprofile.php">
             <i class="material-icons">dashboard</i>
             <p>Dashboard</p>
         </a>
@@ -11,8 +17,8 @@
             <p>Register kid</p>
         </a>
     </li>
-    <li <?php echo ($file=="registercourse")?"class='active'":""; ?>>
-        <a href="registercourse.php">
+    <li <?php echo ($file=="registertocourse")?"class='active'":""; ?>>
+        <a href="registertocourse.php">
             <i class="material-icons">content_paste</i>
             <p>Register to the course</p>
         </a>

@@ -1,95 +1,94 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: Abdulbosid
- * Date: 5/8/2017
- * Time: 9:40 AM
- */
 class Waitlist
 {
+    private $waitlistId;
     private $parentID;
     private $studentID;
     private $courseID;
     private $days;
+    private $confirmed;
+    private $create_time;
 
-    /**
-     * Waitlist constructor.
-     * @param $parentID
-     * @param $studentID
-     * @param $courseID
-     * @param $days
-     */
-    public function __construct($parentID, $studentID, $courseID, $days)
+    public function __construct($waitlistId, $parentID, $studentID, $courseID, $days, $confirmed, $create_time)
     {
+        $this->waitlistId = $waitlistId;
         $this->parentID = $parentID;
         $this->studentID = $studentID;
         $this->courseID = $courseID;
         $this->days = $days;
+        $this->confirmed = $confirmed;
+        $this->create_time = $create_time;
     }
 
+    public function getWaitlistId()
+    {
+        return $this->waitlistId;
+    }
 
-    /**
-     * @return mixed
-     */
+    public function setWaitlistId($waitlistId)
+    {
+        $this->waitlistId = $waitlistId;
+    }
+
     public function getParentID()
     {
         return $this->parentID;
     }
 
-    /**
-     * @param mixed $parentID
-     */
     public function setParentID($parentID)
     {
         $this->parentID = $parentID;
     }
 
-    /**
-     * @return mixed
-     */
     public function getStudentID()
     {
         return $this->studentID;
     }
 
-    /**
-     * @param mixed $studentID
-     */
     public function setStudentID($studentID)
     {
         $this->studentID = $studentID;
     }
 
-    /**
-     * @return mixed
-     */
     public function getCourseID()
     {
         return $this->courseID;
     }
 
-    /**
-     * @param mixed $courseID
-     */
     public function setCourseID($courseID)
     {
         $this->courseID = $courseID;
     }
 
-    /**
-     * @return mixed
-     */
     public function getDays()
     {
         return $this->days;
     }
 
-    /**
-     * @param mixed $days
-     */
     public function setDays($days)
     {
         $this->days = $days;
     }
+
+    public function getConfirmed()
+    {
+        return $this->confirmed;
+    }
+
+    public function setConfirmed($confirmed)
+    {
+        $this->confirmed = $confirmed;
+    }
+
+    public function getCreateTime()
+    {
+        return $this->create_time;
+    }
+
+    public function setCreateTime($create_time)
+    {
+        $this->create_time = $create_time;
+    }
+
 }

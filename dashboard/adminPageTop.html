@@ -1,7 +1,11 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
+<?php
+    $user = $_SESSION['admin'];
 
+    $username = $user->getName()." ".$user->getSurname();
+?>
 <head>
     <meta charset="utf-8" />
     <link rel="apple-touch-icon" sizes="76x76" href="http://demos.creative-tim.com/material-dashboard-pro/assets/img/apple-icon.png" />
@@ -43,68 +47,25 @@
                 </div>
                 <div class="info">
                     <a data-toggle="collapse" href="#collapseExample" class="collapsed">
-                        Flappy Bird
+                        <?= $username ?>
                         <b class="caret"></b>
                     </a>
                     <div class="collapse" id="collapseExample">
                         <ul class="nav">
                             <li>
-                                <a href="#">Edit Profile</a>
+                                <a href="editprofile.php">Edit Profile</a>
                             </li>
                             <li>
                                 <a href="#">Change Password</a>
                             </li>
                             <li>
-                                <a href="#">Log out</a>
+                                <a href="common_pages/logout.php">Log out</a>
                             </li>
                         </ul>
                     </div>
                 </div>
             </div>
-            <ul class="nav">
-                <li>
-                    <a href="adminPage.php">
-                        <i class="material-icons">dashboard</i>
-                        <p>Dashboard</p>
-                    </a>
-                </li>
-                <li class="active">
-                    <a href="adminPageCourses.php" >
-                        <i class="material-icons">assignment</i>
-                        <p>Courses</p>
-                    </a>
-                </li>
-                <li class="active">
-                    <a href="adminPageStudents.php" >
-                        <i class="material-icons">assignment</i>
-                        <p>Students</p>
-                    </a>
-                </li>
-                <li class="active">
-                    <a href="adminPageParents.php" >
-                        <i class="material-icons">assignment</i>
-                        <p>Parents</p>
-                    </a>
-                </li>
-                <li class="active">
-                    <a href="createCourse.php" >
-                        <i class="material-icons">add</i>
-                        <p>Add Course</p>
-                    </a>
-                </li>
-                <li class="active">
-                    <a href="createInstructor.php" >
-                        <i class="material-icons">add</i>
-                        <p>Add Instructor</p>
-                    </a>
-                </li>
-                <li class="active">
-                    <a href="createGroup.php" >
-                        <i class="material-icons">add</i>
-                        <p>Create Group</p>
-                    </a>
-                </li>
-            </ul>
+            <?php include_once("include/admin_nav_bar.php"); ?>
         </div>
     </div>
     <div class="main-panel">

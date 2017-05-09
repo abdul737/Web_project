@@ -270,11 +270,13 @@ class DBManager
         return $allStudents;
     }
 
-    public static function selectAllStudentsOfParent(\_Parent $parent)
+    public static function selectAllStudentsOfParentById($parentId, \_Parent $parent = null)
     {
         $allStudents = array();
-        $parentId = $parent->getId();
-
+        if (!isset($parent))
+        {
+            $parent = new \_Parent($parentId, null, null, n);
+        }
         /* GETTING ARRAY OF IDS' FOR PARENT FROM CUSTOMER*/
         $query = 'SELECT user.id, password, name, surname, email, phoneNumber, birthdate, totalPoints, position FROM user INNER JOIN customer ON user.id=customer.studentID INNER JOIN student ON student.id=user.id WHERE customer.parentID=?';
         if ($statement = self::getConnection()->prepare($query))
@@ -383,15 +385,15 @@ class DBManager
             }
         }
         /* SELECTING FROM WAITLIST */
-        $query = "SELECT * FROM waitlist WHERE parentID=?";
+        $query = "SELECT waitlistId, studentID, courseID, days, confirmed, create_time FROM waitlist WHERE parentID=?";
         if ($statement = self::getConnection()->prepare($query)) {
             $studentId = $courseId = $days = null;
             $statement->bind_param("i", $parentID);
             $statement->execute();
             $statement->store_result();
-            $statement->bind_result($studentId, $courseId, $days);
+            $statement->bind_result($waitlistId, $studentId, $courseId, $days, $confirmed, $create_time);
             while ($statement->fetch()) {
-                $wait = new \Waitlist($parentID, $studentId, $courseId, $days);
+                $wait = new \Waitlist($waitlistId, $parentID, $studentId, $courseId, $days, $confirmed, $create_time);
                 array_push($waitlist, $wait);
             }
 

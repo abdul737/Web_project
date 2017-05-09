@@ -1,5 +1,18 @@
 <?php
+$user = null;
+if ($_SESSION['position'] === 'p')
+{
 $user = $_SESSION['parent'];
+} else if ($_SESSION['position'] === 'a')
+{
+    $user = $_SESSION['admin'];
+} else if ($_SESSION['position'] === 's')
+{
+    $user = $_SESSION['student'];
+} else if ($_SESSION['position'] === 'i')
+{
+    $user = $_SESSION['instructor'];
+}
 
 $username = $user->getName()." ".$user->getSurname();
 ?>

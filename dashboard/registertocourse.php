@@ -1,7 +1,7 @@
 <?php
 require_once("databaseManager/DBManager.php");
 require_once("functions.php");
-session_start();
+require_once("common_pages/logoutcheck.php");
 $selectCourseId = null;
 $selectStudentId = null;
 $selectTimeId = null;
@@ -12,7 +12,7 @@ if (isset($parent))
 {
     if (!(isset($_COOKIE["students"])))
     {
-        $_COOKIE["students"] = \databaseManager\DBManager::selectAllStudentsOfParent($parent);
+        $_COOKIE["students"] = \databaseManager\DBManager::selectAllStudentsOfParentById($parent->getId(), $parent);
         $_COOKIE["courses"] = \databaseManager\DBManager::selectAllCourses();
         $_COOKIE["times"] = array("Doesn't matter", "Monday/Wednesday/Friday", "Tuesday/Thursday/Saturday");
     }
@@ -55,17 +55,15 @@ if (isset($parent))
             echo $selectCourseId;
             echo $selectTime;
             $waitList = \databaseManager\DBManager::insertOrGetWaitlist($parent->getId(), $selectStudentId, $selectCourseId, $selectTime);
-            header('Location: registercourse.php?message=true');
+            header('Location: registertocourse.php?message=true');
         }
         else
         {
-            header('Location: registercourse.php?message=notfilled');
+            header('Location: registertocourse.php?message=notfilled');
         }
 
         exit;
     }
-    $waitList = \databaseManager\DBManager::insertOrGetWaitlist($parent->getId(), $selectStudentId, $selectCourseId, $selectTime);
-
 }else
 {
     print "<SCRIPT type='text/javascript'>

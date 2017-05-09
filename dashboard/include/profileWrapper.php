@@ -1,9 +1,17 @@
 <?php
-    $user = $_SESSION['parent'];
-
-    $path= $_SERVER["SCRIPT_FILENAME"];
-    $file = basename($path);         // $file is set to "index.php"
-    $file = basename($path, ".php"); // $file is set to "index"
+    if ($_SESSION['position'] === 'p')
+    {
+        $user = $_SESSION['parent'];
+    } else if ($_SESSION['position'] === 'a')
+    {
+        $user = $_SESSION['admin'];
+    } else if ($_SESSION['position'] === 's')
+    {
+        $user = $_SESSION['student'];
+    } else if ($_SESSION['position'] === 'i')
+    {
+        $user = $_SESSION['instructor'];
+    }
 ?>
 <div class="sidebar-wrapper">
     <div class="user">
@@ -11,11 +19,11 @@
             <img src="../../assets/img/avatar_default.png" />
         </div>
         <div class="info">
-            <a data-toggle="collapse" href="#collapseExample" class="collapsed">
+            <a data-toggle="collapse" href="#edit" class="collapsed">
                 <?php echo $user->getName(); echo " "; echo $user->getSurname(); ?>
                 <b class="caret"></b>
             </a>
-            <div class="collapse" id="collapseExample">
+            <div class="collapse" id="edit">
                 <ul class="nav">
                     <li>
                         <a href="editprofile.php">Edit Profile</a>
@@ -31,21 +39,19 @@
         </div>
     </div>
     <?php
-        if (isset($_SESSION['parent']))
-        {
-            include_once "include/parent_nav_bar.php";
-        } else
-            if(isset($_SESSION['admin']))
-            {
-                include_once "include/admin_nav_bar.php";
-            } else
-                if(isset($_SESSION['instructor']))
-                {
-                    include_once "include/instructor_nav_bar.php";
-                } else
-                    if (isset($_SESSION['student']))
-                    {
-                        include_once "include/student_nav_bar.php";
-                    }
+    if ($_SESSION['position'] == 'p')
+    {
+        include_once "include/parent_nav_bar.php";
+    } else if ($_SESSION['position'] == 'a')
+    {
+        include_once "include/admin_nav_bar.php";
+    } else if ($_SESSION['position'] == 's')
+    {
+        include_once "include/student_nav_bar.php";
+    } else if ($_SESSION['position'] == 'i')
+    {
+        include_once "include/instructor_nav_bar.php";
+    }
+
     ?>
 </div>
