@@ -357,14 +357,13 @@ class DBManager
     }
 
     public static function selectAllParents(){
-        $parents = null;
-        $query = "SELECT user.id, name, surname, email, phoneNumber, password FROM parent INNER JOIN user ON user.id = parent.id";
+        $parents = array();;
+        $query = "SELECT user.id, name, surname, email, phoneNumber, password FROM user INNER JOIN parent ON user.id = parent.id";
         if ($statement = self::getConnection()->prepare($query))
         {
             $statement->execute();
             $statement->store_result();
             $statement->bind_result($id, $name, $surname, $email, $phoneNumber, $password);
-            $parents = array();
             while($statement->fetch())//object fetches only id of the student
             {
                 array_push($parents, new \_Parent($id, $name, $surname, $password, $email, $phoneNumber));
