@@ -13,8 +13,10 @@ if(isset($parent))
 }
 else
 {
-    echo '<script>alert("Session timed out or not found!");</script>';
-    header("Location: login.php");
+    print "<SCRIPT type='text/javascript'>
+                    alert('Session timed out or not found!');
+                    window.location.replace('addstudent.php');
+                </SCRIPT > ";
     exit;
 }
 ?>

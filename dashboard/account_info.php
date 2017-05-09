@@ -12,9 +12,6 @@ if(isset($parent))
 }
 else
 {
-    echo '<script>alert("Session timed out or not found!");</script>';
-    header("Location: login.php");
-    exit;
 }
 ?>
 

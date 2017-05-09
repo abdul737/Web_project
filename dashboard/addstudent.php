@@ -1,7 +1,8 @@
 <?php
 require_once("databaseManager/DBManager.php");
-
+require_once("functions.php");
 session_start();
+require_once "common_pages/logoutcheck.php";
 
 $parent = $_SESSION["parent"];
 if(isset($parent))
@@ -11,19 +12,17 @@ if(isset($parent))
         $first_name = $_POST["first_name"];
         $last_name = $_POST["last_name"];
         $date = $_POST["date"];
-        $student = new Student(null, $first_name, $last_name, $parent, $date);
+        $first_name = test_input($first_name);
+        $last_name = test_input($last_name);
+        $date = test_input($date);
+
+        $student = new Student(null, $first_name, $last_name, $date, $date, $parent->getEmail(), $parent->getPhoneNumber(), $parent);
         $student = \databaseManager\DBManager::insertStudent($student, $parent);
         printf("<script>alert('New student with id s%06d successfully created!')</script>", $student->getId());
         $_POST = array();
         include "addstudent.php";
         exit;
     }
-}
-else
-{
-    echo '<script>alert("Session timed out or not found!");</script>';
-    include_once("login.php");
-    exit;
 }
 ?>
 

@@ -27,8 +27,8 @@ class DBManager
         } catch (Exception $err){
             error_log($err->getMessage());
             error_log($err->getTraceAsString());
+            exit(500);
         }
-        return;
     }
 
     public static function insertParent(\_Parent $parent){
@@ -131,7 +131,7 @@ class DBManager
         $surname = $student->getSurname();
         $birthdate = $student->getBirthdate();
         $password = $student->getPassword();
-        $totalPoints = $student->getTotalPoints();
+        $totalPoints = 0;
         $photoFileId = $student->getPhotoFileId();
         $email = $student->getEmail();
         $phoneNumber = $student->getPhoneNumber();
@@ -182,7 +182,7 @@ class DBManager
         $query = "INSERT INTO student VALUES(?,?,?)";
         if ($statement = self::getConnection()->prepare($query))
         {
-            $statement->bind_param("ids", $id, $totalPoints, $birthdate);
+            $statement->bind_param("iis", $id, $totalPoints, $birthdate);
             $statement->execute();
 
             $statement->free_result();
@@ -276,7 +276,7 @@ class DBManager
         $parentId = $parent->getId();
 
         /* GETTING ARRAY OF IDS' FOR PARENT FROM CUSTOMER*/
-        $query = 'SELECT "user".id, password, name, surname, email, phoneNumber, birthdate, totalPoints, "position" FROM customer INNER JOIN user ON user.id=customer.studentID INNER JOIN student ON student.id=customer.studentID WHERE customer.parentID=?';
+        $query = 'SELECT user.id, password, name, surname, email, phoneNumber, birthdate, totalPoints, position FROM user INNER JOIN customer ON user.id=customer.studentID INNER JOIN student ON student.id=user.id WHERE customer.parentID=?';
         if ($statement = self::getConnection()->prepare($query))
         {
             $id = null;
@@ -294,7 +294,7 @@ class DBManager
             $statement->bind_result($id, $password, $name, $surname, $email, $phoneNumber, $birthdate, $totalPoints, $position);
             while ($statement->fetch())
             {
-                if ($position == "s")
+                if ($position == 's')
                 {
                     $student = new \Student($id, $name, $surname, $parent, $password, $birthdate, $email, $phoneNumber, $totalPoints);
                     array_push($allStudents, $student);

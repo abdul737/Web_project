@@ -1,5 +1,6 @@
 <?php
 require_once("databaseManager/DBManager.php");
+require_once("functions.php");
 session_start();
 $selectCourseId = null;
 $selectStudentId = null;
@@ -18,16 +19,25 @@ if (isset($parent))
     $students = $_COOKIE["students"];
     $courses = $_COOKIE["courses"];
     $times = $_COOKIE["times"];
+    if (!$students)
+    {
+        print "<SCRIPT type='text/javascript'>
+                    alert('You don\'t have any kid registered, register your kid first!');
+                    window.location.replace('addstudent.php');
+                </SCRIPT > ";
+        exit;
+    }
     if ($_GET)
     {
-        if ($_GET["inserted"] == true)
+        if ($_GET["message"] == "notfilled")
         {
-            echo "<script>alert('Student added to waitlist');</script>";
-        }else
-            if ($_GET["inserted"] == "notfilled")
+            echo "<script>alert('Fill all the fields');</script>";
+        } else
+            if ($_GET["message"] == true)
             {
-                echo "<script>alert('Fill all the fields');</script>";
+                echo "<script>alert('Student added to waitlist');</script>";
             }
+
     }
     if ($_POST) {
         $selectCourseId = $_POST["selectCourseId"];
@@ -35,9 +45,9 @@ if (isset($parent))
         $selectTimeId = $_POST["selectTimeId"];
         if($selectStudentId > 1 && $selectCourseId > 1 && $selectTimeId > 1)
         {
-            $selectCourseId = \databaseManager\DBManager::test_input($selectCourseId);
-            $selectStudentId = \databaseManager\DBManager::test_input($selectStudentId);
-            $selectTimeId = \databaseManager\DBManager::test_input($selectTimeId);
+            $selectCourseId = test_input($selectCourseId);
+            $selectStudentId = test_input($selectStudentId);
+            $selectTimeId = test_input($selectTimeId);
             $selectStudentId = $students[$selectStudentId - 2]->getId();
             $selectCourseId = $courses[$selectCourseId - 2]->getCourseId();
             $selectTime = $times[$selectTimeId - 2];
@@ -45,11 +55,11 @@ if (isset($parent))
             echo $selectCourseId;
             echo $selectTime;
             $waitList = \databaseManager\DBManager::insertOrGetWaitlist($parent->getId(), $selectStudentId, $selectCourseId, $selectTime);
-            header('Location: registercourse.php?inserted=true');
+            header('Location: registercourse.php?message=true');
         }
         else
         {
-            header('Location: registercourse.php?inserted=notfilled');
+            header('Location: registercourse.php?message=notfilled');
         }
 
         exit;
@@ -58,8 +68,10 @@ if (isset($parent))
 
 }else
 {
-    echo '<script>alert("Session timed out or not found!");</script>';
-    header("Location: login.php");
+    print "<SCRIPT type='text/javascript'>
+                    alert('Session timed out or not found!');
+                    window.location.replace('addstudent.php');
+                </SCRIPT > ";
     exit;
 }
 ?>
