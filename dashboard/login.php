@@ -48,7 +48,7 @@ function check($login, $password){
             if($userType == 'p')
                 getParent($id, $user);
             else if($userType == 's'){
-                $student = DBManager::selectStudent($id);
+                $student = DBManager::getStudent($id);
                 $_SESSION['student'] = $student;
                 exit;
             }else if($userType == 'i'){
@@ -126,85 +126,6 @@ function getParent($id, $user){
     echo "<script>alert('Parent info is gotten from database')</script>";
     header("Location: editprofile.php");
     exit;
-}
-
-/*function getStudent($id){
-    $student = null;
-    $connection = connect();
-    $statement = $connection->prepare('SELECT birthdate FROM student WHERE id = ?');
-    $statement->bind_param("i", $id);
-    $statement->execute();
-    $birthdate = null;
-    $statement->bind_result($birthdate);
-    $statement->fetch();
-    $statement->close();
-
-    $statement = $connection->prepare('SELECT name, surname, email, phoneNumber FROM user WHERE id = ?');
-    $statement->bind_param("i", $id);
-    $statement->execute();
-    $statement->store_result();
-    $name = null;
-    $surname = null;
-    $email = null;
-    $phoneNumber = null;
-    $statement->bind_result($name, $surname, $email, $phoneNumber);
-    if($statement->fetch()){
-        $student = new Student($id, $name, $surname, null, $birthdate, $email, $phoneNumber);
-        error_log($student->getEmail());
-    }else{
-        error_log(__FILE__.": not found in USER table");
-        return;
-    }
-    $statement->free_result();
-    $statement->close();
-
-    $statement = $connection->prepare('SELECT groupID FROM attendingStudent WHERE studentID = ?');
-    $statement->bind_param("i", $id);
-    $statement->execute();
-    $statement->store_result();
-    $num_rows = $statement->num_rows;
-    if($num_rows == 0){
-        error_log(__FILE__.": there is no group");
-        return;
-    }
-    $groupID = null;
-    $statement->bind_result($groupID);
-    while($statement->fetch()){
-        $group = getChildGroup($groupID);
-        $student->addGroup($group);
-    }
-    error_log(__FILE__.": all groups are inserted for ". $id);
-    return $student;
-}*/
-
-function getChildGroup($groupID){
-    $group = new Group($groupID, null, null, null);
-    $connection = connect();
-    $stmt = $connection->prepare('SELECT courseID FROM `group` WHERE id = ?');
-    $stmt->bind_param("i", $groupID);
-    $stmt->execute();
-    $courseID = null;
-    $stmt->bind_result($courseID);
-    if(!$stmt->fetch()){
-        error_log(__FILE__.": error in getting COURSE_ID FROM GROUP table");
-        return;
-    }
-    $stmt->close();
-    error_log(__FILE__.": course id gotten");
-
-    $stmt = $connection->prepare('SELECT title FROM course WHERE id = ?');
-    $stmt->bind_param("i", $courseID);
-    $stmt->execute();
-    $courseTitle = null;
-    $stmt->bind_result($courseTitle);
-    if(!$stmt->fetch()){
-        error_log(__FILE__.": error in getting TITLE FROM COURSE table");
-        return;
-    }
-    $course = new Course($courseID, $courseTitle, 0);
-    $stmt->close();
-    $group->setCourse($course);
-    return $group;
 }
 
 function getAdmin(User $user){

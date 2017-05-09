@@ -3,16 +3,18 @@
 namespace databaseManager;
 require_once "DBConnect.php";
 
-require_once "ObjectSources/_Parent.php";
-require_once "ObjectSources/Student.php";
-require_once "ObjectSources/Course.php";
-require_once "ObjectSources/Waitlist.php";
+require_once ("ObjectSources/_Parent.php");
+require_once ("ObjectSources/Student.php");
+require_once ("ObjectSources/Course.php");
+require_once ("ObjectSources/Group.php");
+require_once ("ObjectSources/Waitlist.php");
 
 require_once ("functions.php");
 
 use \Exception;
 use \Course;
 use \Student;
+use \Group;
 
 class DBManager
 {
@@ -450,7 +452,7 @@ class DBManager
 
     private static function getChildGroup($groupID){
         $group = new Group($groupID, null, null, null);
-        $connection = self::getConnection();
+        $connection = connect();
         $stmt = $connection->prepare('SELECT courseID FROM `group` WHERE id = ?');
         $stmt->bind_param("i", $groupID);
         $stmt->execute();
