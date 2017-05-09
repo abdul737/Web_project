@@ -385,13 +385,18 @@ class DBManager
         /* SELECTING FROM WAITLIST */
         $query = "SELECT * FROM waitlist WHERE parentID=?";
         if ($statement = self::getConnection()->prepare($query)) {
+            $studentId = $courseId = $days = null;
             $statement->bind_param("i", $parentID);
             $statement->execute();
-            $result = $statement->get_result();
-            while ($row = $result->fetch_assoc()) {
-                $wait = new \Waitlist($parentID, $row["studentID"], $row["courseID"], $row["days"]);
+            $statement->store_result();
+            $statement->bind_result($studentId, $courseId, $days);
+            while ($statement->fetch()) {
+                $wait = new \Waitlist($parentID, $studentId, $courseId, $days);
                 array_push($waitlist, $wait);
             }
+
+            $statement->free_result();
+            $statement->close();
         } else {
             error_log("ERROR WHILE SELECTING FROM WAITLIST");
         }

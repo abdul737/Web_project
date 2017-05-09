@@ -54,7 +54,6 @@ function check($login, $password){
             }else if($userType == 'i'){
                 // read instructor from the database
             }else if($userType == 'a'){
-                print_r($user);
                 $admin = getAdmin($user);
                 $_SESSION['admin'] = $admin;
                 header('Location: adminPage.php');
