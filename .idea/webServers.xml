@@ -3,9 +3,9 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="b917c612-5f48-4e8b-a660-3519662d8ca5" name="codecraft.uz" url="http://codecraft.uz">
-        <fileTransfer host="ftp://www.codecraft.uz" port="21">
+        <fileTransfer host="www.codecraft.uz" port="21" rootFolder="/www">
           <advancedOptions>
-            <advancedOptions dataProtectionLevel="Private" />
+            <advancedOptions compatibilityMode="true" dataProtectionLevel="Private" passiveMode="true" showHiddenFiles="true" />
           </advancedOptions>
           <option name="port" value="21" />
         </fileTransfer>

@@ -5,8 +5,14 @@
       <paths name="codecraft.uz">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
           </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/.idea" />
+            <excludedPath local="true" path="$PROJECT_DIR$/index.php" />
+            <excludedPath local="true" path="$PROJECT_DIR$/MAMP-PRO-Logo.png" />
+            <excludedPath local="true" path="$PROJECT_DIR$/README.md" />
+          </excludedPaths>
         </serverdata>
       </paths>
     </serverData>

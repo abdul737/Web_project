@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="lcm@localhost" uuid="3fedb7f3-8947-4222-bbf3-158be7129fec">
+    <data-source source="LOCAL" name="codecraft_moodle@localhost" uuid="3fedb7f3-8947-4222-bbf3-158be7129fec">
       <driver-ref>mysql</driver-ref>
       <auto-commit>false</auto-commit>
       <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/lcm</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/codecraft_moodle</jdbc-url>
       <driver-properties>
         <property name="autoReconnect" value="true" />
         <property name="zeroDateTimeBehavior" value="convertToNull" />
