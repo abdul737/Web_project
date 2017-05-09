@@ -21,6 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['password'])) {
     $password = (string)test_input($_POST["password"]);
     $phoneNumber = (string)test_input($_POST["phoneNumber"]);
 }
+
 if (!preg_match("/^[a-zA-Z ]*$/",$name)) {
     $nameErr = "Only letters and white space allowed";
 }
@@ -49,7 +50,7 @@ if(isset($_POST['password'])){
             if($result){
                 error_log("reg.php: inserted into PARENT table");
                 $id = str_pad($parent_id,  6, "0", STR_PAD_LEFT);
-                echo "<script>alert('Your ID is $id. You should use it as login')</script>";
+                echo "<script>alert('Your ID is p$id. You should use it as login')</script>";
                 require_once("login.php");
                 exit;
             }else{
@@ -66,5 +67,6 @@ if(isset($_POST['password'])){
         echo "<script>alert('Passwords does not match')</script>";
     }
 }
+
 require_once("register.htm");
 ?>
