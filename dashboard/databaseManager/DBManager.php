@@ -246,33 +246,17 @@ class DBManager
         $parentId = $parent->getId();
 
         /* GETTING ARRAY OF IDS' FOR PARENT FROM CUSTOMER*/
-        $query = 'SELECT "user".id, password, name, surname, email, phoneNumber, birthdate, totalPoints, "position" FROM customer INNER JOIN user ON user.id=customer.studentID INNER JOIN student ON student.id=customer.studentID WHERE customer.parentID=?';
+        $query = 'SELECT studentID FROM customer WHERE customer.parentID=?';
         if ($statement = self::getConnection()->prepare($query))
         {
             $id = null;
-            $password = null;
-            $name = null;
-            $surname = null;
-            $email = null;
-            $phoneNumber = null;
-            $birthdate = null;
-            $totalPoints = null;
-            $position = null;
-
             $statement->bind_param("i", $parentId);
             $statement->execute();
-            $statement->store_result();
-            $statement->bind_result($id, $password, $name, $surname, $email, $phoneNumber, $birthdate, $totalPoints, $position);
+            $statement->bind_result($id);
             while ($statement->fetch())
             {
-                if ($position == "s")
-                {
-                    $student = new \Student($id, $name, $surname, $parent, $password, $birthdate, $email, $phoneNumber, $totalPoints);
-                    array_push($allStudents, $student);
-                }else
-                {
-                    error_log("Error: Id(".$id.") doesn't belong to student!");
-                }
+                $student = self::getStudent($id);
+                array_push($allStudents, $student);
             }
 
             $statement->free_result();
@@ -457,7 +441,7 @@ class DBManager
         $groupID = null;
         $statement->bind_result($groupID);
         while($statement->fetch()){
-            $group = getChildGroup($groupID);
+            $group = self::getChildGroup($groupID);
             $student->addGroup($group);
         }
         error_log(__FILE__.": all groups are inserted for ". $id);
@@ -493,13 +477,5 @@ class DBManager
         $group->setCourse($course);
         return $group;
     }
-
-    public static function test_input($data) {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-    }
-
 }
 
