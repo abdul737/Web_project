@@ -477,22 +477,24 @@ class DBManager
         }
         $statement->close();
 
-        $statement = $connection->prepare('SELECT groupID FROM attendingStudent WHERE studentID = ?');
-        $statement->bind_param("i", $id);
-        $statement->execute();
-        $statement->store_result();
-        $num_rows = $statement->num_rows;
-        if($num_rows == 0){
-            error_log(__FILE__.": there is no group");
-            return;
+        if($statement = $connection->prepare('SELECT groupID FROM attendingStudent WHERE studentID = ?'))
+        {
+            $statement->bind_param("i", $id);
+            $statement->execute();
+            $statement->store_result();
+            $num_rows = $statement->num_rows;
+            if($num_rows == 0){
+                error_log(__FILE__.": there is no group");
+                return;
+            }
+            $groupID = null;
+            $statement->bind_result($groupID);
+            while($statement->fetch()){
+                $group = self::getChildGroup($groupID);
+                $student->addGroup($group);
+            }
+            error_log(__FILE__.": all groups are inserted for ". $id);
         }
-        $groupID = null;
-        $statement->bind_result($groupID);
-        while($statement->fetch()){
-            $group = self::getChildGroup($groupID);
-            $student->addGroup($group);
-        }
-        error_log(__FILE__.": all groups are inserted for ". $id);
         return $student;
     }
 
