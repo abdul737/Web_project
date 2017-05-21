@@ -1,17 +1,17 @@
 <?php
 require_once("databaseManager/DBManager.php");
 require_once("common_pages/logoutcheck.php");
-
-if ($_SESSION['position'] === 'p')
+$position = $_SESSION['position'];
+if ($position === 'p')
 {
     $user = $_SESSION['parent'];
-} else if ($_SESSION['position'] === 'a')
+} else if ($position === 'a')
 {
     $user = $_SESSION['admin'];
-} else if ($_SESSION['position'] === 's')
+} else if ($position === 's')
 {
     $user = $_SESSION['student'];
-} else if ($_SESSION['position'] === 'i')
+} else if ($position === 'i')
 {
     $user = $_SESSION['instructor'];
 } else
@@ -28,7 +28,7 @@ if(isset($user))
     if ($_POST) {
         foreach ($_POST as $item)
         {
-            $item = \databaseManager\DBManager::test_input($item);
+            $item = \databaseManager\SecurityCheck::test_input($item);
         }
         $firstName = $_POST["firstName"];
         $lastName = $_POST["lastName"];

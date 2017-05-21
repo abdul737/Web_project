@@ -3,7 +3,7 @@
   <component name="WebServers">
     <option name="servers">
       <webServer id="b917c612-5f48-4e8b-a660-3519662d8ca5" name="codecraft.uz" url="http://codecraft.uz">
-        <fileTransfer host="www.codecraft.uz" port="21" rootFolder="/www">
+        <fileTransfer host="192.168.1.106" port="21" rootFolder="/www">
           <advancedOptions>
             <advancedOptions compatibilityMode="true" dataProtectionLevel="Private" passiveMode="true" showHiddenFiles="true" />
           </advancedOptions>

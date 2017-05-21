@@ -1,5 +1,6 @@
 <?php
 
+
 namespace databaseManager;
 require_once "DBConnect.php";
 
@@ -8,6 +9,7 @@ require_once ("ObjectSources/Student.php");
 require_once ("ObjectSources/Course.php");
 require_once ("ObjectSources/Group.php");
 require_once ("ObjectSources/Waitlist.php");
+require_once("SecurityCheck.php");
 
 require_once ("functions.php");
 
@@ -275,7 +277,7 @@ class DBManager
         $allStudents = array();
         if (!isset($parent))
         {
-            $parent = new \_Parent($parentId, null, null, n);
+            $parent = new \_Parent($parentId, null, null, null);
         }
         /* GETTING ARRAY OF IDS' FOR PARENT FROM CUSTOMER*/
         $query = 'SELECT user.id, password, name, surname, email, phoneNumber, birthdate, totalPoints, position FROM user INNER JOIN customer ON user.id=customer.studentID INNER JOIN student ON student.id=user.id WHERE customer.parentID=?';
