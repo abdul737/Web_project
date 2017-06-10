@@ -2,41 +2,28 @@
 require_once("databaseManager/DBManager.php");
 require_once("common_pages/logoutcheck.php");
 
-$parent = $_SESSION["parent"];
-if(isset($parent))
-{
-    $students = \databaseManager\DBManager::selectAllStudentsOfParentById($parent->getId());
-    $courses = \databaseManager\DBManager::selectAllCourses();
-    $waitList = \databaseManager\DBManager::insertOrGetWaitlist($parent->getId());
-    if (!$waitList)
-    {
-        print "<SCRIPT type='text/javascript'>
-                    alert('You don\'t have registered courses');
-                    window.location.replace('registertocourse.php');
-                </SCRIPT > ";
-        exit;
-    }
-}
+$student = $_SESSION["student"];
+
 ?>
 
 <!doctype html>
 <html lang="en">
 <head>
     <?php
-        include "include/parentProfileHeader.php";
+    include "include/includesHeader.html";
     ?>
 </head>
 <body>
 <div class="wrapper">
     <div class="sidebar" data-active-color="blue" data-background-color="black" data-image="http://demos.creative-tim.com/material-dashboard-pro/assets/img/sidebar-3.jpg">
         <?php
-            include "include/siteLogo.php";
-            include "include/profileWrapper.php";
+        include "include/siteLogo.html";
+        include "include/profileWrapper.php";
         ?>
     </div>
     <div class="main-panel">
         <?php
-            include "include/top_nav_bar.php";
+        include "include/top_nav_bar.php";
         ?>
         <div class="content">
             <div class="container-fluid">
@@ -118,7 +105,7 @@ if(isset($parent))
     </div>
 </div>
 <?php
-    include "include/profilefooter.php";
+include "include/includesFooter.html";
 ?>
 </body>
 </html>

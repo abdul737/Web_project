@@ -1,3 +1,31 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: Abdulbosid
+ * Date: 6/9/2017
+ * Time: 3:55 PM
+ */
+require_once("databaseManager/DBManager.php");
+require_once("common_pages/logoutcheck.php");
+
+$user = null;
+if ($_SESSION['position'] == 'p')
+{
+    $user = $_SESSION['parent'];
+} else if ($_SESSION['position'] == 'a')
+{
+    $user = $_SESSION['admin'];
+} else if ($_SESSION['position'] == 's')
+{
+    $user = $_SESSION['student'];
+} else if ($_SESSION['position'] == 'i')
+{
+    $user = $_SESSION['instructor'];
+}
+
+$username = $user->getName()." ".$user->getSurname();
+
+?>
 <!doctype html>
 <html lang="en">
 
@@ -39,7 +67,7 @@
                         </a>
                     </li>
                     <li class="">
-                        <a href="login.html">
+                        <a href="login.php">
                             <i class="material-icons">fingerprint</i> Login
                         </a>
                     </li>

@@ -57,7 +57,7 @@ function check($login, $password){
             }else if($userType == 'a'){
                 $admin = getAdmin($user);
                 $_SESSION['admin'] = $admin;
-                header('Location: adminPage.php');
+                header('Location: profile.php');
                 exit;
             }
         }
@@ -125,7 +125,7 @@ function getParent($id, $user){
     session_start();
     $_SESSION['parent'] = $parent;
     echo "<script>alert('Parent info is gotten from database')</script>";
-    header("Location: parentprofile.php");
+    header("Location: profile.php");
     exit;
 }
 
@@ -142,6 +142,125 @@ function getAdmin(User $user){
     $admin->setAllStudents($students);
     return $admin;
 }
-
-require_once("login.html");
 ?>
+
+<!doctype html>
+<html lang="en">
+
+
+<head>
+    <?php
+    include "include/includesHeader.html";
+    ?>
+    <title>Login - Edu Management System</title>
+</head>
+<body>
+<nav class="navbar navbar-primary navbar-transparent navbar-absolute">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">Edu Management
+                System</a>
+        </div>
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="">
+                    <a href="register.php">
+                        <i class="material-icons">person_add</i> Register
+                    </a>
+                </li>
+                <li class=" active ">
+                    <a href="login.php">
+                        <i class="material-icons">fingerprint</i> Login
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="wrapper wrapper-full-page">
+    <div class="full-page login-page" filter-color="black" data-image="../assets/img/login.jpg">
+        <!--   you can change the color of the filter page using: data-color="blue | purple | green | orange | red | rose " -->
+        <div class="content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-sm-6 col-md-offset-4 col-sm-offset-3">
+                        <form method="POST" action='<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>'>
+                            <div class="card card-login card-hidden">
+                                <div class="card-header text-center" data-background-color="blue">
+                                    <h4 class="card-title">Login</h4>
+                                </div>
+                                <div class="card-content">
+                                    <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="material-icons">perm_identity</i>
+                                </span>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Login</label>
+                                            <input title="login" name="login" id="login" data-minlength="6" type="text" required class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="material-icons">lock_outline</i>
+                                </span>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Password</label>
+                                            <input title="password" name="password_l" type="password" required class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="checkbox">
+                                        <div class="form-group">
+                                            <label>
+                                                <input type="checkbox" name="remember" checked>
+                                                <span class="checkbox-material"><span class="check">
+                                                    </span></span> Remember
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="footer text-center">
+                                    <button type="submit" class="btn btn-info btn-simple btn-wd btn-lg">Let's go
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+
+            <?php include "include/footer_copyright.html" ?>
+        </footer>
+    </div>
+</div>
+</body>
+<!-- Including validator.js -->
+<script src="../assets/js/validator.js"></script>
+<?php
+include "include/includesFooter.html";
+?>
+<script type="text/javascript">
+    $().ready(function () {
+        main.checkFullPageBackgroundImage();
+        setTimeout(function () {
+            // after 1000 ms we add the class animated to the login/register card
+            $('.card').removeClass('card-hidden');
+        }, 700);
+        $('button[type="submit"]').prop('disabled', false);
+        $('#check').on('input', function() {
+            if(this.value.length >= 6) {
+                $('button[type="submit"]').prop('disabled', false);
+            } else {
+                $('button[type="submit"]').prop('disabled', true);
+            }
+        });
+    });
+</script>
+</html>

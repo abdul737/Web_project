@@ -6,6 +6,9 @@ require_once "DBConnect.php";
 
 require_once ("ObjectSources/_Parent.php");
 require_once ("ObjectSources/Student.php");
+require_once ("ObjectSources/Admin.php");
+require_once ("ObjectSources/User.php");
+require_once ("ObjectSources/Student.php");
 require_once ("ObjectSources/Course.php");
 require_once ("ObjectSources/Group.php");
 require_once ("ObjectSources/Waitlist.php");
@@ -78,6 +81,7 @@ class DBManager
         return -1;
     }
 
+
     public static function updateParent(\_Parent $parent){
         $connection = self::getConnection();
         $query = 'UPDATE user SET name=?, surname=?, password=?, email=?, phoneNumber=? WHERE id=?';
@@ -125,7 +129,53 @@ class DBManager
         }
         return -1;
     }
+    public static function updateAdmin(\Admin $admin){
+        $connection = self::getConnection();
+        $query = 'UPDATE user SET name=?, surname=?, password=?, email=?, phoneNumber=? WHERE id=?';
+        $statement = $connection->prepare($query);
+        if(!$statement){
+            error_log("reg.php: error with the prepared statement");
+            return;
+        }
+        $id = $admin->getId();
+        $name = $admin->getName();
+        $surname = $admin->getSurname();
+        $password = $admin->getPassword();
+        $email = $admin->getEmail();
+        $phoneNumber = $admin->getPhoneNumber();
+        $statement->bind_param("sssssi", $name, $surname, $password, $email, $phoneNumber, $id);
 
+        if($statement->execute()){
+            error_log("reg.php: admin updated into USER table");
+            /* CAN BE USED IF THERE WILL BE OTHER PARAMETERS THAN ID IN PARENT TABLE
+             * if($stmt = $connection->prepare('INSERT INTO admin (id) VALUE (?)')){
+                $stmt->bind_param("i", $admin_id);
+                $stmt->execute();
+                $admin_id = $statement->insert_id;
+
+                error_log("reg.php: inserted into PARENT table");
+
+                $stmt->free_result();
+                $stmt->close();
+                $statement->free_result();
+                $statement->close();
+                $connection->close();
+                return $admin_id;
+            }else{
+                error_log("reg.php: not inserted into PARENT table");
+            }
+            $stmt->close();
+            */
+        }else {
+            error_log("reg.php: not inserted into USER table");
+        }
+
+        if($connection != null){
+            $statement->free_result();
+            $statement->close();
+        }
+        return -1;
+    }
     public static function insertStudent(\Student $student, \_Parent $bindParent = null)
     {
         $id = null;

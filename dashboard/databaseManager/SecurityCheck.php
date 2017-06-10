@@ -8,6 +8,10 @@
 namespace databaseManager;
 class SecurityCheck
 {
+    public static function encrypt($hello)
+    {
+        return md5($hello);
+    }
     public static function test_input($data) {
         $data = trim($data);
         $data = stripslashes($data);

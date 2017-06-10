@@ -1,7 +1,7 @@
 <nav class="navbar navbar-transparent navbar-absolute">
     <div class="container-fluid">
         <div class="navbar-minimize">
-            <button id="minimizeSidebar" class="btn btn-round btn-white btn-fill btn-just-icon">
+            <button id="minimizeSidebar" onclick="clickSidebar()" class="btn btn-round btn-white btn-fill btn-just-icon">
                 <i class="material-icons visible-on-sidebar-regular">more_vert</i>
                 <i class="material-icons visible-on-sidebar-mini">view_list</i>
             </button>
@@ -49,3 +49,37 @@
         </div>
     </div>
 </nav>
+<script>
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        var expires = "expires="+d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for(var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+    
+    function clickSidebar() {
+        if (getCookie('sidebarOpen') == 1)
+        {
+            setCookie('sidebarOpen', 0, 7);
+        }
+        else
+        {
+            setCookie('sidebarOpen', 1, 7);
+        }
+    }
+</script>
