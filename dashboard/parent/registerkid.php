@@ -1,9 +1,11 @@
+
 <?php
 require_once("databaseManager/DBManager.php");
 require_once("functions.php");
 require_once("common_pages/logoutcheck.php");
 
 $parent = $_SESSION["parent"];
+$check = 0;
 if(isset($parent))
 {
     $students = \databaseManager\DBManager::selectAllStudentsOfParentById($parent->getId(), $parent);
@@ -18,11 +20,19 @@ if(isset($parent))
         {
             $student = new Student(null, $first_name, $last_name, $date, $date, $parent->getEmail(), $parent->getPhoneNumber(), $parent);
             $student = \databaseManager\DBManager::insertStudent($student, $parent);
-            printf("<script>alert('New student with id s%05d successfully created!')</script>", $student->getId());
+
+            $notificationCheck = 1;
+            $notificationMessage = "New student with id ".sprintf("s%05d", $student->getId())." successfully created!";
+            $notificationType = "success";
+            $notificationAlign = "center";
+            $notificationTime = 180000;
         }
         else
         {
-            printf("<script>alert('You must fill all the fields')</script>");
+            $notificationCheck = 1;
+            $notificationMessage = "Please fill all the fields!";
+            $notificationType = "danger";
+            $notificationAlign = "right";
         }
         $_POST = array();
 //        include "profile.php";
@@ -30,7 +40,6 @@ if(isset($parent))
     }
 }
 ?>
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
@@ -63,7 +72,7 @@ if(isset($parent))
                             <div class="col-md-9">
                                 <div class="form-group label-floating ">
                                     <label class="control-label"></label>
-                                    <input class="form-control" name="date" type="date">
+                                    <input class="form-control datetimepicker" name="date">
                                 </div>
                             </div>
                         </div>
@@ -76,3 +85,4 @@ if(isset($parent))
         </div>
     </div>
 </div>
+

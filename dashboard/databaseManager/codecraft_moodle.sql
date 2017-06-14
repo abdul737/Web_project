@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 09, 2017 at 10:55 AM
+-- Generation Time: Jun 14, 2017 at 11:26 AM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -27,17 +27,14 @@ USE `codecraft_moodle`;
 --
 -- Table structure for table `admin`
 --
+-- Creation: May 08, 2017 at 07:52 AM
+--
 
 DROP TABLE IF EXISTS `admin`;
 CREATE TABLE IF NOT EXISTS `admin` (
   `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `admin`
---
-
-TRUNCATE TABLE `admin`;
 --
 -- Dumping data for table `admin`
 --
@@ -49,6 +46,8 @@ INSERT INTO `admin` (`id`) VALUES
 
 --
 -- Table structure for table `assignment`
+--
+-- Creation: May 08, 2017 at 07:52 AM
 --
 
 DROP TABLE IF EXISTS `assignment`;
@@ -65,15 +64,12 @@ CREATE TABLE IF NOT EXISTS `assignment` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `assignment`
---
-
-TRUNCATE TABLE `assignment`;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `attendingstudent`
+--
+-- Creation: May 08, 2017 at 07:52 AM
 --
 
 DROP TABLE IF EXISTS `attendingstudent`;
@@ -83,11 +79,6 @@ CREATE TABLE IF NOT EXISTS `attendingstudent` (
   `localPoints` float NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `attendingstudent`
---
-
-TRUNCATE TABLE `attendingstudent`;
 --
 -- Dumping data for table `attendingstudent`
 --
@@ -101,6 +92,8 @@ INSERT INTO `attendingstudent` (`studentID`, `groupID`, `localPoints`) VALUES
 --
 -- Table structure for table `badge`
 --
+-- Creation: May 08, 2017 at 07:52 AM
+--
 
 DROP TABLE IF EXISTS `badge`;
 CREATE TABLE IF NOT EXISTS `badge` (
@@ -112,15 +105,12 @@ CREATE TABLE IF NOT EXISTS `badge` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `badge`
---
-
-TRUNCATE TABLE `badge`;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `course`
+--
+-- Creation: May 08, 2017 at 08:01 PM
 --
 
 DROP TABLE IF EXISTS `course`;
@@ -132,11 +122,6 @@ CREATE TABLE IF NOT EXISTS `course` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `course`
---
-
-TRUNCATE TABLE `course`;
 --
 -- Dumping data for table `course`
 --
@@ -150,6 +135,8 @@ INSERT INTO `course` (`id`, `title`, `length`, `ageLimit`) VALUES
 --
 -- Table structure for table `courseassignment`
 --
+-- Creation: May 08, 2017 at 07:52 AM
+--
 
 DROP TABLE IF EXISTS `courseassignment`;
 CREATE TABLE IF NOT EXISTS `courseassignment` (
@@ -157,15 +144,12 @@ CREATE TABLE IF NOT EXISTS `courseassignment` (
   `assignmentID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `courseassignment`
---
-
-TRUNCATE TABLE `courseassignment`;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `currentgroups`
+--
+-- Creation: May 08, 2017 at 07:52 AM
 --
 
 DROP TABLE IF EXISTS `currentgroups`;
@@ -175,15 +159,12 @@ CREATE TABLE IF NOT EXISTS `currentgroups` (
   `assistant` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `currentgroups`
---
-
-TRUNCATE TABLE `currentgroups`;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `customer`
+--
+-- Creation: May 08, 2017 at 07:52 AM
 --
 
 DROP TABLE IF EXISTS `customer`;
@@ -193,23 +174,36 @@ CREATE TABLE IF NOT EXISTS `customer` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Truncate table before insert `customer`
---
-
-TRUNCATE TABLE `customer`;
---
 -- Dumping data for table `customer`
 --
 
 INSERT INTO `customer` (`studentID`, `parentID`) VALUES
 (3, 1),
 (8, 7),
-(12, 7);
+(12, 7),
+(14, 7),
+(15, 7),
+(16, 7),
+(18, 17),
+(19, 1),
+(20, 7),
+(21, 7),
+(22, 7),
+(23, 7),
+(24, 7),
+(25, 7),
+(26, 1),
+(27, 1),
+(28, 1),
+(29, 1),
+(30, 1);
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `file`
+--
+-- Creation: May 08, 2017 at 07:52 AM
 --
 
 DROP TABLE IF EXISTS `file`;
@@ -221,15 +215,12 @@ CREATE TABLE IF NOT EXISTS `file` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `file`
---
-
-TRUNCATE TABLE `file`;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `group`
+--
+-- Creation: May 08, 2017 at 07:52 AM
 --
 
 DROP TABLE IF EXISTS `group`;
@@ -241,11 +232,6 @@ CREATE TABLE IF NOT EXISTS `group` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `group`
---
-
-TRUNCATE TABLE `group`;
 --
 -- Dumping data for table `group`
 --
@@ -259,6 +245,8 @@ INSERT INTO `group` (`id`, `courseID`, `venue`, `startingTime`) VALUES
 --
 -- Table structure for table `groupassignment`
 --
+-- Creation: May 08, 2017 at 07:52 AM
+--
 
 DROP TABLE IF EXISTS `groupassignment`;
 CREATE TABLE IF NOT EXISTS `groupassignment` (
@@ -266,15 +254,12 @@ CREATE TABLE IF NOT EXISTS `groupassignment` (
   `assignmentID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `groupassignment`
---
-
-TRUNCATE TABLE `groupassignment`;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `instructor`
+--
+-- Creation: May 08, 2017 at 07:52 AM
 --
 
 DROP TABLE IF EXISTS `instructor`;
@@ -282,15 +267,12 @@ CREATE TABLE IF NOT EXISTS `instructor` (
   `id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `instructor`
---
-
-TRUNCATE TABLE `instructor`;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `parent`
+--
+-- Creation: May 08, 2017 at 07:52 AM
 --
 
 DROP TABLE IF EXISTS `parent`;
@@ -300,11 +282,6 @@ CREATE TABLE IF NOT EXISTS `parent` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Truncate table before insert `parent`
---
-
-TRUNCATE TABLE `parent`;
---
 -- Dumping data for table `parent`
 --
 
@@ -312,12 +289,15 @@ INSERT INTO `parent` (`id`) VALUES
 (1),
 (2),
 (7),
-(13);
+(13),
+(17);
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `passport`
+--
+-- Creation: May 08, 2017 at 07:52 AM
 --
 
 DROP TABLE IF EXISTS `passport`;
@@ -332,15 +312,12 @@ CREATE TABLE IF NOT EXISTS `passport` (
   `issueDate` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `passport`
---
-
-TRUNCATE TABLE `passport`;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `student`
+--
+-- Creation: May 08, 2017 at 07:52 AM
 --
 
 DROP TABLE IF EXISTS `student`;
@@ -351,11 +328,6 @@ CREATE TABLE IF NOT EXISTS `student` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Truncate table before insert `student`
---
-
-TRUNCATE TABLE `student`;
---
 -- Dumping data for table `student`
 --
 
@@ -363,12 +335,30 @@ INSERT INTO `student` (`id`, `totalPoints`, `birthdate`) VALUES
 (3, 0, '2017-05-01'),
 (10, 0, '0001-12-12'),
 (11, 0, '2012-12-14'),
-(12, 0, '1111-11-11');
+(12, 0, '1111-11-11'),
+(14, 0, '2009-12-01'),
+(15, 0, '2011-02-04'),
+(16, 0, '2000-12-01'),
+(18, 0, '1996-06-18'),
+(19, 0, '0000-00-00'),
+(20, 0, '0000-00-00'),
+(21, 0, '1998-08-23'),
+(22, 0, '1996-08-14'),
+(23, 0, '1996-08-14'),
+(24, 0, '1996-08-14'),
+(25, 0, '1996-08-14'),
+(26, 0, '1996-08-14'),
+(27, 0, '1996-12-14'),
+(28, 0, '0014-12-14'),
+(29, 0, '0014-12-14'),
+(30, 0, '0012-12-12');
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `studentbadge`
+--
+-- Creation: May 08, 2017 at 07:52 AM
 --
 
 DROP TABLE IF EXISTS `studentbadge`;
@@ -377,15 +367,12 @@ CREATE TABLE IF NOT EXISTS `studentbadge` (
   `badgeID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `studentbadge`
---
-
-TRUNCATE TABLE `studentbadge`;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `subittedassignment`
+--
+-- Creation: May 08, 2017 at 07:52 AM
 --
 
 DROP TABLE IF EXISTS `subittedassignment`;
@@ -396,15 +383,12 @@ CREATE TABLE IF NOT EXISTS `subittedassignment` (
   `fileID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `subittedassignment`
---
-
-TRUNCATE TABLE `subittedassignment`;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `user`
+--
+-- Creation: May 08, 2017 at 08:05 PM
 --
 
 DROP TABLE IF EXISTS `user`;
@@ -418,13 +402,8 @@ CREATE TABLE IF NOT EXISTS `user` (
   `position` varchar(1) NOT NULL,
   `photoFieldId` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `user`
---
-
-TRUNCATE TABLE `user`;
 --
 -- Dumping data for table `user`
 --
@@ -435,18 +414,37 @@ INSERT INTO `user` (`id`, `password`, `email`, `name`, `surname`, `phoneNumber`,
 (4, 'asdasd', 'madina121393@mail.ru', 'Madina', 'Saidova', '+998909110044', 'p', 0),
 (5, 'asdasd', 'madina121393@mail.ru', 'Madina', 'Saidova', '+998909110044', 'p', 0),
 (6, 'asdasd', 'abdulbosid.kh@gmail.com', 'Abdulbosid', 'Khamidov', '+998909110044', 'a', 0),
-(7, 'asd', 'abdulbosid.kh@gmail.com', 'Abdulbosid', 'Khamidov', '+998909110044', 'p', NULL),
+(7, 'asd', 'abdul6180155@gmail.com', 'Abdulbosid', 'Khamidov', '+998909110044', 'p', NULL),
 (8, '2015-12-15', 'abdulbosid.kh@gmail.com', 'Cool', 'boy', '+998909110044', 's', NULL),
 (9, '0001-12-12', 'abdulbosid.kh@gmail.com', 'asd', 'asd', '+998909110044', 's', NULL),
 (10, '0001-12-12', 'abdulbosid.kh@gmail.com', 'asd', 'asd', '+998909110044', 's', NULL),
 (11, '2012-12-14', 'abdulbosid.kh@gmail.com', 'Some', 'Other', '+998909110044', 's', NULL),
 (12, '1111-11-11', 'abdulbosid.kh@gmail.com', 'asd', 'sd', '+998909110044', 's', NULL),
-(13, 'asdasd', 'mu_slim@gmail.com', 'Muslimbek', 'Abduganiyev', '+998909110044', 'p', NULL);
+(13, 'asdasd', 'mu_slim@gmail.com', 'Muslimbek', 'Abduganiyev', '+998909110044', 'p', NULL),
+(14, '2009-12-01', 'abdulbosid.kh@gmail.com', 'Salokhiddin', 'Khamidov', '+998909110044', 's', NULL),
+(15, '2011-02-04', 'abdulbosid.kh@gmail.com', 'Mukhammadsodiq', 'Khamidov', '+998909110044', 's', NULL),
+(16, '2000-12-01', 'abdulbosid.kh@gmail.com', 'Abdulbois', 'Husanov', '+998909110044', 's', NULL),
+(17, '1317777', 'darhon@gmail.com', 'Darkhonbek', 'Mamataliev', '+998971317777', 'p', NULL),
+(18, '1996-06-18', 'darhon@gmail.com', 'Muslimbek', 'Abduganiyev', '+998971317777', 's', NULL),
+(19, '', 'madina121393@mail.ru', '', '', '+998909110044', 's', NULL),
+(20, '', 'abdul6180155@gmail.com', 'Abduvohid', 'Khamidov', '+998909110044', 's', NULL),
+(21, '1998-08-23', 'abdul6180155@gmail.com', 'Madina', 'Khamidova', '+998909110044', 's', NULL),
+(22, '1996-08-14', 'abdul6180155@gmail.com', 'Abdulbosid', 'Khamidov', '+998909110044', 's', NULL),
+(23, '1996-08-14', 'abdul6180155@gmail.com', 'Abdulbosid', 'Khamidov', '+998909110044', 's', NULL),
+(24, '1996-08-14', 'abdul6180155@gmail.com', 'Abdulbosid', 'Khamidov', '+998909110044', 's', NULL),
+(25, '1996-08-14', 'abdul6180155@gmail.com', 'Abdulbosid', 'Khamidov', '+998909110044', 's', NULL),
+(26, '1996-08-14', 'madina121393@mail.ru', 'Abdulbosid', 'Khamidov', '+998909110044', 's', NULL),
+(27, '1996-12-14', 'madina121393@mail.ru', 'Abduvohid', 'Abduganiyev', '+998909110044', 's', NULL),
+(28, '0014-12-14', 'madina121393@mail.ru', 'ads', 'asd', '+998909110044', 's', NULL),
+(29, '0014-12-14', 'madina121393@mail.ru', 'ads', 'asd', '+998909110044', 's', NULL),
+(30, '0012-12-12', 'madina121393@mail.ru', 'asd', 'asd', '+998909110044', 's', NULL);
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `waitlist`
+--
+-- Creation: May 08, 2017 at 08:07 PM
 --
 
 DROP TABLE IF EXISTS `waitlist`;
@@ -459,13 +457,8 @@ CREATE TABLE IF NOT EXISTS `waitlist` (
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `confirmed` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`waitlistId`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 
---
--- Truncate table before insert `waitlist`
---
-
-TRUNCATE TABLE `waitlist`;
 --
 -- Dumping data for table `waitlist`
 --
@@ -477,7 +470,25 @@ INSERT INTO `waitlist` (`waitlistId`, `parentID`, `courseID`, `studentID`, `days
 (5, 1, 2, 3, 'Doesn\'t matter', '2017-05-08 20:06:11', 0),
 (6, 1, 1, 3, 'Monday/Wednesday/Friday', '2017-05-08 20:06:11', 0),
 (7, 7, 1, 12, 'Monday/Wednesday/Friday', '2017-05-09 08:24:18', 0),
-(8, 1, 1, 3, 'Monday/Wednesday/Friday', '2017-05-09 08:51:25', 0);
+(8, 1, 1, 3, 'Monday/Wednesday/Friday', '2017-05-09 08:51:25', 0),
+(9, 7, 1, 14, 'Monday/Wednesday/Friday', '2017-05-09 12:22:37', 0),
+(10, 7, 1, 15, 'Tuesday/Thursday/Saturday', '2017-05-09 12:24:09', 0),
+(11, 7, 2, 16, 'Tuesday/Thursday/Saturday', '2017-05-09 12:26:16', 0),
+(12, 7, 2, 12, 'Monday/Wednesday/Friday', '2017-05-09 13:41:42', 0),
+(13, 17, 1, 18, 'Monday/Wednesday/Friday', '2017-05-09 15:48:58', 0),
+(14, 1, 1, 3, 'Monday/Wednesday/Friday', '2017-05-27 17:46:07', 0),
+(15, 1, 1, 19, 'Tuesday/Thursday/Saturday', '2017-05-27 17:46:18', 0),
+(16, 1, 1, 3, 'Doesn\'t matter', '2017-05-27 17:57:58', 0),
+(17, 1, 1, 3, 'Doesn\'t matter', '2017-05-27 18:01:39', 0),
+(18, 7, 2, 20, 'Monday/Wednesday/Friday', '2017-05-28 07:13:50', 0),
+(19, 7, 2, 21, 'Monday/Wednesday/Friday', '2017-05-28 07:45:14', 0),
+(20, 7, 2, 14, 'Monday/Wednesday/Friday', '2017-06-09 18:16:21', 0),
+(21, 7, 2, 24, 'Doesn\'t matter', '2017-06-09 18:16:48', 0),
+(22, 7, 1, 15, 'Doesn\'t matter', '2017-06-10 07:12:26', 0),
+(23, 1, 1, 26, 'Monday/Wednesday/Friday', '2017-06-11 09:11:38', 0),
+(24, 1, 1, 26, 'Monday/Wednesday/Friday', '2017-06-11 09:14:52', 0),
+(25, 1, 1, 26, 'Tuesday/Thursday/Saturday', '2017-06-13 12:54:21', 0),
+(26, 1, 1, 26, 'Tuesday/Thursday/Saturday', '2017-06-13 13:00:42', 0);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

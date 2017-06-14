@@ -14,6 +14,8 @@ require_once("databaseManager/DBManager.php");
 
 use \databaseManager\DBManager;
 
+if(session_start())
+    session_destroy();
 session_start();
 
 if(isset($_POST["login"]) && $_SERVER["REQUEST_METHOD"] == "POST"){
@@ -82,7 +84,7 @@ function isExists($statement, $id){
 }
 
 function getUser($id, $password){
-    $connection = connect();
+    $connection = \databaseManager\DBConnect::getConnection();
     $user = null;
     $statement = $connection->prepare('SELECT password, email, name, surname, phoneNumber FROM user WHERE id = ?');
     $statement->bind_param("i", $id);
@@ -111,20 +113,8 @@ function getUser($id, $password){
 
 function getParent($id, $user){
     $parent = new _Parent($id, $user->getName(), $user->getSurname(), $user->getPassword(), $user->getEmail(), $user->getPhoneNumber());
-
-    $connection = connect();
-    $statement = $connection->prepare('SELECT studentID FROM customer WHERE parentID = ?');
-    $statement->bind_param("i", $id);
-    $statement->execute();
-    $student_id = null;
-    $statement->bind_result($student_id);
-    while($statement->fetch()){
-        $student = DBManager::selectStudent($student_id, $parent);
-        $parent->addStudent($student);
-    }
-    session_start();
+    $_SESSION['position'] = 'p';
     $_SESSION['parent'] = $parent;
-    echo "<script>alert('Parent info is gotten from database')</script>";
     header("Location: profile.php");
     exit;
 }
@@ -211,7 +201,7 @@ function getAdmin(User $user){
                                 </span>
                                         <div class="form-group label-floating">
                                             <label class="control-label">Password</label>
-                                            <input title="password" name="password_l" type="password" required class="form-control">
+                                            <input title="password" name="password_l" id="passwordTextBox" type="password" required class="form-control">
                                         </div>
                                     </div>
                                     <div class="checkbox">
@@ -247,20 +237,30 @@ function getAdmin(User $user){
 include "include/includesFooter.html";
 ?>
 <script type="text/javascript">
+    document.onload()
+    {
+        setCookie('profile_content', 'editprofile', -1);
+    }
+</script>
+<script type="text/javascript">
     $().ready(function () {
-        main.checkFullPageBackgroundImage();
-        setTimeout(function () {
-            // after 1000 ms we add the class animated to the login/register card
-            $('.card').removeClass('card-hidden');
-        }, 700);
-        $('button[type="submit"]').prop('disabled', false);
-        $('#check').on('input', function() {
+        $("button[type='submit']").prop("disabled", true);
+        $('#passwordTextBox').on('input', function() {
             if(this.value.length >= 6) {
                 $('button[type="submit"]').prop('disabled', false);
             } else {
                 $('button[type="submit"]').prop('disabled', true);
             }
         });
+    });
+</script>
+<script type="text/javascript">
+    $().ready(function () {
+        main.checkFullPageBackgroundImage();
+        setTimeout(function () {
+            // after 1000 ms we add the class animated to the login/register card
+            $('.card').removeClass('card-hidden');
+        }, 700);
     });
 </script>
 </html>

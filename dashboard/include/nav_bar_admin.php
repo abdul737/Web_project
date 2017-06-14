@@ -1,7 +1,7 @@
 <?php
     $file = basename($_SERVER["SCRIPT_FILENAME"]);         // $file is set to "index.php"
 
-    if (!isset($_COOKIE['profile_content']))
+    if (!isset($_COOKIE['profile_content']) || $_COOKIE['profile_content'] == null)
     {
         $_COOKIE['profile_content'] = 'admin_courses';
     }

@@ -27,10 +27,31 @@ if (isset($_SESSION['position']))
 {
     $logout = true; //some other error will be displayed
 }
+
+
+include "include/includesFooter.html";
+include "include/includesHeader.html";
+?>
+
+<html>
+</html>
+<?php
 if ($logout) {
-    print "<SCRIPT type='text/javascript'>
-                    alert('You already logged out!');
-                    window.location.replace('login.php');
-                </SCRIPT > ";
+    print '<SCRIPT type="text/javascript">
+                    swal("Logout", "You already logged out!", "error");
+                    swal({   title: "Logout",   
+                             text: "You already logged out!",   
+                             type: "error",  
+                             confirmButtonText: "Back to login", 
+                             confirmButtonColor: "blue",
+                             closeOnConfirm: false,  
+                             showLoaderOnConfirm: true }, 
+                             function(isConfirm){   
+                                 if (isConfirm) { 
+                                     setTimeout(function(){     window.location.replace("login.php");   }, 1000); 
+                                      }
+                            });
+                </SCRIPT > ';
     exit;
 }
+?>

@@ -10,10 +10,10 @@ if(isset($parent))
     $waitList = \databaseManager\DBManager::insertOrGetWaitlist($parent->getId());
     if (!$waitList)
     {
-        print "<SCRIPT type='text/javascript'>
-                    alert('You don\'t have registered courses');
-                </SCRIPT > ";
-        exit;
+        $notificationCheck = 1;
+        $notificationMessage = "You don\'t have registered courses";
+        $notificationType = "info";
+        $notificationAlign = "right";
     }
 }
 ?>

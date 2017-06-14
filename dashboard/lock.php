@@ -72,7 +72,7 @@ $username = $user->getName()." ".$user->getSurname();
                         </a>
                     </li>
                     <li class=" active ">
-                        <a href="lock.html">
+                        <a href="lock.php">
                             <i class="material-icons">lock_open</i> Lock
                         </a>
                     </li>

@@ -12,19 +12,37 @@ $user = null;
 if ($_SESSION['position'] == 'p')
 {
     $user = $_SESSION['parent'];
+    $imageSidebar = "../../assets/img/sidebar-1.jpg";
 } else if ($_SESSION['position'] == 'a')
 {
     $user = $_SESSION['admin'];
+    $imageSidebar = "../../assets/img/sidebar-2.jpg";
 } else if ($_SESSION['position'] == 's')
 {
     $user = $_SESSION['student'];
+    $imageSidebar = "../../assets/img/sidebar-3.jpg";
 } else if ($_SESSION['position'] == 'i')
 {
     $user = $_SESSION['instructor'];
+    $imageSidebar = "../../assets/img/sidebar-4.jpg";
 }
 
 $username = $user->getName()." ".$user->getSurname();
 
+//these variables are used to show notification
+$notificationCheck = 0; // if check is 1 simple notification is shown
+$notificationMessage = "Notification message!"; // default message
+$notificationType = "success"; // default type
+                                /* notificationType can be:
+                                 * info
+                                 * success
+                                 * warning
+                                 * danger
+                                 * */
+$notificationTimer = 4000; // notification dispose time in milliseconds
+$notificationFrom = "top"; // location in horizontal alignment
+$notificationAlign = "center"; // location in vertical alignment
+// see more about notification settings in include/jsFunctions.php file
 ?>
 
 
@@ -49,7 +67,7 @@ $username = $user->getName()." ".$user->getSurname();
     }
 ?>>
 <div class="wrapper">
-    <div class="sidebar" data-active-color="blue" data-background-color="black" data-image="http://demos.creative-tim.com/material-dashboard-pro/assets/img/sidebar-3.jpg">
+    <div class="sidebar" data-active-color="blue" data-background-color="black" data-image="<?= $imageSidebar ?>">
         <?php
         include "include/siteLogo.html";
         ?>
@@ -72,7 +90,7 @@ $username = $user->getName()." ".$user->getSurname();
                                 <a href="<?php echo basename($_SERVER['SCRIPT_FILENAME']);?>">Change Password</a>
                             </li>
                             <li>
-                                <a href="common_pages/logout.php">Log out</a>
+                                <a href="common_pages/logout.php" onclick="setCookie('profile_content', 'editprofile', -1)">Log out</a>
                             </li>
                         </ul>
                     </div>
@@ -127,6 +145,7 @@ $username = $user->getName()." ".$user->getSurname();
 </div>
 <?php
 include "include/includesFooter.html";
+include "include/jsFunctions.php";
 ?>
 </body>
 </html>

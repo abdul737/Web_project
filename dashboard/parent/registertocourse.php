@@ -10,21 +10,20 @@ $selectTime = null;
 $parent = $_SESSION["parent"];
 if (isset($parent))
 {
-    if (!(isset($_COOKIE["students"])))
+    if (!(isset($_COOKIE["courses"])))
     {
-        $_COOKIE["students"] = \databaseManager\DBManager::selectAllStudentsOfParentById($parent->getId(), $parent);
         $_COOKIE["courses"] = \databaseManager\DBManager::selectAllCourses();
         $_COOKIE["times"] = array("Doesn't matter", "Monday/Wednesday/Friday", "Tuesday/Thursday/Saturday");
     }
-    $students = $_COOKIE["students"];
+    $students = \databaseManager\DBManager::selectAllStudentsOfParentById($parent->getId(), $parent);
     $courses = $_COOKIE["courses"];
     $times = $_COOKIE["times"];
     if (!$students)
     {
-        print "<SCRIPT type='text/javascript'>
-                    alert('You don\'t have any kid registered, register your kid first!');
-                </SCRIPT > ";
-        exit;
+        $notificationCheck = 1;
+        $notificationMessage = "You don\'t have any kid registered, register your kid first!";
+        $notificationType = "warning";
+        $notificationAlign = "right";
     }
     if ($_POST) {
         $selectCourseId = $_POST["selectCourseId"];
@@ -38,23 +37,22 @@ if (isset($parent))
             $selectStudentId = $students[$selectStudentId - 2]->getId();
             $selectCourseId = $courses[$selectCourseId - 2]->getCourseId();
             $selectTime = $times[$selectTimeId - 2];
-            echo $selectStudentId;
-            echo $selectCourseId;
-            echo $selectTime;
             $waitList = \databaseManager\DBManager::insertOrGetWaitlist($parent->getId(), $selectStudentId, $selectCourseId, $selectTime);
             echo "<script>alert('Student added to waitlist, please wait the responce of the administration');</script>";
+
+            $notificationCheck = 1;
+            $notificationMessage = "Student added to waitlist, please wait the responce of the administration";
+            $notificationType = "info";
+            $notificationAlign = "right";
         }
         else
         {
-            echo "<script>alert('Fill all the fields');</script>";
+            $notificationCheck = 1;
+            $notificationMessage = "Please fill all the fields!";
+            $notificationType = "danger";
+            $notificationAlign = "right";
         }
     }
-}else
-{
-    print "<SCRIPT type='text/javascript'>
-                    alert('Session timed out or not found!');
-                </SCRIPT > ";
-    exit;
 }
 ?>
 <div class="container-fluid">
