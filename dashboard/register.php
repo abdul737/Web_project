@@ -68,7 +68,6 @@ if(isset($_POST['password'])){
     }
 }
 
-require_once("register.htm");
 ?>
 
 <!doctype html>
@@ -130,7 +129,7 @@ require_once("register.htm");
                                                 <span class="input-group-addon">
                                                     <i class="material-icons">phone</i>
                                                 </span>
-                                            <input type="text" class="form-control" placeholder="Phone Number..." name="phoneNumber" required>
+                                            <input type="number" class="form-control" placeholder="Phone Number..." name="phoneNumber" required>
                                         </div>
                                         <div class="input-group">
                                                 <span class="input-group-addon">

@@ -31,7 +31,7 @@ else
                             <div class="col-md-9">
                                 <div class="form-group label-floating">
                                     <label class="control-label"></label>
-                                    <input class="form-control" type="text" name="first_name" />
+                                    <input class="form-control" type="text" name="first_name" required/>
                                 </div>
                             </div>
                         </div>
@@ -40,7 +40,25 @@ else
                             <div class="col-md-9">
                                 <div class="form-group label-floating">
                                     <label class="control-label"></label>
-                                    <input class="form-control" type="text" name="last_name" />
+                                    <input class="form-control" type="text" name="last_name" required/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-2 label-on-left">Phone Number</label>
+                            <div class="col-md-9">
+                                <div class="form-group label-floating">
+                                    <label class="control-label"></label>
+                                    <input class="form-control" type="number" name="last_name" required/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-2 label-on-left">Email</label>
+                            <div class="col-md-9">
+                                <div class="form-group label-floating">
+                                    <label class="control-label"></label>
+                                    <input class="form-control" type="email" name="last_name" required/>
                                 </div>
                             </div>
                         </div>

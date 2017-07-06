@@ -8,15 +8,20 @@ class Course
   private $title;
   private $length;
   private $ageLimit;
+  private $price;
+
+
   private $courseId;
   private $assignments = array();
 
-  public function __construct($courseId, $title, $length, $ageLimit = null, $assignments = null)
+  public function __construct($courseId, $title, $length, $price, $ageLimit = null, $assignments = null)
   {
      $this->setAgeLimit($ageLimit);
      $this->setCourseId($courseId);
      $this->setLength($length);
      $this->setTitle($title);
+     $this->setAgeLimit($ageLimit);
+
 
      if ($assignments != null)
          $this->setAssignments($assignments);
@@ -63,6 +68,16 @@ class Course
     public function setAgeLimit($ageLimit)
     {
         $this->ageLimit = $ageLimit;
+    }
+
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    public function setPrice($price)
+    {
+        $this->price = $price;
     }
 
     /**

@@ -8,6 +8,7 @@
 require_once("databaseManager/DBManager.php");
 require_once("common_pages/logoutcheck.php");
 
+
 $user = null;
 if ($_SESSION['position'] == 'p')
 {
@@ -50,7 +51,7 @@ $notificationAlign = "center"; // location in vertical alignment
 <html lang="en">
 <head>
     <?php
-    include "include/includesHeader.html";
+    include_once "include/includesHeader.html";
     ?>
     <title><?= $username ?> - Edu Management System</title>
 </head>
@@ -144,8 +145,8 @@ $notificationAlign = "center"; // location in vertical alignment
     </div>
 </div>
 <?php
-include "include/includesFooter.html";
-include "include/jsFunctions.php";
+include_once "include/includesFooter.html";
+include_once "include/jsFunctions.php";
 ?>
 </body>
 </html>

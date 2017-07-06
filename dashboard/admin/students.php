@@ -1,11 +1,18 @@
 <?php
 
-$admin = $_SESSION['admin'];
-
-if(isset($admin))
+use \databaseManager\DBManager;
+if(isset($user))
 {
     if ($_POST) {
 
+    }
+
+    $allStudents = $user->getAllParents();
+    if (count($allStudents) != 0)
+    {
+        $allStudents = DBManager::selectAllStudents();
+        $user->setAllStudents($allStudents);
+        $_SESSION['admin'] = $user;
     }
 }
 else
@@ -30,8 +37,8 @@ else
                             <thead>
                             <tr>
                                 <th class="text-center">#</th>
-                                <th>Name</th>
-                                <th>Surname</th>
+                                <th>Id</th>
+                                <th>Full name</th>
                                 <th>Birthdate</th>
                                 <th>Phone Number</th>
                                 <th>E-mail</th>
@@ -41,8 +48,8 @@ else
                             <tbody>
                             <?php
                                 $i = 1;
-                                print_r($admin->getAllStudents());
-                                foreach($admin->getAllStudents() as $student){
+                                foreach($allStudents as $student){
+                                    $id = sprintf("s%06d", $student->getId());
                                     $name = $student->getName();
                                     $surname = $student->getSurname();
                                     $birthdate = $student->getBirthdate();
@@ -50,8 +57,8 @@ else
                                     $email = $student->getEmail();
                                     echo "<tr>
                                             <td class='text-center'>$i</td>
-                                            <td>$name</td>
-                                            <td>$surname</td>
+                                            <td><i>$id</i></td>
+                                            <td><b>$name $surname</b></td>
                                             <td>$birthdate</td>
                                             <td>$phoneNumber</td>
                                             <td>$email</td>

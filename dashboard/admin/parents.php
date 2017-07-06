@@ -1,11 +1,21 @@
 <?php
 
-$admin = $_SESSION['admin'];
-
-if(isset($admin))
+use \databaseManager\DBManager;
+if(isset($user))
 {
     if ($_POST) {
 
+    }
+
+    $allParents = $user->getAllParents();
+    if (count($allParents) == 0)
+    {
+        $allParents = DBManager::selectAllParents();
+        $user->setAllParents($allParents);
+        foreach ($allParents as $parent){
+            $parent->setStudents(DBManager::selectAllStudentsOfParentById($parent->getId(), $parent));
+        }
+        $_SESSION['admin'] = $user;
     }
 }
 else
@@ -30,9 +40,9 @@ else
                             <thead>
                             <tr>
                                 <th class="text-center">#</th>
-                                <th>Name</th>
-                                <th>Surname</th>
-                                <th>Student Full Name</th>
+                                <th>Id</th>
+                                <th>Full name</th>
+                                <th>All students</th>
                                 <th>Phone Number</th>
                                 <th>E-mail</th>
                                 <th class="text-right">Actions</th>
@@ -41,17 +51,20 @@ else
                             <tbody>
                             <?php
                                 $i = 1;
-                                foreach($admin->getAllParents() as $parent){
+                                foreach($allParents as $parent){
+                                    $id = sprintf("p%06d",$parent->getId());
+                                    $name = $parent->getName();
+                                    $surname = $parent->getSurname();
+                                    $phoneNumber = $parent->getPhoneNumber();
+                                    $email = $parent->getEmail();
+                                    $studentName = "";
                                     foreach ($parent->getStudents() as $student){
-                                        $name = $parent->getName();
-                                        $surname = $parent->getSurname();
-                                        $studentName = $student->getName()." ".$student->getSurname();
-                                        $phoneNumber = $parent->getPhoneNumber();
-                                        $email = $parent->getEmail();
-                                        echo "<tr>
+                                        $studentName .= $student->getName()." ".$student->getSurname()."\n<br>";
+                                    }
+                                    echo "<tr>
                                                     <td class='text-center'>$i</td>
-                                                    <td>$name</td>
-                                                    <td>$surname</td>
+                                                    <td><i>$id</i></td>
+                                                    <td><b>$name $surname</b></td>
                                                     <td>$studentName</td>
                                                     <td>$phoneNumber</td>
                                                     <td>$email</td>
@@ -67,8 +80,7 @@ else
                                                         </button>
                                                     </td>
                                                 </tr>";
-                                        $i++;
-                                    }
+                                    $i++;
                                 }
                                 ?>
                             </tbody>

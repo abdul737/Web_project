@@ -29,8 +29,8 @@ if (isset($_SESSION['position']))
 }
 
 
-include "include/includesFooter.html";
-include "include/includesHeader.html";
+include_once "include/includesFooter.html";
+include_once "include/includesHeader.html";
 ?>
 
 <html>
@@ -39,7 +39,7 @@ include "include/includesHeader.html";
 if ($logout) {
     print '<SCRIPT type="text/javascript">
                     swal("Logout", "You already logged out!", "error");
-                    swal({   title: "Logout",   
+                    swal({   title: "Logged out",   
                              text: "You already logged out!",   
                              type: "error",  
                              confirmButtonText: "Back to login", 

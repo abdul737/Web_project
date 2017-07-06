@@ -121,15 +121,7 @@ function getParent($id, $user){
 
 function getAdmin(User $user){
     $admin = new Admin($user->getId(), $user->getName(), $user->getSurname(), $user->getPassword(), $user->getEmail(), $user->getPhoneNumber());
-    $courses = DBManager::selectAllCourses();
-    $admin->setAllCourses($courses);
-    $parents = DBManager::selectAllParents();
-    foreach ($parents as $parent){
-        $parent->setStudents(DBManager::selectAllStudentsOfParentById($parent->getId(), $parent));
-    }
-    $admin->setAllParents($parents);
-    $students = DBManager::selectAllStudents();
-    $admin->setAllStudents($students);
+
     return $admin;
 }
 ?>
@@ -215,8 +207,7 @@ function getAdmin(User $user){
                                     </div>
                                 </div>
                                 <div class="footer text-center">
-                                    <button type="submit" class="btn btn-info btn-simple btn-wd btn-lg">Let's go
-                                    </button>
+                                    <button type="submit" class="btn btn-info btn-simple btn-wd btn-lg">Let's go</button>
                                 </div>
                             </div>
                         </form>

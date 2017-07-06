@@ -38,7 +38,6 @@ if (isset($parent))
             $selectCourseId = $courses[$selectCourseId - 2]->getCourseId();
             $selectTime = $times[$selectTimeId - 2];
             $waitList = \databaseManager\DBManager::insertOrGetWaitlist($parent->getId(), $selectStudentId, $selectCourseId, $selectTime);
-            echo "<script>alert('Student added to waitlist, please wait the responce of the administration');</script>";
 
             $notificationCheck = 1;
             $notificationMessage = "Student added to waitlist, please wait the responce of the administration";

@@ -1,28 +1,25 @@
 <?php
 
-$admin = $_SESSION['admin'];
-
-if(isset($admin))
+use \databaseManager\DBManager;
+if(isset($user))
 {
     if ($_POST) {
 
     }
-}
-else
-{
-    print "<SCRIPT type='text/javascript'>
-                    alert('Session timed out or not found!');
-                </SCRIPT > ";
-    exit;
+    $allCourses = $user->getAllCourses();
+    if (count($allCourses) == 0)
+    {
+        $allCourses = DBManager::selectAllCourses();
+        $user->setAllCourses($allCourses);
+        $_SESSION['admin'] = $user;
+    }
 }
 ?>
 
 <div class="container-fluid">
-    <form action="createCourse.php">
-        <div class="text-right">
-            <button type="submit" class="btn btn-info btn-fill">Add course</button>
-        </div>
-    </form>
+    <div class="text-right">
+        <a href="<?=$file ?>" onclick="setCookie('profile_content', 'admin_addcourse', 7)" class="btn btn-info btn-fill">Add course</a>
+    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -45,13 +42,14 @@ else
                             <tbody>
                             <?php
                                 $i = 1;
-                                foreach($admin->getAllCourses() as $course){
+                                echo "\n<br>\n";
+                                foreach($allCourses as $course){
                                     $title = $course->getTitle();
                                     $length = $course->getLength();
                                     $ageLimit = $course->getAgeLimit();
                                     echo "<tr>
                                             <td class='text-center'>$i</td>
-                                            <td>$title</td>
+                                            <td><b>$title</b></td>
                                             <td>$length</td>
                                             <td>$ageLimit</td>
                                             <td class='td-actions text-right'>

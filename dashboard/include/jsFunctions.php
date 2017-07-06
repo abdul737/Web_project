@@ -6,21 +6,17 @@
  * Time: 4:14 PM
  */
 ?>
-<!-- javascript for init date picker -->
 <script>
-    $('.datetimepicker').datetimepicker({
-        icons: {
-            time: "fa fa-clock-o",
-            date: "fa fa-calendar",
-            up: "fa fa-chevron-up",
-            down: "fa fa-chevron-down",
-            previous: 'fa fa-chevron-left',
-            next: 'fa fa-chevron-right',
-            today: 'fa fa-screenshot',
-            clear: 'fa fa-trash',
-            close: 'fa fa-remove'
-        }
-    });</script>
+// javascript for activating the Perfect Scrollbar
+$('.sidebar .sidebar-wrapper').perfectScrollbar();
+$('.main-panel').perfectScrollbar();
+
+// javascript for detroying the Perfect Scrollbar
+// $('.main-panel .content').perfectScrollbar('destroy');
+
+// javascript for updating the Perfect Scrollbar when the content of the page is changing
+//$('.main-panel .content').perfectScrollbar('update');
+</script>
 
 <!-- Script is needed while working with 'single select' in 'register to course' of 'parent' -->
 <script>
@@ -74,3 +70,18 @@ $(document).ready(function(){
         showNotification();
     }
 </script>
+<!-- javascript for init date picker -->
+<script>
+    $('.datetimepicker').datetimepicker({
+        icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-chevron-up",
+            down: "fa fa-chevron-down",
+            previous: 'fa fa-chevron-left',
+            next: 'fa fa-chevron-right',
+            today: 'fa fa-screenshot',
+            clear: 'fa fa-trash',
+            close: 'fa fa-remove'
+        }
+    });</script>

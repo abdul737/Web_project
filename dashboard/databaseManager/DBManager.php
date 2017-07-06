@@ -36,6 +36,31 @@ class DBManager
         }
     }
 
+    public static function insertAndGetCourse(Course $course){
+        $connection = self::getConnection();
+        $statement = $connection->prepare('INSERT INTO course (title, length, ageLimit, price) VALUES (?, ?, ?, ?)');
+        if(!$statement){
+            error_log("insertAndGetCourse: error with the prepared statement");
+            return;
+        }
+        $title = $course->getTitle();
+        $length = $course->getLength();
+        $ageLimit = $course->getAgeLimit();
+        $price = $course->getPrice();
+
+        $statement->bind_param("siid", $title, $length, $ageLimit, $price);
+
+        if($statement->execute()){
+            $course->setCourseId($statement->insert_id);
+
+            $statement->free_result();
+            $statement->close();
+            return $course;
+        }else {
+            error_log("insertAndGetCourse: not inserted into course table");
+        }
+    }
+
     public static function insertParent(\_Parent $parent){
         $connection = self::getConnection();
         $statement = $connection->prepare('INSERT INTO user (name, surname, password, email, phoneNumber, position) VALUES (?, ?, ?, ?, ?, ?)');
@@ -80,7 +105,6 @@ class DBManager
         }
         return -1;
     }
-
 
     public static function updateParent(\_Parent $parent){
         $connection = self::getConnection();
@@ -129,6 +153,7 @@ class DBManager
         }
         return -1;
     }
+
     public static function updateAdmin(\Admin $admin){
         $connection = self::getConnection();
         $query = 'UPDATE user SET name=?, surname=?, password=?, email=?, phoneNumber=? WHERE id=?';
@@ -176,6 +201,7 @@ class DBManager
         }
         return -1;
     }
+
     public static function insertStudent(\Student $student, \_Parent $bindParent = null)
     {
         $id = null;
@@ -405,10 +431,10 @@ class DBManager
         {
             $statement->execute();
             $statement->store_result();
-            $statement->bind_result($id, $title, $length, $ageLimit);
+            $statement->bind_result($id, $title, $length, $ageLimit, $price);
             while($statement->fetch())//object fetches only id of the student
             {
-                array_push($courses, new Course($id, $title, $length, $ageLimit));
+                array_push($courses, new Course($id, $title, $length, $ageLimit, $price));
             }
 
             $statement->free_result();
@@ -480,17 +506,23 @@ class DBManager
     }
 
     public static function selectAllStudents(){
-        $students = null;
-        $query = "SELECT id FROM student";
+        $students = array();
+        $query = "SELECT student.id, name, surname, student.birthdate, email, phoneNumber FROM student INNER JOIN user ON user.id=student.id WHERE 1";
+
         if ($statement = self::getConnection()->prepare($query))
         {
             $statement->execute();
             $statement->store_result();
-            $statement->bind_result($id);
-            $students = array();
+            $id = null;
+            $name = null;
+            $surname = null;
+            $birthdate = null;
+            $email = null;
+            $phoneNumber = null;
+            $statement->bind_result($id, $name, $surname, $birthdate, $email, $phoneNumber);
             while($statement->fetch())//object fetches only id of the student
             {
-                $student = self::getStudent($id);
+                $student = new Student($id, $name, $surname, null, $birthdate, $email, $phoneNumber);
                 array_push($students, $student);
             }
 
