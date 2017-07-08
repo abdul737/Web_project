@@ -14,8 +14,10 @@ require_once("databaseManager/DBManager.php");
 
 use \databaseManager\DBManager;
 
-if(session_start())
+if(session_start()){
+    $_COOKIE['profile_content'] = null;
     session_destroy();
+}
 session_start();
 
 if(isset($_POST["login"]) && $_SERVER["REQUEST_METHOD"] == "POST"){
@@ -228,10 +230,9 @@ function getAdmin(User $user){
 include "include/includesFooter.html";
 ?>
 <script type="text/javascript">
-    document.onload()
-    {
+    $().ready(function () {
         setCookie('profile_content', 'editprofile', -1);
-    }
+    });
 </script>
 <script type="text/javascript">
     $().ready(function () {

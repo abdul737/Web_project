@@ -9,19 +9,24 @@ class Course
   private $length;
   private $ageLimit;
   private $price;
+  private $description;
+  private $image;
 
 
   private $courseId;
   private $assignments = array();
 
-  public function __construct($courseId, $title, $length, $price, $ageLimit = null, $assignments = null)
+
+
+  public function __construct($courseId, $title, $length, $price, $ageLimit = null, $assignments = null, $description = "", $image = null)
   {
      $this->setAgeLimit($ageLimit);
      $this->setCourseId($courseId);
      $this->setLength($length);
      $this->setTitle($title);
      $this->setAgeLimit($ageLimit);
-
+     $this->setDescription($description);
+     $this->setImage($image);
 
      if ($assignments != null)
          $this->setAssignments($assignments);
@@ -110,6 +115,26 @@ class Course
     public function getAssignments()
     {
         return $this->assignments;
+    }
+
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    public function setDescription($description)
+    {
+        $this->description = $description;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function setImage($image)
+    {
+        $this->image = $image;
     }
 
 }
