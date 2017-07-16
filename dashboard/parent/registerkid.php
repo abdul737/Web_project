@@ -5,7 +5,7 @@ require_once("functions.php");
 require_once("common_pages/logoutcheck.php");
 
 $parent = $_SESSION["parent"];
-$check = 0;
+
 if(isset($parent))
 {
     $students = \databaseManager\DBManager::selectAllStudentsOfParentById($parent->getId(), $parent);
@@ -72,7 +72,7 @@ if(isset($parent))
                             <div class="col-md-9">
                                 <div class="form-group label-floating ">
                                     <label class="control-label"></label>
-                                    <input class="form-control datetimepicker" name="date">
+                                    <input class="form-control" type="date" name="date">
                                 </div>
                             </div>
                         </div>

@@ -274,6 +274,53 @@ class DBManager
         return $student;
     }
 
+    public static function insertInstructor(\Instructor $instructor)
+    {
+        $id = null;
+        $name = $instructor->getName();
+        $surname = $instructor->getSurname();
+        $birthdate = $instructor->getBirthdate();
+        $password = $instructor->getPassword();
+        $photoFileId = $instructor->getPhotoFileId();
+        $email = $instructor->getEmail();
+        $phoneNumber = $instructor->getPhoneNumber();
+        $position = "i";
+
+        /* INSERTING STUDENT TO USER TABLE*/
+        $query = "INSERT INTO user(password, email, name, surname, phoneNumber, position, photoFieldId) VALUES(?,?,?,?,?,?,?)";
+        if ($statement = self::getConnection()->prepare($query))
+        {
+            $statement->bind_param("ssssssi", $password, $email, $name, $surname, $phoneNumber, $position, $photoFileId);
+            $statement->execute();
+            $id = $statement->insert_id;
+            $instructor->setId($id);
+
+            $statement->free_result();
+            $statement->close();
+        } else
+        {
+            error_log("WHILE INSERTING INSTRUCTOR TO USER TABLE");
+            return false;
+        }
+
+        /* INSERTING STUDENT AND TOTALPOINTS INTO TABLE STUDENT*/
+        $query = "INSERT INTO instructor VALUES(?)";
+        if ($statement = self::getConnection()->prepare($query))
+        {
+            $statement->bind_param("i", $id);
+            $statement->execute();
+
+            $statement->free_result();
+            $statement->close();
+        } else
+        {
+            error_log("WHILE INSERTING INSTRUCTOR'S ID INTO TABLE instructor");
+            return false;
+        }
+        /*RETURNS INSTRUCTOR BACK, WITH GENERATED ID*/
+        return $instructor;
+    }
+
     public static function selectStudent($id, $parent=null) //with or without parent
     {
         $password = null;
@@ -431,10 +478,10 @@ class DBManager
         {
             $statement->execute();
             $statement->store_result();
-            $statement->bind_result($id, $title, $length, $ageLimit, $price);
+            $statement->bind_result($id, $title, $length, $ageLimit, $price, $description, $image_file_id);
             while($statement->fetch())//object fetches only id of the student
             {
-                array_push($courses, new Course($id, $title, $length, $ageLimit, $price));
+                array_push($courses, new Course($id, $title, $length, $ageLimit, $price, null, $description, $image_file_id));
             }
 
             $statement->free_result();
@@ -447,6 +494,43 @@ class DBManager
     }
 
     public static function insertOrGetWaitlist($parentID, $studentId = null, $courseId = null, $selectTime = null)
+    {
+        $waitlist = array();
+        if (isset($studentId) && isset($courseId) && isset($selectTime)) {
+            /* INSERTING TO WAITLIST */
+            $query = "INSERT INTO waitlist(parentID, studentID, courseID, days) VALUES(?,?,?,?)";
+            if ($statement = self::getConnection()->prepare($query)) {
+                $statement->bind_param("iiis", $parentID, $studentId, $courseId, $selectTime);
+                $statement->execute();
+
+                $statement->free_result();
+                $statement->close();
+            } else {
+                error_log("ERROR WHILE INSERTING TO WAITLIST");
+            }
+        }
+        /* SELECTING FROM WAITLIST */
+        $query = "SELECT waitlistId, studentID, courseID, days, confirmed, create_time FROM waitlist WHERE parentID=?";
+        if ($statement = self::getConnection()->prepare($query)) {
+            $studentId = $courseId = $days = null;
+            $statement->bind_param("i", $parentID);
+            $statement->execute();
+            $statement->store_result();
+            $statement->bind_result($waitlistId, $studentId, $courseId, $days, $confirmed, $create_time);
+            while ($statement->fetch()) {
+                $wait = new \Waitlist($waitlistId, $parentID, $studentId, $courseId, $days, $confirmed, $create_time);
+                array_push($waitlist, $wait);
+            }
+
+            $statement->free_result();
+            $statement->close();
+        } else {
+            error_log("ERROR WHILE SELECTING FROM WAITLIST");
+        }
+        return $waitlist;
+    }
+
+    public static function getWaitlist()
     {
         $waitlist = array();
         if (isset($studentId) && isset($courseId) && isset($selectTime)) {
@@ -530,9 +614,41 @@ class DBManager
             $statement->close();
         }else
         {
-            error_log("WHILE GETTING ARRAY OF studentIDS' FOR GROUP FROM attendingStudents");
+            error_log("WHILE GETTING ARRAY OF allInstructors");
         }
         return $students;
+    }
+
+    public static function selectAllInstructors(){
+        $instructors = array();
+        $query = "SELECT instructor.id, name, surname, instructor.birthdate, photoFieldId, email, phoneNumber FROM instructor INNER JOIN user ON user.id=instructor.id WHERE 1";
+
+        if ($statement = self::getConnection()->prepare($query))
+        {
+            $statement->execute();
+            $statement->store_result();
+            $id = null;
+            $name = null;
+            $surname = null;
+            $birthdate = null;
+            $email = null;
+            $phoneNumber = null;
+            $photoFieldId = null;
+            $statement->bind_result($id, $name, $surname, $birthdate, $photoFieldId, $email, $phoneNumber);
+            while($statement->fetch())//object fetches only id of the student
+            {
+                $instructor = new \Instructor($id, $name, $surname, null, $photoFieldId, $email, $phoneNumber);
+                $instructor->setBirthdate($birthdate);
+                array_push($instructors, $instructor);
+            }
+
+            $statement->free_result();
+            $statement->close();
+        }else
+        {
+            error_log("WHILE GETTING ARRAY OF allInstructors");
+        }
+        return $instructors;
     }
 
     public static function getStudent($id){

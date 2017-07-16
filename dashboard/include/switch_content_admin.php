@@ -17,4 +17,7 @@ else
                 else
                     if ($_COOKIE['profile_content'] == 'admin_addgroup')
                         include_once "admin/addgroup.php";
+                    else
+                        if ($_COOKIE['profile_content'] == 'admin_classroom_manager')
+                            include_once "admin/classroom_manager.php";
 ?>

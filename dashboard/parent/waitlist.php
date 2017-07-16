@@ -11,7 +11,7 @@ if(isset($parent))
     if (!$waitList)
     {
         $notificationCheck = 1;
-        $notificationMessage = "You don\'t have any registers to courses";
+        $notificationMessage = "You don't have any registers to courses";
         $notificationType = "info";
         $notificationAlign = "right";
     }

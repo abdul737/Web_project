@@ -44,4 +44,10 @@
             <p>Add Instructor</p>
         </a>
     </li>
+    <li <?php echo ($_COOKIE['profile_content'] == 'admin_classroom_manager')?"class='active'":""; ?>>
+        <a href="<?=$file ?>" onclick="setCookie('profile_content', 'admin_classroom_manager', 7)">
+            <i class="material-icons">class</i>
+            <p>Classroom manager</p>
+        </a>
+    </li>
 </ul>
