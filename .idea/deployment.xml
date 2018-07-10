@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="codecraft.uz">
+    <serverData>
+      <paths name="codecraft.uz">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/.idea" />
+            <excludedPath local="true" path="$PROJECT_DIR$/index.php" />
+            <excludedPath local="true" path="$PROJECT_DIR$/MAMP-PRO-Logo.png" />
+            <excludedPath local="true" path="$PROJECT_DIR$/README.md" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>
